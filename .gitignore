@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Simulation binaries
+build/
+
+# VCD waveforms
+*.vcd
+
+# Development testbenches
+sim_0/
+
+# Notes
+CDC_NOTES.md
