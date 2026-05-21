@@ -46,7 +46,7 @@ A parameterized, pipelined **dot-product MAC accelerator** implemented in Verilo
 | `vecA`, `vecB` | bus → mac | Asynchronous FIFO (Gray-code pointers) | Multi-bit data: FIFO is the only safe method |
 | `done` | mac → bus | Toggle register → 2-FF sync → XOR edge detect | Pulse: single mac_clk cycle, would be missed by direct 2-FF sync |
 | `busy` | mac → bus | 2-FF synchronizer | Level signal: direct 2-FF sync is safe |
-| `result`, `latency` | mac → bus | Latched on `done_pulse_bus` rising edge | Data stable when done fires; latch captures safely |
+| `result`, `latency` | mac → bus | Latched on `done_pulse_bus` rising edge | Multi-bit, output-only: stable when done fires, latch in bus domain is safe |
 
 > **Key insight:** `done_mac` is a single mac_clk cycle pulse. At 133 MHz mac_clk vs 100 MHz bus_clk, a direct 2-FF sync on a 1-cycle pulse has a high probability of being missed entirely. Using a toggle synchronizer converts the pulse into a level change, which is guaranteed to be captured regardless of clock phase.
 
@@ -67,8 +67,7 @@ mac_accel_axi          (AXI4-Lite slave wrapper)
 
 | Byte Offset | Name | R/W | Description |
 |-------------|------|-----|-------------|
-| `0x00` | CTRL | W | Bit[0]: write `1` to start computation |
-| `0x00` | CTRL | R | Bit[2]: `done`, Bit[1]: `busy` |
+| `0x00` | CTRL | R/W | Write Bit[0]=1 to start; Read: Bit[2]=done, Bit[1]=busy |
 | `0x04` | AIN | W | Write next element of vector A (auto-increment index) |
 | `0x08` | BIN | W | Write next element of vector B (auto-increment index) |
 | `0x0C` | MASK | W | Bit mask to enable which vector elements to update; resets load index |
@@ -106,8 +105,6 @@ Expected output:
 
 ---
 
-
-
 ## Parameters
 
 | Parameter | Default | Description |
@@ -126,6 +123,11 @@ Expected output:
 │   ├── mac_accel.v          # Top-level: CDC logic, FIFO control, register map
 │   ├── mac_pe.v             # 2-stage pipelined signed MAC core
 │   └── mac_fifo_async.v     # Dual-clock async FIFO (Gray-code pointers)
-└── sim/
-    └── tb_mac_accel_cdc_v3.v  # True dual-clock CDC testbench (8 test cases)
+├── sim/
+│   └── tb_mac_accel_cdc_v3.v  # True dual-clock CDC testbench (8 test cases)
+└── sim_0/                      # Earlier testbench iterations (reference only)
+    ├── tb_mac_accel_cdc.v
+    ├── tb_mac_accel_cdc_v2.v
+    ├── tb_mac_accel_only.v
+    └── tb_mac_pe.v             # MAC PE unit test
 ```
