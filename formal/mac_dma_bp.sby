@@ -1,0 +1,21 @@
+# bmc:   bounded check, fast, short counterexamples while debugging
+# prove: k-induction, unbounded proof -> backs the word "proof"
+[tasks]
+bmc
+prove
+
+[options]
+bmc:   mode bmc
+bmc:   depth 40
+prove: mode prove
+prove: depth 12        # k = induction length; bumped until the step closes
+
+[engines]
+smtbmc boolector
+
+[script]
+read_verilog -sv -formal -DFORMAL mac_dma.v
+prep -top mac_dma
+
+[files]
+../rtl/mac_dma.v
