@@ -16,7 +16,7 @@ module mac_fifo_async #(
     input  wire                 wr_rst,
     input  wire                 wr_en,
     input  wire [WIDTH-1:0]     din,
-    output wire                 full,
+    output reg                  full,
 
     // read domain
     input  wire                 rd_clk,
@@ -74,8 +74,17 @@ module mac_fifo_async #(
         end
     end
 
-    assign full = (wr_ptr_gray_next == {~rd_ptr_gray_sync2[ADDR_WIDTH:ADDR_WIDTH-1],
-                                         rd_ptr_gray_sync2[ADDR_WIDTH-2:0]});
+    // full computed combinationally from the *next* write Gray pointer, then
+    // REGISTERED.  Registering breaks the combinational loop
+    //   full -> wr_ptr_bin_next -> wr_ptr_gray_next -> full
+    // (the loop is closed because wr_ptr_bin_next at line 51 consumes `full`).
+    wire full_val = (wr_ptr_gray_next == {~rd_ptr_gray_sync2[ADDR_WIDTH:ADDR_WIDTH-1],
+                                           rd_ptr_gray_sync2[ADDR_WIDTH-2:0]});
+
+    always @(posedge wr_clk or posedge wr_rst) begin
+        if (wr_rst) full <= 1'b0;
+        else        full <= full_val;
+    end
 
     // read logic - pointer only, no registered dout
     wire [ADDR_WIDTH:0] rd_ptr_bin_next  = rd_ptr_bin + (rd_en && !empty);

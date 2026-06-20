@@ -103,9 +103,11 @@ module mac_dma #(
     wire [15:0] remaining  = length_r - elem_cnt;
     wire [15:0] next_beats = (remaining > BURST_LEN[15:0]) ? BURST_LEN[15:0] : remaining;
 
-    // RREADY: in S_R_A always accept (internal buffer); in S_R_B gate on FIFO.
+    // RREADY: in S_R_A always accept (internal buffer); in S_R_B accept a new
+    // beat only when the skid register has room -- empty, or being drained this
+    // cycle.  (READY may depend on READY/full; only VALID may not depend on READY.)
     assign M_AXI_RREADY = (state == S_R_A) ? 1'b1 :
-                          (state == S_R_B) ? stream_ready : 1'b0;
+                          (state == S_R_B) ? (!stream_valid || stream_ready) : 1'b0;
 
     wire ar_handshake = M_AXI_ARVALID & M_AXI_ARREADY;
     wire r_handshake  = M_AXI_RVALID  & M_AXI_RREADY;
@@ -164,14 +166,18 @@ module mac_dma #(
             stream_a         <= {DATA_WIDTH{1'b0}};
             stream_b         <= {DATA_WIDTH{1'b0}};
         end else begin
-            // single-cycle pulses default low
+            // single-cycle pulse default low
             dma_done     <= 1'b0;
-            stream_valid <= 1'b0;
-            stream_last  <= 1'b0;
 
             // sticky error
             if (r_handshake && (M_AXI_RRESP != 2'b00))
                 dma_err <= 1'b1;
+
+            // Skid drain: clear VALID only when the consumer accepts (READY).
+            // VALID is NEVER a function of READY -> AXI-Stream compliant.  Runs
+            // in every state so the final beat still drains after S_R_B exits.
+            if (stream_valid && stream_ready)
+                stream_valid <= 1'b0;
 
             case (state)
                 S_IDLE: begin
@@ -216,6 +222,11 @@ module mac_dma #(
                 end
 
                 S_R_B: begin
+                    // Accept a B beat only when the skid has room (gated by
+                    // RREADY above).  Load it into the skid register and assert
+                    // VALID; VALID is held (independent of READY) until the drain
+                    // above clears it -> no element is ever dropped or advanced
+                    // past before it is safely written to the FIFO.
                     if (r_handshake) begin
                         stream_a     <= buf_a[read_idx_a];
                         stream_b     <= M_AXI_RDATA[DATA_WIDTH-1:0];
@@ -242,6 +253,58 @@ module mac_dma #(
     initial begin
         $display("[MAC_DMA] instantiated: BURST_LEN=%0d MAX_LEN=%0d", BURST_LEN, MAX_LEN);
     end
+`endif
+
+`ifdef FORMAL
+    // -------------------------------------------------------------------
+    // Formal: AXI-Stream VALID-stability / no-drop property (single bus_clk
+    // domain).  Proves the producer never drops a back-pressured beat.
+    //
+    // stream_ready (= ~fifo_full) is a FREE input -> the solver drives it
+    // adversarially, modelling any back-pressure pattern a real FIFO could
+    // produce.  length is pinned small so BMC unrolls a short, fast bound.
+    //
+    // The property below asserts that once VALID is asserted and the consumer
+    // has not yet accepted (READY low), VALID stays high and {a,b,last} are
+    // held stable on the next cycle -- the spec-compliant handshake guarantee.
+    // -------------------------------------------------------------------
+    reg f_past_valid = 1'b0;
+    always @(posedge clk) f_past_valid <= 1'b1;
+
+    // force a clean reset in the very first step so registers start at their
+    // reset values (otherwise BMC picks an arbitrary -> spurious -> initial state)
+    always @(*) if (!f_past_valid) assume (rst);
+
+    // bound the transfer so the counterexample is short
+    always @(*) assume (length == 16'd2);
+
+    // -------------------------------------------------------------------
+    // Inductive invariant (needed for `mode prove` / k-induction):
+    //   k-induction starts the inductive step from an ARBITRARY register
+    //   state, not from reset.  Without help the solver may begin in an
+    //   unreachable state where `state` holds one of the two illegal 3-bit
+    //   encodings (3'd6 / 3'd7), then manufacture a spurious counterexample.
+    //   Asserting the FSM is always in a legal encoding does double duty: it
+    //   is a true property AND it strengthens the induction hypothesis so the
+    //   step can close.  (BMC reaches this for free; only `prove` needs it.)
+    // -------------------------------------------------------------------
+    always @(posedge clk)
+        if (f_past_valid && !rst)
+            a_state_legal : assert (state <= S_DONE);
+
+    // CORE PROPERTY (AXI-Stream VALID stability / no-drop under back-pressure):
+    //   Once VALID is asserted it must remain asserted, with the payload held
+    //   stable, until the consumer accepts it (READY).  VALID must NEVER depend
+    //   on READY.  This is the spec-compliant guarantee that a back-pressured
+    //   element is held -- never dropped -- until it is written to the FIFO.
+    always @(posedge clk)
+        if (f_past_valid && !rst && !$past(rst)
+            && $past(stream_valid) && !$past(stream_ready)) begin
+            a_valid_stable : assert (stream_valid);
+            a_dataA_stable : assert (stream_a    == $past(stream_a));
+            a_dataB_stable : assert (stream_b    == $past(stream_b));
+            a_last_stable  : assert (stream_last == $past(stream_last));
+        end
 `endif
 
 endmodule
