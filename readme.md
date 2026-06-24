@@ -171,6 +171,33 @@ Expected output (V2):
 
 ---
 
+## Formal Verification (SymbiYosys)
+
+Two properties are machine-checked with SymbiYosys (Yosys + boolector). Each `.sby`
+runs a `bmc` task (bounded model check) and a `prove` task (k-induction → unbounded).
+Run with `oss-cad-suite` on `PATH`:
+
+```bash
+sby -f formal/mac_dma_bp.sby      # DMA back-pressure no-drop
+sby -f formal/mac_fifo_gray.sby   # async-FIFO Gray-code invariants
+```
+
+| Proof | Module | Property checked | Result |
+|-------|--------|------------------|--------|
+| `mac_dma_bp` | `mac_dma.v` | AXI-Stream VALID-stability / no-drop under adversarial back-pressure; AR-channel handshake stability | bmc + prove PASS |
+| `mac_fifo_gray` | `mac_fifo_async.v` | Gray pointers change by ≤1 bit per clock (the CDC safety property); no overflow; no underflow | bmc + prove PASS |
+
+`stream_ready` / `M_AXI_ARREADY` and the two clocks are free inputs the solver drives
+adversarially, so every back-pressure pattern and clock relationship is covered. See
+[`formal/STUDY_GUIDE.md`](formal/STUDY_GUIDE.md) for a line-by-line walkthrough.
+
+> The Gray-code one-bit-change proof is the formal counterpart of the CDC design
+> claim: because consecutive pointer values differ in a single bit, a pointer
+> sampled mid-flight by the other domain's 2-FF synchronizer always resolves to
+> the old *or* new value — never a corrupt intermediate.
+
+---
+
 ## Parameters
 
 | Parameter | Default | Description |
@@ -191,6 +218,10 @@ Expected output (V2):
 │   ├── mac_dma.v             # V2: AXI4 master DMA engine (INCR bursts)
 │   ├── mac_pe.v              # 2-stage pipelined signed MAC core (shared)
 │   └── mac_fifo_async.v      # Dual-clock async FIFO, Gray-code (shared)
+├── formal/
+│   ├── mac_dma_bp.sby        # DMA back-pressure no-drop + AR stability proof
+│   ├── mac_fifo_gray.sby     # async-FIFO Gray-code / no over-underflow proof
+│   └── STUDY_GUIDE.md        # line-by-line formal walkthrough
 ├── sim/
 │   ├── tb_mac_accel_cdc_v3.v # V1: true dual-clock CDC testbench (8 cases)
 │   └── tb_mac_accel_dma.v    # V2: DMA + AXI memory model testbench (7 cases)

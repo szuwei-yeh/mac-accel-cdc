@@ -2,3 +2,6 @@
 mac_dma_bp_bmc/
 mac_dma_bp_prove/
 mac_dma_bp/
+mac_fifo_gray_bmc/
+mac_fifo_gray_prove/
+mac_fifo_gray/

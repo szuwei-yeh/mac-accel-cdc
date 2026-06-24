@@ -117,4 +117,42 @@ module mac_fifo_async #(
     // empty check
     assign empty = (rd_ptr_gray == wr_ptr_gray_sync2);
 
+`ifdef FORMAL
+    // ------------------------------------------------------------------
+    // Formal: the invariants that justify a Gray-code async FIFO.
+    //
+    // wr_clk and rd_clk are independent, free-running clocks the solver drives
+    // adversarially (multiclock), so any phase/frequency relationship the
+    // 100/133 MHz hardware could produce is covered.  Every property below is a
+    // COMBINATIONAL invariant -- it must hold in every state, so it is immune to
+    // multiclock $past sampling and closes cleanly under k-induction.  Each also
+    // holds during reset (the pointers are 0 and encode(0)=0).
+    // ------------------------------------------------------------------
+
+    // Clean power-on reset: hold both resets until the first wr_clk edge so the
+    // base case starts from the known 0 state (the invariants tolerate later
+    // resets too -- encode(0)=0 -- so no mid-run constraint is needed).
+    reg f_init = 1'b0;
+    always @(posedge wr_clk) f_init <= 1'b1;
+    always @(*) if (!f_init) assume (wr_rst && rd_rst);
+
+    // Binding invariant: the Gray pointer is always the Gray encoding of the
+    // binary pointer.  True by construction; it also stops k-induction from
+    // starting in an unreachable state where gray and binary disagree.
+    always @(*) a_wr_gray_enc : assert (wr_ptr_gray == ((wr_ptr_bin >> 1) ^ wr_ptr_bin));
+    always @(*) a_rd_gray_enc : assert (rd_ptr_gray == ((rd_ptr_bin >> 1) ^ rd_ptr_bin));
+
+    // GRAY-CODE ONE-BIT-CHANGE: the next Gray pointer differs from the current
+    // one by AT MOST a single bit.  This is the whole point of Gray coding for
+    // CDC -- a pointer sampled mid-flight by the other domain's synchronizer
+    // resolves to either the old or the new value, never a corrupt intermediate.
+    always @(*) a_wr_gray_onehot : assert ($onehot0(wr_ptr_gray_next ^ wr_ptr_gray));
+    always @(*) a_rd_gray_onehot : assert ($onehot0(rd_ptr_gray_next ^ rd_ptr_gray));
+
+    // NO OVERFLOW: a full FIFO never advances its write pointer.
+    always @(*) if (full)  a_no_overflow  : assert (wr_ptr_bin_next == wr_ptr_bin);
+    // NO UNDERFLOW: an empty FIFO never advances its read pointer.
+    always @(*) if (empty) a_no_underflow : assert (rd_ptr_bin_next == rd_ptr_bin);
+`endif
+
 endmodule
