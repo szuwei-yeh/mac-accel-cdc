@@ -1,0 +1,30 @@
+# Async FIFO formal proof (dual-clock, multiclock).
+#   bmc:   bounded check, fast counterexamples while debugging
+#   prove: k-induction, unbounded proof -> backs the word "proof"
+#
+# Properties (see FORMAL block in mac_fifo_async.v):
+#   - Gray pointers change by at most one bit per clock (write & read domains)
+#   - no overflow: a write while full never advances the write pointer
+#   - no underflow: a read while empty never advances the read pointer
+[tasks]
+bmc
+prove
+
+[options]
+multiclock on
+bmc:   mode bmc
+bmc:   depth 30
+prove: mode prove
+prove: depth 12
+
+[engines]
+smtbmc boolector
+
+[script]
+read_verilog -sv -formal -DFORMAL mac_fifo_async.v
+# small instance -> fast proof; the properties are structural and depth-independent
+chparam -set ADDR_WIDTH 2 -set WIDTH 4 mac_fifo_async
+prep -top mac_fifo_async
+
+[files]
+../rtl/mac_fifo_async.v

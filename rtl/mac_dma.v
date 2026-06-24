@@ -305,6 +305,34 @@ module mac_dma #(
             a_dataB_stable : assert (stream_b    == $past(stream_b));
             a_last_stable  : assert (stream_last == $past(stream_last));
         end
+
+    // Supporting invariants (true properties that also strengthen the induction
+    // hypothesis): ARVALID is asserted only in the two AR-request states, and
+    // while asserted the registered AR payload matches the intended burst.
+    // Without these, k-induction may start from an unreachable state where
+    // ARVALID is high but the address is detached from the FSM.
+    always @(posedge clk)
+        if (f_past_valid && !rst) begin
+            a_arvalid_state : assert (!M_AXI_ARVALID
+                                      || state == S_AR_A || state == S_AR_B);
+            if (M_AXI_ARVALID) begin
+                a_araddr_bound : assert (M_AXI_ARADDR == cur_addr);
+                a_arlen_bound  : assert (M_AXI_ARLEN  == next_beats[7:0] - 8'd1);
+            end
+        end
+
+    // AXI4 AR-CHANNEL HANDSHAKE STABILITY (the master-side mirror of the stream
+    // property above): once ARVALID is asserted it must stay asserted, with the
+    // address payload held stable, until the slave accepts with ARREADY.  A
+    // master that drops or mutates an outstanding AR request violates the AXI
+    // spec and can corrupt the burst.
+    always @(posedge clk)
+        if (f_past_valid && !rst && !$past(rst)
+            && $past(M_AXI_ARVALID) && !$past(M_AXI_ARREADY)) begin
+            a_arvalid_stable : assert (M_AXI_ARVALID);
+            a_araddr_stable  : assert (M_AXI_ARADDR == $past(M_AXI_ARADDR));
+            a_arlen_stable   : assert (M_AXI_ARLEN  == $past(M_AXI_ARLEN));
+        end
 `endif
 
 endmodule
