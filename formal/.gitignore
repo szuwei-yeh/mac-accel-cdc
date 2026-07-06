@@ -5,3 +5,7 @@ mac_dma_bp/
 mac_fifo_gray_bmc/
 mac_fifo_gray_prove/
 mac_fifo_gray/
+axi_read_engine_rob_bmc/
+axi_read_engine_rob_prove/
+axi_read_engine_rob_cover/
+axi_read_engine_rob/

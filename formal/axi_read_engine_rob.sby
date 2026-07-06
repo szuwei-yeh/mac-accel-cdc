@@ -1,0 +1,43 @@
+# Formal verification of the ROB read engine (Step 3).
+#   bmc   : bounded model check (fast, short counterexamples, all asserts)
+#   prove : k-induction -> unbounded proof of the safety asserts
+#   cover : reachability of the interesting traces (>=2 ARs, OOO fill, ...)
+#
+# Proven on a small bounded config (set via chparam): MAX_OUTSTANDING=2,
+# MAX_BURST_LEN=2, LEN_WIDTH=8.  cmd_len is bounded to MAX_OUTSTANDING*MAX_BURST_LEN
+# + MAX_BURST_LEN = 6 inside the FORMAL block, which forces entry/tag reuse.
+# (LEN_WIDTH=8 keeps the engine's next_beats[7:0] slice in-bounds; counters still
+#  stay tiny because cmd_len <= 6.)
+[tasks]
+bmc
+prove
+cover
+
+[options]
+bmc:   mode bmc
+bmc:   depth 14
+prove: mode prove
+cover: mode cover
+cover: depth 30
+
+[engines]
+# bmc/cover: bounded SMT.  prove: IC3/PDR (abc) -> unbounded safety proof that
+# discovers its own inductive invariants (no hand-tuned k depth needed).
+bmc:   smtbmc boolector
+prove: abc pdr
+cover: smtbmc boolector
+
+[script]
+# Small bounded config.  The data/address/ID widths are irrelevant to the safety
+# properties, so they are shrunk too -> far smaller SMT problem, faster solve.
+# (AXI_ADDR_W must exceed LEN_WIDTH; AXI_ID_WIDTH must exceed ID_W=clog2(MO)=1.)
+read_verilog -sv -formal -DFORMAL axi_read_engine_rob.v
+chparam -set MAX_OUTSTANDING 2 -set MAX_BURST_LEN 2 -set LEN_WIDTH 8 \
+        -set AXI_DATA_W 8 -set AXI_ADDR_W 12 -set AXI_ID_WIDTH 2 axi_read_engine_rob
+prep -top axi_read_engine_rob
+# flatten the tiny ROB arrays to logic so the solver avoids slow array theory
+memory_map
+opt -fast
+
+[files]
+../rtl/axi_read_engine_rob.v
