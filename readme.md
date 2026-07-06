@@ -234,6 +234,28 @@ The conservative headline result is `MAX_OUTSTANDING=4`: integrated MAC feed uti
 
 ---
 
+## Synopsys VCS / Design Compiler
+
+The V2 and V3 RTL were also checked on the UCSB ECE Synopsys flow. VCS
+`V-2023.12-SP2` passes the original V2 DMA regression (`7 PASS / 0 FAIL`) and
+the experimental ROB DMA integration regression (`4 PASS / 0 FAIL`).
+
+Design Compiler `R-2020.09-SP4` was run with the OSU 0.18 um standard-cell
+library (`osu018_stdcells.db`) at a 10 ns clock. Both synthesis targets meet
+timing with zero setup/hold violating paths and no timing/design-rule constraint
+violations:
+
+| Target | Critical path | Slack @ 10 ns | Leaf cells | Cell area |
+|--------|---------------|---------------|------------|-----------|
+| `axi_read_engine_rob` | 5.45 ns | +3.55 ns | 9,455 | 400,254 |
+| `mac_dma_rob` | 5.45 ns | +3.55 ns | 22,396 | 968,782 |
+
+The longest reported path is the AXI AR address-generation path from
+`issue_elem` through the address adder to `M_AXI_ARADDR`, which is expected for
+this design.
+
+---
+
 ## Formal Verification (SymbiYosys)
 
 Three property sets are machine-checked with SymbiYosys. The FIFO and V2 DMA proofs use BMC + k-induction; the ROB proof uses BMC + IC3/PDR for an unbounded safety proof on a small bounded configuration.
@@ -252,6 +274,7 @@ sby -f formal/axi_read_engine_rob.sby
 | `axi_read_engine_rob` | `axi_read_engine_rob.v` | ROB no-overflow, no tag reuse while valid, no retire before complete, in-order retirement, output/AR stability, sticky error capture | bmc + IC3/PDR prove PASS; cover PASS |
 
 `stream_ready` / `M_AXI_ARREADY` and the two clocks are free inputs the solver drives
+adversarially in the existing proofs, so every back-pressure pattern and clock relationship is covered. The ROB proof models a legal AXI read slave with assumptions on `RID`, per-ID beat order, and `RLAST`, while leaving readiness/error signals free. See [`formal/STUDY_GUIDE.md`](formal/STUDY_GUIDE.md) for details.
 
 > The Gray-code one-bit-change proof is the formal counterpart of the CDC design
 > claim: because consecutive pointer values differ in a single bit, a pointer
@@ -296,4 +319,9 @@ sby -f formal/axi_read_engine_rob.sby
 │   ├── axi_read_mem_model.v  # Step 0: single-outstanding latency model
 │   ├── axi_read_mem_model_mo.v # Step 1: multi-outstanding in-order model
 │   └── axi_read_mem_model_ooo.v # Step 2+: out-of-order/interleaved model
+└── syn/
+    ├── run_dc.sh             # Design Compiler wrapper
+    ├── dc_rob.tcl            # synthesis script
+    ├── constraints_rob.sdc   # portable single-clock constraints
+    └── README.md             # Synopsys DC flow notes
 ```
