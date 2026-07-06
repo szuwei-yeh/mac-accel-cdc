@@ -3,9 +3,23 @@
 
 # Simulation binaries
 build/
+simv
+simv_*
+simv*.daidir/
+csrc/
+ucli.key
+command.log
 
 # VCD waveforms
 *.vcd
+
+# Synopsys DC generated outputs
+alib-*/
+default.svf
+syn/logs/
+syn/mapped/
+syn/reports/
+syn/work/
 
 # Development testbenches
 sim_0/
