@@ -27,3 +27,7 @@ TARGET_LIB=/path/to/other.db bash syn/run_dc.sh
 
 Reports are written to `syn/reports/`; mapped netlists and SDC files are written
 to `syn/mapped/`. Treat the results as synthesis sanity data, not signoff timing.
+
+Use `*_qor.rpt` and `*_timing_constraints.rpt` for timing/design-rule pass/fail.
+The `*_all_constraints.rpt` file intentionally includes every DC constraint
+class, including power targets that may be unset in this portable flow.

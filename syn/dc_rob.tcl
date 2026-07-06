@@ -65,7 +65,10 @@ compile_ultra
 report_qor > [file join $report_dir "${TOP}_qor.rpt"]
 report_area -hierarchy > [file join $report_dir "${TOP}_area.rpt"]
 report_timing -max_paths 20 -delay_type max > [file join $report_dir "${TOP}_timing.rpt"]
-report_constraint -all_violators > [file join $report_dir "${TOP}_constraints.rpt"]
+report_constraint -all_violators \
+    -max_delay -min_delay -max_transition -max_capacitance -max_fanout \
+    > [file join $report_dir "${TOP}_timing_constraints.rpt"]
+report_constraint -all_violators > [file join $report_dir "${TOP}_all_constraints.rpt"]
 report_cell > [file join $report_dir "${TOP}_cells.rpt"]
 
 write -format ddc -hierarchy -output [file join $mapped_dir "${TOP}.ddc"]
