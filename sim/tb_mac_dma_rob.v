@@ -12,6 +12,8 @@
 //
 // The AXI memory model returns out-of-order/interleaved responses, so the ROB
 // must restore in-order phase streams before pairing.
+// An external two-phase scoreboard also checks accepted AR addresses, burst
+// geometry, and request-count conservation across the A -> B transition.
 // -----------------------------------------------------------------------------
 
 `ifndef DMA_ROB_MAX_OUT
@@ -216,8 +218,92 @@ module tb_mac_dma_rob;
     // Counters/checkers
     //----------------------------------------------------
     integer m_active, m_arh, m_beats, m_pairs;
+    reg     m_done_seen;
     integer pair_idx, data_err, last_err, got_sum;
     integer chk_len;
+
+    // Independent two-phase AR scoreboard.  A start handshake captures the
+    // externally supplied A/B bases and length.  Accepted AR payloads alone
+    // advance each phase; no DUT address/counter internals are observed.
+    wire [8:0] ar_seq_burst_beats = {1'b0, M_AXI_ARLEN} + 9'd1;
+    wire [16:0] ar_seq_burst_beats_ext = {8'd0, ar_seq_burst_beats};
+    wire [AXI_ADDR_WIDTH-1:0] ar_seq_stride =
+        {{(AXI_ADDR_WIDTH-9){1'b0}}, ar_seq_burst_beats} << M_AXI_ARSIZE;
+    reg [AXI_ADDR_WIDTH-1:0] ar_seq_expected_addr;
+    reg [AXI_ADDR_WIDTH-1:0] ar_seq_b_base;
+    reg [16:0] ar_seq_command_beats;
+    reg [16:0] ar_seq_phase_issued;
+    wire [16:0] ar_seq_remaining = ar_seq_command_beats - ar_seq_phase_issued;
+    wire [16:0] ar_seq_expected_burst =
+        (ar_seq_remaining > BURST_LEN) ? BURST_LEN : ar_seq_remaining;
+    wire [16:0] ar_seq_issued_after =
+        ar_seq_phase_issued + ar_seq_burst_beats_ext;
+    reg ar_seq_phase_b;
+    reg ar_seq_active;
+    integer ar_seq_err;
+
+    always @(posedge clk) begin
+        if (rst) begin
+            ar_seq_expected_addr <= {AXI_ADDR_WIDTH{1'b0}};
+            ar_seq_b_base        <= {AXI_ADDR_WIDTH{1'b0}};
+            ar_seq_command_beats <= 17'd0;
+            ar_seq_phase_issued  <= 17'd0;
+            ar_seq_phase_b       <= 1'b0;
+            ar_seq_active        <= 1'b0;
+            ar_seq_err           <= 0;
+        end else begin
+            if (start && !dma_busy) begin
+                ar_seq_expected_addr <= src_a_addr;
+                ar_seq_b_base        <= src_b_addr;
+                ar_seq_command_beats <= {1'b0, length};
+                ar_seq_phase_issued  <= 17'd0;
+                ar_seq_phase_b       <= 1'b0;
+                ar_seq_active        <= 1'b1;
+            end
+
+            if (M_AXI_ARVALID && M_AXI_ARREADY) begin
+                if (!ar_seq_active ||
+                    M_AXI_ARADDR !== ar_seq_expected_addr ||
+                    M_AXI_ARSIZE !== 3'b010 ||
+                    M_AXI_ARBURST !== 2'b01 ||
+                    ar_seq_burst_beats_ext < 1 ||
+                    ar_seq_burst_beats_ext > BURST_LEN ||
+                    ar_seq_burst_beats_ext != ar_seq_expected_burst ||
+                    ar_seq_issued_after > ar_seq_command_beats) begin
+                    ar_seq_err <= ar_seq_err + 1;
+                    $display("  [DMA AR SEQUENCE ERROR] phase=%s got addr=%h beats=%0d; exp addr=%h beats=%0d issued=%0d/%0d",
+                             ar_seq_phase_b ? "B" : "A", M_AXI_ARADDR,
+                             ar_seq_burst_beats, ar_seq_expected_addr,
+                             ar_seq_expected_burst, ar_seq_phase_issued,
+                             ar_seq_command_beats);
+                end
+
+                if (ar_seq_issued_after == ar_seq_command_beats) begin
+                    if (!ar_seq_phase_b) begin
+                        ar_seq_phase_b       <= 1'b1;
+                        ar_seq_phase_issued  <= 17'd0;
+                        ar_seq_expected_addr <= ar_seq_b_base;
+                    end else begin
+                        ar_seq_phase_issued  <= ar_seq_issued_after;
+                        ar_seq_expected_addr <= ar_seq_expected_addr + ar_seq_stride;
+                        ar_seq_active        <= 1'b0;
+                    end
+                end else begin
+                    ar_seq_phase_issued  <= ar_seq_issued_after;
+                    ar_seq_expected_addr <= ar_seq_expected_addr + ar_seq_stride;
+                end
+            end
+
+            if (dma_done &&
+                (ar_seq_active || !ar_seq_phase_b ||
+                 ar_seq_phase_issued != ar_seq_command_beats)) begin
+                ar_seq_err <= ar_seq_err + 1;
+                $display("  [DMA AR CONSERVATION ERROR] phase_b=%0b active=%0b issued=%0d command=%0d",
+                         ar_seq_phase_b, ar_seq_active,
+                         ar_seq_phase_issued, ar_seq_command_beats);
+            end
+        end
+    end
 
     always @(posedge clk) begin
         if (rst) begin
@@ -225,11 +311,13 @@ module tb_mac_dma_rob;
             m_arh    <= 0;
             m_beats  <= 0;
             m_pairs  <= 0;
+            m_done_seen <= 1'b0;
         end else begin
             if (dma_busy)                         m_active <= m_active + 1;
             if (M_AXI_ARVALID && M_AXI_ARREADY)   m_arh    <= m_arh + 1;
             if (M_AXI_RVALID && M_AXI_RREADY)     m_beats  <= m_beats + 1;
             if (stream_valid && stream_ready)     m_pairs  <= m_pairs + 1;
+            if (dma_done)                         m_done_seen <= 1'b1;
         end
     end
 
@@ -351,7 +439,7 @@ module tb_mac_dma_rob;
         start      <= 1'b0;
 
         timeout = 0;
-        while ((m_pairs < len || !dma_done) && timeout < 200000) begin
+        while ((m_pairs < len || !m_done_seen) && timeout < 200000) begin
             @(posedge clk);
             timeout = timeout + 1;
         end
@@ -368,13 +456,17 @@ module tb_mac_dma_rob;
         if (timeout >= 200000) begin
             $display("  FAIL: TIMEOUT pairs=%0d done=%0b", m_pairs, dma_done);
             fail_cnt = fail_cnt + 1;
-        end else if (data_err || last_err || dma_err || stream_stab_err || ar_stab_err) begin
-            $display("  FAIL: data_err=%0d last_err=%0d dma_err=%0b stream_stab=%0d ar_stab=%0d",
-                     data_err, last_err, dma_err, stream_stab_err, ar_stab_err);
+        end else if (data_err != 0 || last_err != 0 || dma_err ||
+                     stream_stab_err != 0 || ar_stab_err != 0 ||
+                     ar_seq_err != 0) begin
+            $display("  FAIL: data_err=%0d last_err=%0d dma_err=%0b stream_stab=%0d ar_stab=%0d ar_seq=%0d",
+                     data_err, last_err, dma_err, stream_stab_err, ar_stab_err, ar_seq_err);
             fail_cnt = fail_cnt + 1;
-        end else if (m_pairs != len || m_beats != 2*len || got_sum != exp_sum) begin
-            $display("  FAIL: pairs=%0d beats=%0d got_sum=%0d",
-                     m_pairs, m_beats, got_sum);
+        end else if (m_pairs != len || m_beats != 2*len || got_sum != exp_sum ||
+                     m_arh != 2*((len + BURST_LEN - 1) / BURST_LEN)) begin
+            $display("  FAIL: pairs=%0d beats=%0d AR=%0d exp_AR=%0d got_sum=%0d",
+                     m_pairs, m_beats, m_arh,
+                     2*((len + BURST_LEN - 1) / BURST_LEN), got_sum);
             fail_cnt = fail_cnt + 1;
         end else begin
             pass_cnt = pass_cnt + 1;
@@ -407,6 +499,23 @@ module tb_mac_dma_rob;
                          "steady len=256 L=100");
         run_dma_rob_test(64,  32'h0000_1800, 32'h0000_1C00, 16'd100, 1'b1, 0, 1'b0,
                          "random stream/AR backpressure");
+
+        // Directed burst-boundary and address-carry cases.  The engine-level
+        // OOO test separately runs these as consecutive commands without reset.
+        run_dma_rob_test(1,  32'h1234_00FC, 32'h5678_08FC, 16'd3, 1'b0, 0, 1'b0,
+                         "AR sequence len=1 nonzero bases");
+        run_dma_rob_test(15, 32'h1234_0120, 32'h5678_0920, 16'd20, 1'b0, 1, 1'b0,
+                         "AR sequence len=15");
+        run_dma_rob_test(16, 32'h1234_01C0, 32'h5678_09C0, 16'd20, 1'b1, 2, 1'b0,
+                         "AR sequence len=16 backpressure");
+        run_dma_rob_test(17, 32'h1234_1FC0, 32'h5678_0FC0, 16'd40, 1'b1, 0, 1'b0,
+                         "AR sequence len=17 carry");
+        run_dma_rob_test(31, 32'h1234_1E80, 32'h5678_0E80, 16'd40, 1'b0, 1, 1'b0,
+                         "AR sequence len=31");
+        run_dma_rob_test(32, 32'h1234_1E7C, 32'h5678_0E7C, 16'd40, 1'b1, 2, 1'b0,
+                         "AR sequence len=32 backpressure");
+        run_dma_rob_test(33, 32'h1234_1F7C, 32'h5678_0F7C, 16'd100, 1'b1, 0, 1'b0,
+                         "AR seq len=33 carry/bp");
 
         $display("==================================================");
         $display("  TOTAL: %0d PASS / %0d FAIL", pass_cnt, fail_cnt);

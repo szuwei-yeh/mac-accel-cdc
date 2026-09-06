@@ -20,7 +20,7 @@ syn/logs/
 syn/mapped/
 syn/reports/
 syn/work/
+syn/runs/
 
 # Development testbenches
 sim_0/
-

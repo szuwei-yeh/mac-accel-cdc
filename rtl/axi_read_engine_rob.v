@@ -113,7 +113,7 @@ module axi_read_engine_rob #(
     reg [7:0]            drain_idx;     // beat index within the head entry being drained
 
     reg [1:0]            state;
-    reg [AXI_ADDR_W-1:0] cmd_addr_r;
+    reg [AXI_ADDR_W-1:0] current_ar_addr_r;
     reg [LEN_WIDTH-1:0]  cmd_len_r;
     reg [LEN_WIDTH-1:0]  issue_elem;    // beats whose AR has been accepted
     reg [LEN_WIDTH-1:0]  retire_elem;   // beats retired to out (in order)
@@ -126,8 +126,13 @@ module axi_read_engine_rob #(
     wire [LEN_WIDTH-1:0] elems_left = cmd_len_r - issue_elem;
     wire [LEN_WIDTH-1:0] next_beats = (elems_left > MAX_BURST_LEN) ? MAX_BURST_LEN[LEN_WIDTH-1:0]
                                                                    : elems_left;
-    wire [AXI_ADDR_W-1:0] issue_byte_off =
-        {{(AXI_ADDR_W-LEN_WIDTH){1'b0}}, issue_elem} << 2;
+    // Address stride of the AR request currently being presented.  Form the
+    // beat count at nine bits so ARLEN=8'hff represents 256 without wrapping.
+    wire [8:0] ar_burst_beats = {1'b0, M_AXI_ARLEN} + 9'd1;
+    wire [AXI_ADDR_W-1:0] ar_burst_beats_addr =
+        {{(AXI_ADDR_W-9){1'b0}}, ar_burst_beats};
+    wire [AXI_ADDR_W-1:0] ar_burst_bytes =
+        ar_burst_beats_addr << M_AXI_ARSIZE;
 
     wire more_bursts = (issue_elem < cmd_len_r);
     wire have_credit = (occupancy < MAX_OUTSTANDING);
@@ -138,7 +143,7 @@ module axi_read_engine_rob #(
     // Requires AXI_ID_WIDTH > ID_W (true here: AXI_ID_WIDTH=4, MAX_OUTSTANDING<=8).
     //----------------------------------------------------
     assign M_AXI_ARID    = {{(AXI_ID_WIDTH-ID_W){1'b0}}, alloc_ptr};
-    assign M_AXI_ARADDR  = cmd_addr_r + issue_byte_off;
+    assign M_AXI_ARADDR  = current_ar_addr_r;
     assign M_AXI_ARLEN   = next_beats[7:0] - 8'd1;
     assign M_AXI_ARSIZE  = 3'b010;                 // 4 bytes/beat
     assign M_AXI_ARBURST = 2'b01;                  // INCR
@@ -179,7 +184,7 @@ module axi_read_engine_rob #(
     always @(posedge clk) begin
         if (rst) begin
             state       <= S_IDLE;
-            cmd_addr_r  <= {AXI_ADDR_W{1'b0}};
+            current_ar_addr_r <= {AXI_ADDR_W{1'b0}};
             cmd_len_r   <= {LEN_WIDTH{1'b0}};
             issue_elem  <= {LEN_WIDTH{1'b0}};
             retire_elem <= {LEN_WIDTH{1'b0}};
@@ -199,7 +204,7 @@ module axi_read_engine_rob #(
             case (state)
                 S_IDLE: begin
                     if (cmd_valid) begin
-                        cmd_addr_r  <= cmd_addr;
+                        current_ar_addr_r <= cmd_addr;
                         cmd_len_r   <= cmd_len;
                         issue_elem  <= {LEN_WIDTH{1'b0}};
                         retire_elem <= {LEN_WIDTH{1'b0}};
@@ -225,6 +230,7 @@ module axi_read_engine_rob #(
                         e_complete[alloc_ptr] <= 1'b0;
                         e_recv[alloc_ptr]     <= 8'd0;
                         e_exp[alloc_ptr]      <= next_beats[7:0];
+                        current_ar_addr_r     <= current_ar_addr_r + ar_burst_bytes;
                         issue_elem            <= issue_elem + next_beats;
                         alloc_ptr             <= alloc_ptr + 1'b1;   // wraps mod MAX_OUTSTANDING
                     end
@@ -294,6 +300,7 @@ module axi_read_engine_rob #(
     // cmd_len is bounded so retire/issue counters stay small; F_MAXLEN exceeds
     // one full ROB fill so entry/tag REUSE (alloc_ptr wrap) is exercised.
     localparam F_MAXLEN = MAX_OUTSTANDING*MAX_BURST_LEN + MAX_BURST_LEN;
+    localparam [LEN_WIDTH:0] F_MAX_BURST_EXT = MAX_BURST_LEN;
 
     reg f_past_valid = 1'b0;
     always @(posedge clk) f_past_valid <= 1'b1;
@@ -303,6 +310,58 @@ module axi_read_engine_rob #(
     always @(*) begin
         assume (cmd_len >= 1);
         assume (cmd_len <= F_MAXLEN);
+    end
+
+    // ---- independent AR request-sequence reference model ----
+    // This model observes only the external command and AXI handshakes.  It does
+    // not use issue_elem, next_beats, or current_ar_addr_r.
+    wire f_cmd_acc = cmd_valid && cmd_ready;
+    wire [8:0] f_ar_burst_beats_9 = {1'b0, M_AXI_ARLEN} + 9'd1;
+    wire [LEN_WIDTH:0] f_ar_burst_beats =
+        {{(LEN_WIDTH-8){1'b0}}, f_ar_burst_beats_9};
+    wire [AXI_ADDR_W-1:0] f_ar_burst_beats_addr =
+        {{(AXI_ADDR_W-LEN_WIDTH-1){1'b0}}, f_ar_burst_beats};
+    wire [AXI_ADDR_W-1:0] f_ar_byte_stride =
+        f_ar_burst_beats_addr << M_AXI_ARSIZE;
+
+    reg                    f_ar_active;
+    reg                    f_ar_all_issued;
+    reg [AXI_ADDR_W-1:0]   f_expected_araddr;
+    reg [LEN_WIDTH:0]      f_command_beats;
+    reg [LEN_WIDTH:0]      f_ar_beats_issued;
+
+    wire [LEN_WIDTH:0] f_ar_remaining = f_command_beats - f_ar_beats_issued;
+    wire [LEN_WIDTH:0] f_expected_burst =
+        (f_ar_remaining > F_MAX_BURST_EXT) ? F_MAX_BURST_EXT : f_ar_remaining;
+    wire [LEN_WIDTH:0] f_ar_issued_after = f_ar_beats_issued + f_ar_burst_beats;
+
+    always @(posedge clk) begin
+        if (rst) begin
+            f_ar_active       <= 1'b0;
+            f_ar_all_issued   <= 1'b0;
+            f_expected_araddr <= {AXI_ADDR_W{1'b0}};
+            f_command_beats   <= {(LEN_WIDTH+1){1'b0}};
+            f_ar_beats_issued <= {(LEN_WIDTH+1){1'b0}};
+        end else begin
+            // engine_done may overlap the idle cycle that accepts the next
+            // command.  Clear the old transaction first so f_cmd_acc below
+            // takes priority for a back-to-back command.
+            if (engine_done)
+                f_ar_active <= 1'b0;
+            if (f_cmd_acc) begin
+                f_ar_active       <= 1'b1;
+                f_ar_all_issued   <= 1'b0;
+                f_expected_araddr <= cmd_addr;
+                f_command_beats   <= {1'b0, cmd_len};
+                f_ar_beats_issued <= {(LEN_WIDTH+1){1'b0}};
+            end
+            if (ar_acc) begin
+                f_expected_araddr <= f_expected_araddr + f_ar_byte_stride;
+                f_ar_beats_issued <= f_ar_issued_after;
+                if (f_ar_issued_after == f_command_beats)
+                    f_ar_all_issued <= 1'b1;
+            end
+        end
     end
 
     // ---- ghost: element index of each entry's first beat (in-order check) ----
@@ -330,8 +389,24 @@ module axi_read_engine_rob #(
     always @(posedge clk) if (f_past_valid && !rst) begin
         a_occ_bound   : assert (occupancy <= MAX_OUTSTANDING);   // no overflow
         a_state_legal : assert (state <= S_DONE);
+        a_ar_count_bound : assert (f_ar_beats_issued <= f_command_beats);
+        if (M_AXI_ARVALID) begin
+            a_ar_has_command    : assert (f_ar_active);
+            a_ar_not_past_end   : assert (!f_ar_all_issued);
+            a_ar_expected_addr  : assert (M_AXI_ARADDR == f_expected_araddr);
+            a_ar_size           : assert (M_AXI_ARSIZE == 3'b010);
+            a_ar_burst_type     : assert (M_AXI_ARBURST == 2'b01);
+            a_ar_burst_nonzero  : assert (f_ar_burst_beats >= 1);
+            a_ar_burst_bound    : assert (f_ar_burst_beats <= F_MAX_BURST_EXT);
+            a_ar_no_overissue   : assert (f_ar_issued_after <= f_command_beats);
+            a_ar_exact_geometry : assert (f_ar_burst_beats == f_expected_burst);
+            if (f_ar_burst_beats == f_ar_remaining)
+                a_ar_final_conservation : assert (f_ar_issued_after == f_command_beats);
+        end
         if (ar_acc)
             a_tag_no_reuse : assert (!e_valid[alloc_ptr]);       // ID not reused while valid
+        if (f_ar_all_issued)
+            a_no_ar_after_final : assert (!ar_acc);
         if (out_valid) begin
             a_retire_complete : assert (e_valid[head_ptr] && e_complete[head_ptr]);
             a_drain_bound     : assert (drain_idx < e_exp[head_ptr]);
@@ -340,6 +415,10 @@ module axi_read_engine_rob #(
         end
         if (engine_done)
             a_done_timing : assert (retire_elem == cmd_len_r);   // done after all retired
+        if (engine_done) begin
+            a_done_all_ar_issued : assert (f_ar_all_issued);
+            a_done_ar_count      : assert (f_ar_beats_issued == f_command_beats);
+        end
     end
 
     // ---- DUT assertions needing the previous cycle ($past) ----
@@ -356,6 +435,11 @@ module axi_read_engine_rob #(
             a_ar_addr_stable  : assert (M_AXI_ARADDR == $past(M_AXI_ARADDR));
             a_ar_len_stable   : assert (M_AXI_ARLEN  == $past(M_AXI_ARLEN));
             a_ar_id_stable    : assert (M_AXI_ARID   == $past(M_AXI_ARID));
+        end
+        if ($past(ar_acc) &&
+            ($past(f_ar_issued_after) == $past(f_command_beats))) begin
+            a_final_count_committed : assert (f_ar_beats_issued == f_command_beats);
+            a_final_flag_committed  : assert (f_ar_all_issued);
         end
         // engine_err: sticky *within a command*; cleared only when a new command
         // is accepted (cmd_ready && cmd_valid in S_IDLE).  Also set on a bad RRESP.
@@ -409,6 +493,10 @@ module axi_read_engine_rob #(
         c_ooo_fill : cover (g_ooo_seen);                          // out-of-order fill
         c_backpres : cover (out_valid && !out_ready);             // output back-pressure
         c_done_ooo : cover (engine_done && g_ooo_seen);           // in-order done after OOO fill
+        c_ar_backpres : cover (M_AXI_ARVALID && !M_AXI_ARREADY);  // AR payload held
+        c_final_ar    : cover (ar_acc &&
+                               (f_ar_issued_after == f_command_beats));
+        c_next_cmd_on_done : cover (engine_done && f_cmd_acc);    // consecutive commands
     end
 `endif
 

@@ -10,8 +10,9 @@
 // which issues multiple unique-ID AXI reads and restores in-order phase output
 // through a reorder buffer.
 //
-// This module is intentionally standalone and is not wired into mac_accel_dma_top.
-// The verified V2 path remains rtl/mac_dma.v.
+// The original V2 mac_accel_dma_top remains wired to rtl/mac_dma.v.  The additive
+// V3 full-top variant mac_accel_dma_rob_top wires this wrapper into the same
+// CSR/FIFO/MAC shell for full-path simulation.
 // -----------------------------------------------------------------------------
 
 module mac_dma_rob #(

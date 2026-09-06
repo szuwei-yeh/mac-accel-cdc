@@ -1,4 +1,5 @@
-# Formal verification of the ROB read engine (Step 3).
+# Formal verification of the ROB read engine, including an independent
+# command/AR-handshake reference model for request addresses and burst geometry.
 #   bmc   : bounded model check (fast, short counterexamples, all asserts)
 #   prove : k-induction -> unbounded proof of the safety asserts
 #   cover : reachability of the interesting traces (>=2 ARs, OOO fill, ...)

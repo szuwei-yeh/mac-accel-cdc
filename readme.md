@@ -4,7 +4,7 @@ A parameterized, pipelined **dot-product MAC accelerator** implemented in Verilo
 
 - **V1 — `mac_accel_axi`**: AXI4-Lite slave with MMIO data path (CPU writes every element). Validated end-to-end on a Digilent Nexys A7-100T FPGA with MicroBlaze.
 - **V2 — `mac_accel_dma_top`**: AXI4-Lite slave (control) **+ AXI4 master DMA** (data). CPU writes only `SRC_A_ADDR / SRC_B_ADDR / LENGTH` and kicks `CTRL`; the accelerator burst-reads its operands directly from system memory. Verified in simulation against a behavioural AXI memory model.
-- **V3 experimental — `axi_read_engine_rob` + `mac_dma_rob`**: unique-ARID AXI4 read engine with up to 4 outstanding bursts by default and a reorder buffer (ROB) that restores in-order phase output from out-of-order/interleaved R responses. Integrated at DMA level as an experimental path; the verified V2 top remains untouched.
+- **V3 experimental — `mac_accel_dma_rob_top` + `mac_dma_rob` + `axi_read_engine_rob`**: unique-ARID AXI4 read engine with up to 4 outstanding bursts by default and a reorder buffer (ROB) that restores in-order phase output from out-of-order/interleaved R responses. The original V2 top remains untouched; V3 is provided as an additive full-top variant.
 
 ---
 
@@ -18,7 +18,7 @@ A parameterized, pipelined **dot-product MAC accelerator** implemented in Verilo
 - **True AXI4-Lite slave** — full AWVALID/WVALID/BVALID/ARVALID/RVALID handshake, independent AW and W channel latching
 - **FPGA validated (V1)** — end-to-end verified on Nexys A7-100T at 100 MHz with MicroBlaze MMIO
 - **AXI4 master DMA (V2)** — read-only burst master (INCR, up to 16 beats/burst) with multi-burst transactions, sticky `RRESP` error capture, and FIFO-paced back-pressure
-- **Outstanding read engine (V3 experimental)** — credit-paced issue, unique `ARID=alloc_ptr`, circular ROB indexed by `RID`, in-order retirement, out-of-order response testbench, and integrated DMA-level utilization sweep
+- **Outstanding read engine (V3 experimental)** — credit-paced issue, unique `ARID=alloc_ptr`, circular ROB indexed by `RID`, in-order retirement, out-of-order response testbench, integrated DMA-level utilization sweep, and additive full-top regression
 - **Formal verification** — async-FIFO CDC properties, DMA no-drop / AR-stability properties, and ROB safety properties proven on a bounded configuration with SymbiYosys / IC3-PDR
 
 ---
@@ -81,11 +81,14 @@ In V2 the AXI4-Lite slave only carries a small control surface; the DMA engine f
 
 ### V3 — Experimental outstanding + ROB read path
 ```
-mac_dma_rob                  (experimental DMA wrapper; not wired into V2 top)
-└── axi_read_engine_rob      (unique-ID AXI read issue + ROB + in-order output)
+mac_accel_dma_rob_top        (AXI4-Lite slave + ROB AXI4 master + CDC + register file)
+├── mac_dma_rob              (experimental DMA wrapper around ROB engine)
+│   └── axi_read_engine_rob  (unique-ID AXI read issue + ROB + in-order output)
+├── mac_fifo_async           (dual-clock async FIFO, Gray-code pointers)
+└── mac_pe                   (2-stage pipelined signed MAC)
 ```
 
-The V3 path preserves the V2 A-then-B operand schedule: one active read phase at a time. The same `axi_read_engine_rob` first fills `buf_a` with in-order A beats, then reads B with outstanding transactions and pairs the in-order B stream with buffered A before emitting `{last, a, b}`.
+The V3 path preserves the V2 A-then-B operand schedule: one active read phase at a time. The same `axi_read_engine_rob` first fills `buf_a` with in-order A beats, then reads B with outstanding transactions and pairs the in-order B stream with buffered A before emitting `{last, a, b}` into the same async FIFO/MAC shell as V2.
 
 The ROB is a circular buffer with `MAX_OUTSTANDING` entries. Each accepted AR uses `ARID = alloc_ptr`; R beats fill entries by `RID`; only the `head_ptr` entry retires, so the output stream is strictly in allocation order even when the AXI slave returns interleaved or out-of-order responses.
 
@@ -147,6 +150,12 @@ Experimental DMA wrapper integration:
 
 ```bash
 iverilog -g2012 -o sim_dma_rob sim/tb_mac_dma_rob.v rtl/mac_dma_rob.v rtl/axi_read_engine_rob.v sim/axi_read_mem_model_ooo.v && vvp sim_dma_rob
+```
+
+Full-top ROB accelerator regression:
+
+```bash
+iverilog -g2012 -o sim_dma_rob_top sim/tb_mac_accel_dma_rob_top.v rtl/mac_accel_dma_rob_top.v rtl/mac_dma_rob.v rtl/axi_read_engine_rob.v rtl/mac_pe.v rtl/mac_fifo_async.v sim/axi_read_mem_model_ooo.v && vvp sim_dma_rob_top
 ```
 
 Utilization sweep:
@@ -219,6 +228,19 @@ Expected output (V3 DMA ROB, default `MAX_OUTSTANDING=4`):
 ==================================================
 ```
 
+Expected output (V3 full top, default `MAX_OUTSTANDING=4`):
+
+```
+==================================================
+  mac_accel_dma_rob_top Testbench (V3 full top)
+  bus_clk=100MHz mac_clk=133MHz MAX_OUT=4
+==================================================
+...
+==================================================
+  TOTAL: 7 PASS / 0 FAIL
+==================================================
+```
+
 ### V3 measured utilization
 
 Baseline V2 at `N=256`, `L=100` cycles:
@@ -238,7 +260,8 @@ The conservative headline result is `MAX_OUTSTANDING=4`: integrated MAC feed uti
 
 The V2 and V3 RTL were also checked on the UCSB ECE Synopsys flow. VCS
 `V-2023.12-SP2` passes the original V2 DMA regression (`7 PASS / 0 FAIL`) and
-the experimental ROB DMA integration regression (`4 PASS / 0 FAIL`).
+the experimental ROB DMA integration regression (`4 PASS / 0 FAIL`). The V3
+full-top regression passes locally with Icarus Verilog (`7 PASS / 0 FAIL`).
 
 Design Compiler `R-2020.09-SP4` was run with the OSU 0.18 um standard-cell
 library (`osu018_stdcells.db`) at a 10 ns clock. Both synthesis targets meet
@@ -250,9 +273,14 @@ violations:
 | `axi_read_engine_rob` | 5.45 ns | +3.55 ns | 9,455 | 400,254 |
 | `mac_dma_rob` | 5.45 ns | +3.55 ns | 22,396 | 968,782 |
 
-The longest reported path is the AXI AR address-generation path from
-`issue_elem` through the address adder to `M_AXI_ARADDR`, which is expected for
-this design.
+In these pre-optimization runs, the longest reported path is the AXI AR
+address-generation path from `issue_elem` through the address adder to
+`M_AXI_ARADDR`. A later canonical depth-8 pass replaced that output expression
+with a handshake-driven incrementing address register. Under the same 10 ns
+DC flow, exact worst slack improved from +3.5027 ns to +4.7923 ns, logic levels
+fell from 31 to 11, and cell area changed from 1,160,928 to 1,160,580. ARADDR no
+longer appears in the global top-10 timing paths; see `syn/README.md` for the
+archived run and detailed comparison.
 
 ---
 
@@ -271,7 +299,7 @@ sby -f formal/axi_read_engine_rob.sby
 |-------|--------|------------------|--------|
 | `mac_dma_bp` | `mac_dma.v` | AXI-Stream VALID-stability / no-drop under adversarial back-pressure; AR-channel handshake stability | bmc + prove PASS |
 | `mac_fifo_gray` | `mac_fifo_async.v` | Gray pointers change by ≤1 bit per clock (the CDC safety property); no overflow; no underflow | bmc + prove PASS |
-| `axi_read_engine_rob` | `axi_read_engine_rob.v` | ROB no-overflow, no tag reuse while valid, no retire before complete, in-order retirement, output/AR stability, sticky error capture | bmc + IC3/PDR prove PASS; cover PASS |
+| `axi_read_engine_rob` | `axi_read_engine_rob.v` | Independent AR address sequence/burst/count model; ROB no-overflow, no tag reuse while valid, no retire before complete, in-order retirement, output/AR stability, sticky error capture | bmc + IC3/PDR prove PASS; cover PASS |
 
 `stream_ready` / `M_AXI_ARREADY` and the two clocks are free inputs the solver drives
 adversarially in the existing proofs, so every back-pressure pattern and clock relationship is covered. The ROB proof models a legal AXI read slave with assumptions on `RID`, per-ID beat order, and `RLAST`, while leaving readiness/error signals free. See [`formal/STUDY_GUIDE.md`](formal/STUDY_GUIDE.md) for details.
@@ -300,6 +328,7 @@ adversarially in the existing proofs, so every back-pressure pattern and clock r
 │   ├── mac_accel_axi.v       # V1: AXI4-Lite slave wrapper (MMIO path)
 │   ├── mac_accel.v           # V1: top-level CDC + control logic
 │   ├── mac_accel_dma_top.v   # V2: AXI4-Lite slave + AXI4 master DMA top
+│   ├── mac_accel_dma_rob_top.v # V3: AXI4-Lite slave + ROB AXI4 master DMA top
 │   ├── mac_dma.v             # V2: AXI4 master DMA engine (INCR bursts)
 │   ├── axi_read_engine_rob.v # V3 experimental: unique-ID read issue + ROB
 │   ├── mac_dma_rob.v         # V3 experimental: A/B DMA wrapper around ROB engine
@@ -313,6 +342,7 @@ adversarially in the existing proofs, so every back-pressure pattern and clock r
 ├── sim/
 │   ├── tb_mac_accel_cdc_v3.v # V1: true dual-clock CDC testbench (8 cases)
 │   ├── tb_mac_accel_dma.v    # V2: DMA + AXI memory model testbench (7 cases)
+│   ├── tb_mac_accel_dma_rob_top.v # V3: full top + OOO AXI memory regression
 │   ├── tb_axi_read_engine_rob_ooo.v # V3: standalone ROB OOO response test
 │   ├── tb_mac_dma_rob.v      # V3: experimental DMA wrapper integration test
 │   ├── tb_mac_dma_rob_sweep.v # V3: utilization sweep harness
