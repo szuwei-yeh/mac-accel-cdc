@@ -12,6 +12,9 @@ syn/
 ├── constraints_rob.sdc      Shared clock and I/O constraints
 ├── dc_baseline.tcl          Canonical parameterized DC flow
 ├── run_baseline_dc.sh       Canonical launcher and manifest generator
+├── dc_power_targeted.tcl    Symmetric baseline/gated power synthesis flow
+├── run_power_activity.sh    Deterministic VCS-to-SAIF activity flow
+├── run_power_targeted.sh    Immutable targeted-power launcher
 ├── dc_rob.tcl               Original compatibility flow
 ├── run_dc.sh                Original compatibility launcher
 └── runs/                    Generated output; ignored by Git
@@ -134,6 +137,125 @@ mux and wrapper capture logic, with 4.6982 ns arrival and +5.1322 ns slack. The
 isolated `retire_elem` Q-to-D arithmetic path is 2.0926 ns with +7.7290 ns
 slack. With more than half a cycle of functional margin, no additional
 microarchitectural timing optimization is currently justified.
+
+## Clock-period sweep
+
+The optimized depth-8 RTL was independently recompiled at 10, 8, 6, and 5 ns.
+Only the clock period changed; every run retained an input snapshot, manifest,
+hashes, DC log, mapped outputs, and detailed timing/area reports.
+
+| Period | Frequency | Setup | WNS | Critical length | Main path class |
+|---:|---:|---|---:|---:|---|
+| 10 ns | 100 MHz | PASS | +4.7923 ns | 4.05 ns | reset/control |
+| 8 ns | 125 MHz | PASS | +1.3094 ns | 6.52 ns | address-state update mapping |
+| 6 ns | 166.7 MHz | PASS | +1.1860 ns | 4.64 ns | ROB read/data selection |
+| 5 ns | 200 MHz | PASS | +0.0389 ns | 4.80 ns | ROB read/data selection |
+
+At 5 ns the global and functional worst path is:
+
+```text
+head_ptr
+  -> flat ROB read mux
+  -> engine_out_data
+  -> wrapper buf_a/stream_b capture
+```
+
+The 200 MHz point closes in the current pre-layout DC/library/ideal-clock
+model, but 38.9 ps is not useful physical-design margin. It is not a
+post-layout frequency claim. The canonical target remains 100 MHz.
+
+## Targeted `buf_a` clock-gating experiment
+
+The power flow compares ordinary `compile_ultra` with a targeted
+`compile_ultra -gate_clock` run. It does not modify functional RTL. Before
+compile, every register outside `buf_a_reg[*]` is explicitly excluded with
+`set_clock_gating_objects`; the 4096 `buf_a` bits are the only included scope.
+
+The exact style is:
+
+```tcl
+set_clock_gating_style \
+    -sequential_cell latch:osu018_stdcells/LATCH \
+    -positive_edge_logic {and:osu018_stdcells/AND2X1} \
+    -minimum_bitwidth 16 \
+    -max_fanout 16 \
+    -no_sharing \
+    -control_point none
+```
+
+This produced 256 independent 16-bit banks and gated exactly 4096 registers.
+No ROB, control, CDC, or other buffer register was gated. The correct wording
+is **synthesis-inserted latch-based clock gating using discrete LATCH + AND
+cells**. `osu018_stdcells.db` has no dedicated integrated clock-gating cell.
+
+### Deterministic activity source
+
+`run_power_activity.sh` builds a dedicated `MAX_OUTSTANDING=8`, 100 MHz VCS
+workload with:
+
+- fixed 40-cycle memory latency;
+- fixed OOO-response selection state;
+- deterministic AR and output backpressure;
+- one measured length-64 active job;
+- a separate 512-cycle idle window;
+- reset/idle wake-up and consecutive length 1/16/33 follow-up jobs.
+
+VCS VPD memory tracing and `vpd2vcd +includemda` preserve all unpacked `buf_a`
+and ROB memory words. `vcd2saif` then creates independent active and idle SAIF
+files. Baseline and gated synthesis consume the same files and reject missing
+activity inputs. The accepted run achieved 100% annotation of ports, all 4232
+RTL-invariant sequential objects, and all 4096 `buf_a` bits.
+
+### Reproduction
+
+Run from a clean checkout in the UCSB ECE Synopsys environment:
+
+```bash
+RUN_ID=mac_dma_rob_mo8_power_activity_final \
+bash syn/run_power_activity.sh
+
+MODE=baseline \
+ACTIVITY_RUN=mac_dma_rob_mo8_power_activity_final \
+RUN_ID=mac_dma_rob_mo8_power_baseline_final \
+bash syn/run_power_targeted.sh
+
+MODE=gated \
+ACTIVITY_RUN=mac_dma_rob_mo8_power_activity_final \
+RUN_ID=mac_dma_rob_mo8_power_gated_final \
+bash syn/run_power_targeted.sh
+```
+
+The launchers use repository-relative inputs, do not read private notes, and
+do not require a temporary working path. They refuse to reuse a run directory.
+The canonical OSU database path and tool executables must be available in the
+UCSB environment.
+
+### Result
+
+| SAIF-driven pre-layout metric | Baseline | Gated | Change |
+|---|---:|---:|---:|
+| Active dynamic power | 76.1114 mW | 35.3225 mW | -53.59% |
+| Active total power | 76.1134 mW | 35.3242 mW | -53.59% |
+| Idle dynamic power | 71.6315 mW | 30.6423 mW | -57.22% |
+| Energy per measured job | 221.870 nJ | 102.970 nJ | -53.59% |
+| Setup WNS at 10 ns | +4.7923 ns | +2.4278 ns | PASS |
+
+The gated worst path is a half-cycle enable path from ROB/head output-valid
+control through the A-write word decode to a gate latch D pin. Its arrival is
+2.5722 ns against a 5 ns requirement, leaving +2.4278 ns slack. Separate
+enable-path hold timing also passes.
+
+The library assigns zero area to its generic `LATCH`, so the reported mapped
+area delta has no credible physical interpretation and is not used as a result.
+Clock-network power also cannot be compared directly because the baseline
+source clock is ideal and is classified differently from the inserted discrete
+gate network.
+
+This is **SAIF-driven pre-layout power analysis**. It is not production ICG,
+CTS, post-layout, PrimeTime PX, physical-implementation, or signoff power.
+Mapped GLS remains inconclusive because the OSU cell model leaves some
+synchronous-reset state unknown; the independently compiled baseline mapped
+design reproduces the same behavior. GLS and LEC are not claimed as passing.
 
 ## Original compatibility flow
 

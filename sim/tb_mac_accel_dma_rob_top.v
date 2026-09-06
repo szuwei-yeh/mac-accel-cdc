@@ -1,5 +1,9 @@
 `timescale 1ns/1ps
 
+`ifndef V3_MAX_OUT
+`define V3_MAX_OUT 4
+`endif
+
 // tb_mac_accel_dma_rob_top.v
 // Full-top V3 regression:
 //   AXI4-Lite CSR -> mac_dma_rob -> async FIFO CDC -> mac_pe -> result CSR.
@@ -8,6 +12,7 @@
 // out-of-order/interleaved R-channel beats, so this verifies that the ROB DMA
 // can replace the V2 single-outstanding DMA inside the complete accelerator
 // shell.
+// MAX_OUTSTANDING is selected with -DV3_MAX_OUT=<n> (default 4).
 
 module tb_mac_accel_dma_rob_top;
 
@@ -17,7 +22,7 @@ module tb_mac_accel_dma_rob_top;
     localparam AXI_ID_WIDTH    = 4;
     localparam MAX_LEN         = 256;
     localparam BURST_LEN       = 16;
-    localparam MAX_OUT         = 4;
+    localparam MAX_OUT         = `V3_MAX_OUT;
     localparam MEM_WORDS       = 2048;
 
     localparam ADDR_CTRL    = 8'h00;
