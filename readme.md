@@ -5,7 +5,7 @@ from a CPU-fed AXI4-Lite peripheral into a dual-clock accelerator whose DMA can
 issue multiple AXI read bursts, accept out-of-order/interleaved responses, and
 retire data in order through a RID-indexed reorder buffer.
 
-The canonical synthesis and power-analysis target is:
+The canonical block synthesis and power-analysis target remains:
 
 ```text
 TOP               = mac_dma_rob
@@ -43,6 +43,29 @@ target remains 100 MHz.
 The power result is **SAIF-driven pre-layout power analysis**. Clock gating is
 **synthesis-inserted latch-based clock gating using discrete LATCH + AND
 cells**. The OSU library has no dedicated production ICG cell.
+
+## Whole-top front-end validation
+
+The separate **`mac_accel_dma_rob_top`, MAX_OUTSTANDING=8** flow covers the
+AXI-Lite interface, DMA/ROB, asynchronous FIFO, synchronizers and MAC together.
+It preserves the block timing/power benchmark above.
+
+- Supplemental CDC regression: **36/36 jobs per simulator** with Icarus and VCS,
+  six clock/phase/reset-release scenarios, six sequential jobs without inter-job
+  reset, and observed eight outstanding bursts on long jobs.
+- DC mapping followed by standalone PrimeTime on the same mapped netlist and
+  resolved SDC; mapped CDC connectivity and all 13 two-flop chains checked.
+- Bus 10 ns / MAC 7.5 ns, asynchronous ideal clocks; functional I/O min 0/max 1 ns.
+
+| PrimeTime domain | Worst setup slack | Worst hold slack | Setup/hold violations |
+|---|---:|---:|---:|
+| Bus | +5.114273 ns | +0.049906 ns | 0 |
+| MAC | +0.020727 ns | +0.214744 ns | 0 |
+
+These are **single-corner, pre-layout portfolio results**. MAC setup margin is
+only 20.727 ps; reset timing exclusions and untested coverage remain. No physical
+closure or CDC/RDC signoff is claimed. See [analysis and DC/PT comparison](syn/whole_top/RESULTS.md),
+[constraint rationale](syn/whole_top/README.md), and [CDC regression](sim/CDC_REGRESSION.md).
 
 ## Engineering evolution
 
@@ -251,6 +274,23 @@ iverilog -g2012 -DV3_MAX_OUT=8 -o sim_dma_rob_top \
 vvp sim_dma_rob_top
 ```
 
+### Supplemental CDC matrix
+
+```bash
+python3 sim/run_cdc_regression.py --simulator iverilog
+# On the configured UCSB Synopsys environment:
+python3 sim/run_cdc_regression.py --simulator vcs
+```
+
+Each invocation snapshots inputs and stores reports in a new `/tmp` directory.
+See [the scenario matrix and checks](sim/CDC_REGRESSION.md).
+
+### Whole-top DC and PrimeTime
+
+Follow [DC mapping/readback and bundle creation](syn/whole_top/DC_FLOW.md), then
+[standalone PrimeTime](syn/whole_top/PT_FLOW.md). The launchers require the
+specified licensed tools and OSU library; these are not included in this repo.
+
 ### Formal
 
 With OSS CAD Suite on `PATH`:
@@ -320,7 +360,8 @@ INCR bursts of up to 16 beats and chains bursts for longer vectors.
   PrimeTime PX, or signoff power.
 - Mapped GLS is inconclusive because of OSU cell-model unknown-state behavior;
   the baseline netlist reproduces it.
-- Formality/LEC and PrimeTime signoff were not available.
+- Formality/LEC is not established. Standalone PrimeTime analysis is available
+  for the whole top; multi-corner and physical signoff are not established.
 - The RTL top remains parameterized with a default outstanding depth of 4; the
   final ROB, DMA, and V3 full-top regressions explicitly select depth 8.
 
@@ -345,7 +386,8 @@ INCR bursts of up to 16 beats and chains bursts for longer vectors.
 rtl/       V1/V2/V3 accelerator, DMA, ROB, FIFO, and MAC RTL
 sim/       Behavioral memory models, functional regressions, power workload
 formal/    SymbiYosys property sets and study guide
-syn/       Canonical timing and targeted power flows
+syn/       Canonical block timing and targeted power flows
+syn/whole_top/  Separate dual-clock whole-top DC and PrimeTime flow
 ```
 
 See [`syn/README.md`](syn/README.md) for synthesis methodology and report

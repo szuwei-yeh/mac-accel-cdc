@@ -12,6 +12,27 @@ command.log
 
 # VCD waveforms
 *.vcd
+*.vpd
+*.fsdb
+*.saif
+
+# Private experiment records and licensed technology assets
+notes_private/
+*.db
+*.lib
+*.ddc
+*.ndm
+*.tluplus
+*.lef
+*.tf
+
+# Local Python and simulator caches
+__pycache__/
+*.pyc
+.pytest_cache/
+DVEfiles/
+verdiLog/
+novas.*
 
 # Synopsys DC generated outputs
 alib-*/

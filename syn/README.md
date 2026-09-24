@@ -4,6 +4,11 @@ This directory contains the synthesis scripts for the ROB/outstanding-read
 subsystem. The canonical flow creates one self-contained, immutable directory
 per run so reports from different parameters cannot overwrite each other.
 
+For the separate dual-clock accelerator top, see
+[whole-top DC / PrimeTime](whole_top/README.md) and its
+[results and coverage limits](whole_top/RESULTS.md). The block benchmark and
+power experiments documented below retain their original configuration.
+
 ## Directory layout
 
 ```text
