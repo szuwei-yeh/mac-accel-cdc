@@ -19,9 +19,9 @@
 //   * INCR bursts, 4-byte beats.  ARSIZE/ARBURST are ignored (assumed 4B/INCR).
 //   * RRESP always OKAY.
 //
-// Step 2 will extend a sibling model to accept multiple outstanding ARs with
-// unique IDs and return responses out of order; this single-outstanding model
-// is left intact as the baseline stimulus.
+// The sibling axi_read_mem_model_ooo.v accepts multiple unique-ID requests and
+// returns OOO/interleaved responses. This model remains the single-outstanding
+// baseline stimulus.
 //
 // Latency convention (registered model):
 //   ar_latency = L is sampled at the AR handshake.  The first R beat is asserted

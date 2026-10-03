@@ -2,7 +2,8 @@
 
 // mac_dma_rob.v
 // -----------------------------------------------------------------------------
-// Experimental V3 DMA front-end for the ROB/outstanding-transaction path.
+// V3 multi-outstanding AXI read DMA front-end with in-order ROB retirement.
+// Block timing/power target; the full accelerator is mac_accel_dma_rob_top.
 //
 // This wrapper preserves the existing V2 DMA contract: read vector A, then read
 // vector B, and emit paired {last, a, b} samples to the async FIFO write side.
@@ -22,7 +23,7 @@ module mac_dma_rob #(
     parameter AXI_ID_WIDTH    = 4,
     parameter MAX_LEN         = 256,
     parameter BURST_LEN       = 16,
-    parameter MAX_OUTSTANDING = 4
+    parameter MAX_OUTSTANDING = 4  // RTL default; canonical benchmark selects 8
 )(
     input  wire                       clk,
     input  wire                       rst,

@@ -14,11 +14,10 @@
 // outstanding-credit issue logic is meant to exploit.
 //
 // Responses are returned strictly in allocation order (a circular FIFO of
-// outstanding requests), all echoing the request's ARID.  This matches the
-// Step-1 engine, which uses a single shared ARID, so in-order return is AXI-legal
-// and needs no reorder buffer.  A sibling model that returns responses OUT OF
-// ORDER (for the unique-ID ROB) is a Step-2 deliverable; this model is left as
-// the in-order baseline stimulus.
+// outstanding requests), all echoing the request's ARID. This model can serve
+// shared or unique request IDs, but always returns complete bursts in allocation
+// order. It remains the in-order baseline stimulus for the current ROB engine.
+// Use axi_read_mem_model_ooo.v to exercise OOO/interleaved responses.
 //
 // Latency convention matches axi_read_mem_model.v: first beat of a request is
 // presented max(L,1) cycles after that request's AR handshake; subsequent beats

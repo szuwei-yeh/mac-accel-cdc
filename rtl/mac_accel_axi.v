@@ -1,7 +1,9 @@
 `timescale 1ns/1ps
 
 // mac_accel_axi.v
-// AXI4-Lite slave wrapper for mac_accel
+// V1 CPU-fed accelerator: AXI4-Lite slave wrapper for mac_accel.
+// The CPU writes A/B operands through registers; no AXI read DMA or ROB.
+// See rtl/README.md for the V2 single-outstanding and V3 ROB DMA variants.
 //
 // Address map (word-aligned, 4-byte offset):
 //   0x00  CTRL    W: bit[0]=start  R: bit[2]=done, bit[1]=busy

@@ -9,7 +9,7 @@
 // from system memory.
 //
 // Register map (S_AXI, 4-byte aligned):
-//   0x00 CTRL        W:bit[0]=start  R:{29'b0, dma_err, done, busy, 1'b0}
+//   0x00 CTRL        W:bit[0]=start  R:{28'b0, dma_err, done, busy, 1'b0}
 //   0x04 SRC_A_ADDR  W: vector A base address (4-byte aligned)
 //   0x08 SRC_B_ADDR  W: vector B base address (4-byte aligned)
 //   0x0C LENGTH      W: element count per vector (1..MAX_LEN)

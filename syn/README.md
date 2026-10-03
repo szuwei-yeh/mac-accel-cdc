@@ -242,7 +242,7 @@ UCSB environment.
 | Active dynamic power | 76.1114 mW | 35.3225 mW | -53.59% |
 | Active total power | 76.1134 mW | 35.3242 mW | -53.59% |
 | Idle dynamic power | 71.6315 mW | 30.6423 mW | -57.22% |
-| Energy per measured job | 221.870 nJ | 102.970 nJ | -53.59% |
+| Estimated energy per job | 221.870 nJ | 102.970 nJ | -53.59% |
 | Setup WNS at 10 ns | +4.7923 ns | +2.4278 ns | PASS |
 
 The gated worst path is a half-cycle enable path from ROB/head output-valid

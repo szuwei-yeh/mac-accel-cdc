@@ -10,8 +10,9 @@
 //   - long vectors (multi-burst) maximise the number of stall/resume edges.
 //
 // Trust model: this uses the REAL async FIFO + REAL mac_pe and checks the
-// final signed dot-product against a known answer. If ANY element is dropped
-// or duplicated under back-pressure, the result is wrong -> FAIL.
+// final signed dot-product against a known answer. Payload/order scoreboarding
+// is provided separately by tb_mac_accel_dma_rob_cdc.sv for the V3 full top;
+// a final sum alone does not detect every possible data-transfer error.
 
 module tb_mac_accel_dma_bp;
 

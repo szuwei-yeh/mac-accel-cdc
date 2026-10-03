@@ -1,11 +1,14 @@
 `timescale 1ns/1ps
 
-// tb_mac_accel_cdc_v3.v
-// True dual-clock CDC testbench
+// tb_mac_accel_cdc.v
+// Basic dual-clock functional test of mac_accel (CPU-fed core, no DMA/ROB).
+// Each case resets both domains. The complete V3 DMA/ROB CDC regression is
+// tb_mac_accel_dma_rob_cdc.sv, driven by run_cdc_regression.py.
 // bus_clk = 100 MHz (period = 10ns)
-// mac_clk = 133 MHz (period = 7.5ns) — non-integer ratio to stress CDC paths
+// mac_clk = ~133 MHz (period = 7.5ns); fixed digital clock relationship.
+// This test does not model analog metastability.
 
-module tb_mac_accel_cdc_v3;
+module tb_mac_accel_cdc;
 
     localparam DATA_WIDTH = 16;
     localparam VEC_LEN    = 4;
@@ -18,7 +21,7 @@ module tb_mac_accel_cdc_v3;
     localparam ADDR_LATENCY = 4'h5;
 
     // -------------------------------------------------------
-    // Two INDEPENDENT clocks (non-integer ratio = real CDC)
+    // Separately generated bus and MAC clocks
     // -------------------------------------------------------
     reg bus_clk;
     reg mac_clk;
@@ -27,7 +30,7 @@ module tb_mac_accel_cdc_v3;
     always #5.0  bus_clk = ~bus_clk;   // 100 MHz
 
     initial mac_clk = 0;
-    always #3.75 mac_clk = ~mac_clk;   // ~133 MHz  (non-integer ratio w/ bus_clk)
+    always #3.75 mac_clk = ~mac_clk;   // ~133 MHz
 
     // -------------------------------------------------------
     // Reset (independent per domain)
@@ -110,7 +113,7 @@ module tb_mac_accel_cdc_v3;
         repeat (8) @(posedge mac_clk);
 
         // De-assert mac_rst first, then bus_rst a few cycles later
-        // (worst-case ordering for CDC reset synchronisation)
+        // (one startup-release ordering; not exhaustive reset coverage)
         @(posedge mac_clk); #1; mac_rst = 0;
         repeat (3) @(posedge bus_clk);
         @(posedge bus_clk); #1; bus_rst = 0;
@@ -208,7 +211,7 @@ module tb_mac_accel_cdc_v3;
         fail_cnt = 0;
 
         $display("========================================");
-        $display("  mac_accel TRUE CDC Testbench");
+        $display("  mac_accel basic dual-clock functional test");
         $display("  bus_clk=100MHz  mac_clk=133MHz");
         $display("========================================");
 
@@ -242,11 +245,11 @@ module tb_mac_accel_cdc_v3;
                  0, 1, 0, 1,
                  0, "Test 6: Orthogonal");
 
-        // Test 7: Back-to-back — stress CDC with no extra delay between runs
-        // (resets between runs via do_reset inside run_test, but clocks keep running)
+        // Test 7: Another job after reset, with both clocks continuing to run.
+        // No-reset consecutive jobs are covered by tb_mac_accel_dma_rob_cdc.sv.
         run_test(3, 3, 3, 3,
                  3, 3, 3, 3,
-                 36, "Test 7: Back-to-back stress");
+                 36, "Test 7: Job after reset");
 
         // Test 8: 32-bit overflow check
         // -32768 * -32768 = 1,073,741,824 per element

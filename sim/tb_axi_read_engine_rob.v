@@ -2,9 +2,11 @@
 
 // tb_axi_read_engine_rob.v
 // -----------------------------------------------------------------------------
-// STEP 1 (Milestone A) standalone testbench for axi_read_engine_rob in its
-// multiple-outstanding / single-shared-ID / in-order configuration, driven
-// against axi_read_mem_model_mo (multi-outstanding, in-order, latency L).
+// Standalone testbench for the current unique-ID axi_read_engine_rob, driven
+// against axi_read_mem_model_mo (multi-outstanding, in-order responses, latency L).
+// This harness originated in the shared-ID milestone; the current DUT uses
+// unique ARIDs. In-order stimulus does not exercise out-of-order retirement;
+// use tb_axi_read_engine_rob_ooo.v for OOO/interleaved response coverage.
 //
 // Does NOT touch any V2 file or the Step-0 baseline files.  Single clock domain
 // (the engine is a bus_clk block); no CDC here.
@@ -393,7 +395,7 @@ module tb_axi_read_engine_rob;
     //----------------------------------------------------
     initial begin
         $display("==================================================");
-        $display("  STEP 1 (Milestone A): multiple outstanding, shared ID, in-order");
+        $display("  ROB read engine: multiple outstanding, unique IDs, in-order memory stimulus");
         $display("  engine MAX_OUTSTANDING = %0d   burst = %0d beats", MAX_OUT, MAX_BURST);
         $display("  U_bus = beats/T_active   U_mac = U_bus/2 (A-then-B projection)");
         $display("  Step-0 baseline @L=100:  U_bus=13.54%%  U_mac=6.77%%");
@@ -416,7 +418,7 @@ module tb_axi_read_engine_rob;
 
         $display("==================================================");
         $display("  TOTAL: %0d PASS / %0d FAIL", pass_cnt, fail_cnt);
-        $display("  MILESTONE A (MAX_OUT=%0d, N=64, L=100):", MAX_OUT);
+        $display("  IN-ORDER STIMULUS (MAX_OUT=%0d, N=64, L=100):", MAX_OUT);
         $display("    U_bus = %0d.%02d %%  (baseline 13.54%%)   U_mac = %0d.%02d %%  (baseline 6.77%%)",
                  head_ubus_h/100, head_ubus_h%100, head_umac_h/100, head_umac_h%100);
         $display("==================================================");

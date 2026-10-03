@@ -1,7 +1,8 @@
 `timescale 1ns/1ps
 
 // mac_dma.v
-// AXI4 master DMA front-end for the MAC accelerator.
+// V2 single-outstanding AXI4 read DMA front-end for mac_accel_dma_top.
+// V3 uses mac_dma_rob and axi_read_engine_rob instead; see rtl/README.md.
 //
 // Reads vector A then vector B from external memory via AXI4 INCR bursts and
 // emits paired {last, a, b} samples on an internal stream interface intended
@@ -16,8 +17,8 @@
 //   - ARSIZE  = 3'b010 (4 bytes)
 //   - ARBURST = 2'b01  (INCR)
 //   - Each burst <= BURST_LEN beats.  Multi-burst transactions issued if
-//     length exceeds one burst.  Bursts never cross a 4 KB boundary as long
-//     as the caller passes 4-byte aligned addresses (16-beat bursts span 64 B).
+//     length exceeds one burst. There is no 4 KB boundary split logic: the
+//     caller must ensure each issued burst stays within a 4 KB page.
 
 module mac_dma #(
     parameter DATA_WIDTH      = 16,

@@ -30,7 +30,7 @@ module mac_accel_dma_rob_top #(
     parameter S_AXI_ADDR_WIDTH = 8,
     parameter MAX_LEN         = 256,
     parameter BURST_LEN       = 16,
-    parameter MAX_OUTSTANDING = 4
+    parameter MAX_OUTSTANDING = 4  // RTL default; published V3 results select 8
 )(
     //----------------------------------------------------
     // AXI4-Lite slave (control plane) - bus_clk domain

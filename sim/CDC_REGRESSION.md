@@ -1,5 +1,9 @@
 # Whole-top CDC supplemental regression
 
+This targets the V3 DMA/ROB accelerator. The separate `tb_mac_accel_cdc.v`
+tests the CPU-fed `mac_accel` core, with reset before each case. See the
+[testbench and memory-model map](README.md) for naming and scope.
+
 ```sh
 python3 sim/run_cdc_regression.py --simulator iverilog
 # Requires the configured UCSB VCS installation and a valid license:

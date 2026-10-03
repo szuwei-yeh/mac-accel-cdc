@@ -6,7 +6,7 @@
 // Owns ONLY AR-issue + R-collection for one read phase; knows nothing about MAC,
 // A/B pairing, or CDC.  Output is an in-order beat stream.
 //
-// *** STEP 2 (Milestone B): UNIQUE ARID per burst + REORDER BUFFER ***
+// Unique ARID per burst + RID-indexed reorder buffer (V3 read engine).
 //   - Issues up to MAX_OUTSTANDING read bursts, each with a UNIQUE ARID equal to
 //     its ROB entry index (alloc_ptr).  Unique IDs let the slave return responses
 //     OUT OF ORDER / interleaved across IDs (AXI only requires same-ID beats to be
@@ -16,14 +16,14 @@
 //     RID), but retirement is strictly in allocation order (head pointer).  The
 //     output stream out_valid/out_data/out_last is therefore in order regardless
 //     of response order.  Ordering here is in-order RETIREMENT, not data-hazard
-//     detection: v1 is read-only.
+//     detection: this engine is read-only.
 //   - R is always accepted (RREADY=1 while running): the ROB IS the buffer, so R
 //     reception is decoupled from out retirement.  Back-pressure propagates the
 //     other way: if out stalls, entries fill, occupancy hits MAX_OUTSTANDING, and
 //     AR issue stalls -- the producer is throttled without ever dropping a beat.
 //
-// AR valid/payload stability under back-pressure holds by construction (same as
-// Step 1): ARVALID = want_issue, and want_issue / the AR payload change only on an
+// AR valid/payload stability under back-pressure holds by construction:
+// ARVALID = want_issue, and want_issue / the AR payload change only on an
 // AR accept (a freed credit can only make want_issue more true), so ARVALID never
 // depends on ARREADY and the payload is held until the slave accepts.
 //
@@ -36,7 +36,7 @@ module axi_read_engine_rob #(
     parameter AXI_DATA_W      = 32,
     parameter AXI_ADDR_W      = 32,
     parameter AXI_ID_WIDTH    = 4,
-    parameter MAX_OUTSTANDING = 4,    // in-flight bursts / ROB depth (power of two, >=2)
+    parameter MAX_OUTSTANDING = 4,    // default depth; canonical benchmark selects 8
     parameter MAX_BURST_LEN   = 16,   // max beats per burst (power of two)
     parameter LEN_WIDTH       = 16
 )(
@@ -290,7 +290,7 @@ module axi_read_engine_rob #(
 
 `ifdef FORMAL
     // =====================================================================
-    // STEP 3 formal: ROB safety properties (SymbiYosys, BMC + IC3/PDR).
+    // ROB safety properties (SymbiYosys, BMC + IC3/PDR).
     // Proven on a small bounded config set via chparam in the .sby
     // (MAX_OUTSTANDING=2, MAX_BURST_LEN=2, LEN_WIDTH=8).  Environment
     // assumptions (assume) model a LEGAL AXI read slave; DUT assertions

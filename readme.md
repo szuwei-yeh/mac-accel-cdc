@@ -1,394 +1,165 @@
 # Vector MAC Accelerator with CDC and Multi-Outstanding AXI Read DMA
 
-A parameterized dot-product accelerator written in Verilog. The project evolves
-from a CPU-fed AXI4-Lite peripheral into a dual-clock accelerator whose DMA can
-issue multiple AXI read bursts, accept out-of-order/interleaved responses, and
-retire data in order through a RID-indexed reorder buffer.
-
-The canonical block synthesis and power-analysis target remains:
-
-```text
-TOP               = mac_dma_rob
-MAX_OUTSTANDING   = 8
-Bus clock target  = 10 ns / 100 MHz
-DC                 = R-2020.09-SP4
-Library            = osu018_stdcells.db
-Compile            = compile_ultra
-```
-
-V1 was also validated end to end on a Digilent Nexys A7-100T with MicroBlaze.
-V2 and V3 use behavioral AXI memory models for simulation and formal models for
-control-safety properties.
+A parameterized Verilog dot-product accelerator with AXI4-Lite control,
+independent bus/MAC clocks, and an AXI read DMA. The current V3 design keeps up
+to eight read bursts in flight and uses a RID-indexed reorder buffer (ROB) to
+accept out-of-order/interleaved responses while delivering operands in order.
 
 ## Results at a glance
 
-| Area | Result |
-|---|---|
-| Multi-outstanding DMA | Up to 8 outstanding bursts validated at standalone ROB, DMA-wrapper, and V3 full-top levels |
-| Reordering | Unique ARIDs, RID-indexed response storage, strictly in-order retirement |
-| CDC | Async FIFO with Gray-code pointers plus toggle and 2-FF synchronizers |
-| Timing optimization | Critical-path length reduced from about 5.50 ns to 4.05 ns, a 26.36% improvement |
-| Canonical 100 MHz timing | Setup WNS +4.7923 ns |
-| Clock sweep | 100, 125, 166.7, and 200 MHz all pass pre-layout DC setup timing |
-| 200 MHz edge | WNS +0.0389 ns; functional limiter is the flat ROB read/capture path |
-| Targeted power experiment | 4096 `buf_a` bits gated in 256 16-bit banks |
-| SAIF-driven active power | Dynamic and total power both reduced by 53.59% |
-| SAIF-driven idle power | Dynamic power reduced by 57.22% |
-| Measured-job energy | Reduced by 53.59% |
-
-The 200 MHz result uses a pre-layout Design Compiler model with ideal clocks and
-no extracted parasitics. It is not a post-layout frequency claim. The project
-target remains 100 MHz.
-
-The power result is **SAIF-driven pre-layout power analysis**. Clock gating is
-**synthesis-inserted latch-based clock gating using discrete LATCH + AND
-cells**. The OSU library has no dedicated production ICG cell.
-
-## Whole-top front-end validation
-
-The separate **`mac_accel_dma_rob_top`, MAX_OUTSTANDING=8** flow covers the
-AXI-Lite interface, DMA/ROB, asynchronous FIFO, synchronizers and MAC together.
-It preserves the block timing/power benchmark above.
-
-- Supplemental CDC regression: **36/36 jobs per simulator** with Icarus and VCS,
-  six clock/phase/reset-release scenarios, six sequential jobs without inter-job
-  reset, and observed eight outstanding bursts on long jobs.
-- DC mapping followed by standalone PrimeTime on the same mapped netlist and
-  resolved SDC; mapped CDC connectivity and all 13 two-flop chains checked.
-- Bus 10 ns / MAC 7.5 ns, asynchronous ideal clocks; functional I/O min 0/max 1 ns.
-
-| PrimeTime domain | Worst setup slack | Worst hold slack | Setup/hold violations |
-|---|---:|---:|---:|
-| Bus | +5.114273 ns | +0.049906 ns | 0 |
-| MAC | +0.020727 ns | +0.214744 ns | 0 |
-
-These are **single-corner, pre-layout portfolio results**. MAC setup margin is
-only 20.727 ps; reset timing exclusions and untested coverage remain. No physical
-closure or CDC/RDC signoff is claimed. See [analysis and DC/PT comparison](syn/whole_top/RESULTS.md),
-[constraint rationale](syn/whole_top/README.md), and [CDC regression](sim/CDC_REGRESSION.md).
-
-## Engineering evolution
-
-| Stage | Engineering change | Evidence |
+| Contribution | Result | Conditions and scope |
 |---|---|---|
-| 1. Original Vector MAC | Two-stage signed multiply/accumulate pipeline behind AXI4-Lite | Simulation and FPGA validation |
-| 2. CDC architecture | Separate bus/MAC clocks, async FIFO, toggle synchronizers, stable multi-bit capture | Dual-clock regression and FIFO formal properties |
-| 3. AXI read DMA | Operand vectors fetched through AXI INCR bursts | DMA regression with a reference memory model |
-| 4. Multi-outstanding reads | Credit-paced AR issue with unique IDs | Standalone engine and utilization tests |
-| 5. RID-indexed ROB | Responses stored by RID and retired by allocation order | OOO/interleaved-response regressions |
-| 6. Verification and formal | Scoreboards, protocol stability checks, BMC, prove, and cover | Simulation plus SymbiYosys/IC3-PDR results |
-| 7. Canonical synthesis | Immutable parameterized DC runs with manifests and hashes | `mac_dma_rob`, depth 8, 10 ns |
-| 8. Address timing optimization | Replaced the long combinational ARADDR expression with handshake-driven address state | 26.36% critical-path improvement |
-| 9. Frequency characterization | Recompiled at 10/8/6/5 ns without RTL changes | All setup PASS; 5 ns has 38.9 ps margin |
-| 10. Targeted power optimization | Gated only the large A-operand buffer through Power Compiler | Same-workload SAIF baseline/gated comparison |
+| Operand delivery | **Simulated MAC-feed utilization: 6.78% → 27.21% (4.0×)** | 256 elements/vector, 16-beat bursts, 100-cycle first-beat memory latency; V2 with 1 vs. V3 with 8 outstanding bursts |
+| Timing optimization | **Synthesized QoR critical-path length reduced by 26.36%** | 5.50 → 4.05 ns; DMA block, depth 8, same 100 MHz synthesis configuration |
+| Targeted clock gating | **Active dynamic power reduced by 53.59%** | 76.1114 → 35.3225 mW; DMA block, identical workload activity, SAIF-driven pre-layout estimate |
+
+Verification combines RTL scoreboards, formal control-safety properties,
+dual-clock CDC regressions, and whole-top DC/PrimeTime timing analysis.
+V1 was also validated on a Digilent Nexys A7-100T with MicroBlaze; V2/V3 use
+behavioral AXI memory models.
 
 ## Architecture
 
-```text
-bus_clk domain                                      mac_clk domain
-────────────────────────────────────────────────────────────────────────
-AXI4-Lite CSR                                            ┌─────────────┐
-     │                                                   │   mac_pe    │
-     ▼                                                   │ multiply +  │
-mac_accel_dma_rob_top                                    │ accumulate  │
-     │                                                   └──────▲──────┘
-     ├── mac_dma_rob ── AXI4 AR/R ── memory model               │
-     │      │                                                   │
-     │      └── axi_read_engine_rob                             │
-     │             ├── multi-outstanding AR issue               │
-     │             ├── RID-indexed response storage             │
-     │             └── in-order retirement                      │
-     │                                                           │
-     └── {last,a,b} ── mac_fifo_async ───────────────────────────┘
-                        Gray pointers + 2-FF synchronizers
-```
+| Version | Top module | Operand delivery |
+|---|---|---|
+| V1 — CPU-fed | `mac_accel_axi` | CPU writes operands through AXI4-Lite |
+| V2 — DMA | `mac_accel_dma_top` | Single-outstanding AXI read DMA |
+| V3 — ROB DMA | `mac_accel_dma_rob_top` | Multiple unique-ID bursts with in-order ROB retirement |
 
-### Implementations
+![V3 architecture: AXI-Lite control and a multi-outstanding read DMA with ROB in the bus clock domain; A operands are buffered, paired with B, and sent through an asynchronous FIFO to the MAC clock domain.](docs/figures/architecture.svg)
 
-- **V1 — `mac_accel_axi`**: AXI4-Lite control and CPU-fed operand data.
-- **V2 — `mac_accel_dma_top`**: AXI4-Lite control plus a single-outstanding
-  AXI read DMA.
-- **V3 — `mac_accel_dma_rob_top`**: AXI4-Lite control plus a parameterized,
-  multi-outstanding AXI read DMA and ROB.
+V3 first fetches vector A into `buf_a`, then streams vector B and pairs it with
+stored A. Each `{last,a,b}` pair crosses the asynchronous FIFO into the signed
+multiply/accumulate pipeline. AXI-Lite registers provide addresses, length,
+start/status, result, and latency.
 
-V3 preserves the A-then-B schedule. The first read phase fills `buf_a`; the
-second returns B operands and pairs them with the stored A operands before
-crossing the async FIFO into the MAC clock domain.
+### Out-of-order receive, in-order output
 
-Each accepted AR request uses `ARID=alloc_ptr`. R beats update the ROB entry
-selected by `RID`. Only the completed `head_ptr` entry can drive the output,
-which restores allocation order even when responses arrive out of order or are
-interleaved across IDs.
+Each accepted AR request uses `ARID=alloc_ptr`. Incoming R beats select their
+ROB entry by `RID`; only the completed `head_ptr` entry may retire. An entry's
+credit returns after all its beats have drained, preventing premature ID reuse.
 
-### CDC strategy
+![ROB schematic: bursts 0, 1 and 2 are issued in order; interleaved responses complete bursts 1, 2 and 0; RID-indexed entries restore output order 0, 1 and 2.](docs/figures/rob_reordering.svg)
+
+*Illustrative two-beat bursts, not a recorded waveform. Beat order within each
+ID is preserved. Burst 1 completes first but waits for burst 0 to retire.*
+
+### Clock-domain crossing
 
 | Signal | Direction | Method |
 |---|---|---|
-| Start event | bus to MAC | Toggle, 2-FF synchronization, edge detection |
-| Operand stream | bus to MAC | Async FIFO with Gray-code pointers |
-| Done event | MAC to bus | Toggle, 2-FF synchronization, edge detection |
-| Busy level | MAC to bus | 2-FF synchronizer |
-| Result/latency | MAC to bus | Stable bus captured when synchronized done arrives |
+| Start event | bus → MAC | Toggle, 2-FF synchronization, edge detection |
+| Operand stream | bus → MAC | Async FIFO with Gray-code pointers |
+| Done event | MAC → bus | Toggle, 2-FF synchronization, edge detection |
+| Busy level | MAC → bus | 2-FF synchronizer |
+| Result/latency | MAC → bus | Stable bus captured when synchronized done arrives |
 
-Synchronizer chains and FIFO pointer logic are intentionally excluded from the
-clock-gating experiment.
+See the [RTL module map and register interface](rtl/README.md) for integration
+details. The complete accelerator is `mac_accel_dma_rob_top`; the timing/power
+benchmark below targets `mac_dma_rob`, excluding the AXI-Lite shell, FIFO and MAC.
 
-## Verification evidence
+## Performance and optimization
 
-Final simulation results:
+**Hide memory latency with multiple outstanding reads.** V2 waits for each
+burst before issuing the next; V3 overlaps requests and restores response order
+through the ROB. Under the utilization-test conditions above, accepted operand
+pairs per DMA-busy bus cycle increase from 256/3777 to 256/941. This is a 4.0×
+increase in simulated MAC-feed utilization, not a 4.0× whole-accelerator speedup
+or a measurement of MAC PE activity. See the [measurement definition and
+testbenches](sim/README.md#utilization-measurement).
 
-| Regression | Configuration | Result |
-|---|---|---:|
-| Original dual-clock MAC/CDC | Non-integer clock ratio | 8 PASS / 0 FAIL |
-| Single-outstanding DMA | Behavioral AXI memory | 7 PASS / 0 FAIL |
-| Standalone ROB | `MAX_OUTSTANDING=8` | 12 PASS / 0 FAIL |
-| ROB DMA wrapper | `MAX_OUTSTANDING=8` | 11 PASS / 0 FAIL |
-| V3 full top | `MAX_OUTSTANDING=8` | 7 PASS / 0 FAIL |
-| Deterministic power workload | `MAX_OUTSTANDING=8` | 4 PASS / 0 FAIL |
+**Shorten address-generation logic.** Replacing
+`cmd_addr_r + (issue_elem << 2)` with handshake-updated `current_ar_addr_r`
+reduces synthesized QoR critical-path length from 5.50 to 4.05 ns. These compare
+each design's global worst path, not the delay of one unchanged path. The
+optimized 100 MHz block has setup WNS +4.7923 ns. A 100–200 MHz synthesis sweep
+passes setup, but the 200 MHz point has only +0.0389 ns margin and exposes the
+flat ROB read/capture path. The canonical target remains 100 MHz.
+See [timing comparison](syn/README.md#first-synthesis-driven-optimization) and
+[frequency characterization](syn/README.md#clock-period-sweep).
 
-The scoreboards and reference models check:
+**Stop unnecessary A-buffer clock activity.** Power Compiler gates only the
+4096 `buf_a` register bits in 256 16-bit banks; all other registers, including
+CDC logic, are excluded. Baseline and gated designs consume identical active
+and idle SAIF files from a deterministic workload: 40-cycle memory latency,
+OOO responses/backpressure, a length-64 active job, and a 512-cycle idle window.
+Active dynamic power falls by 53.59%, idle dynamic power by 57.22%, and estimated
+energy per job from 221.870 to 102.970 nJ. Gated setup WNS is +2.4278 ns at 100 MHz.
+The OSU library uses discrete LATCH + AND cells rather than a dedicated ICG.
+See [power methodology, coverage and results](syn/README.md#targeted-buf_a-clock-gating-experiment).
 
-- accepted AR address sequence, ARLEN geometry, and request/beat conservation;
-- AR payload stability under backpressure;
-- no duplicate, skipped, or over-issued data;
-- RID-indexed response placement and in-order retirement;
-- output payload/last stability while stalled;
-- OOO and interleaved RID responses;
-- lengths 1 and 16 plus multi-burst/cross-burst transfers;
-- reset, idle wake-up, consecutive jobs, and FIFO/stream backpressure.
+Block timing/power results use `mac_dma_rob`, `MAX_OUTSTANDING=8`, Design Compiler
+R-2020.09-SP4 and `osu018_stdcells.db`, with a 10 ns clock target. They are
+pre-layout estimates using ideal clocks, without CTS or extracted parasitics.
 
-### Formal verification
+## Verification
 
-| Property set | Main properties | Result |
+| Evidence | What is checked | Recorded result |
 |---|---|---|
-| `mac_dma_bp` | DMA no-drop behavior and AR-channel stability under adversarial backpressure | BMC + prove PASS |
-| `mac_fifo_gray` | Gray pointer transitions, no overflow, no underflow | BMC + prove PASS |
-| `axi_read_engine_rob` | No overflow/tag reuse, legal retirement, in-order output, burst/address/count model, sticky errors | BMC + IC3/PDR prove PASS; cover PASS |
+| RTL regressions | AR geometry/stability, request/beat conservation, RID placement, ordered output, payload/last under stalls | ROB 12/12, DMA wrapper 11/11, V3 full top 7/7; power workload 4/4 |
+| Supplemental CDC matrix | Six clock/phase/reset-release scenarios, six consecutive jobs per scenario, operand/event/Gray-pointer checks | 36/36 jobs per simulator with Icarus and VCS; eight outstanding bursts observed on long jobs |
+| Formal | DMA backpressure safety, FIFO Gray/overflow/underflow properties, ROB ownership/order/count/error properties | BMC + prove PASS; ROB IC3/PDR prove and cover PASS |
+| Whole-top DC + PrimeTime | Mapped dual-clock timing and CDC connectivity, including all 13 two-flop chains | Bus/MAC setup and hold: 0 violations |
 
-The ROB proof uses a small bounded parameter configuration and a legal AXI read
-slave model. Readiness and error behavior remain adversarial within the model's
-protocol assumptions. See [`formal/STUDY_GUIDE.md`](formal/STUDY_GUIDE.md).
+The whole-top timing flow uses `mac_accel_dma_rob_top`, depth 8, asynchronous
+ideal clocks at bus 10 ns / MAC 7.5 ns, and functional I/O min 0/max 1 ns.
+Worst setup slack is +5.114273 ns (bus) and +0.020727 ns (MAC); worst hold slack
+is +0.049906 ns and +0.214744 ns respectively. The small MAC setup margin is
+20.727 ps in a single-corner pre-layout model.
 
-Mapped gate-level simulation is inconclusive because the OSU Verilog cell model
-leaves some synchronous-reset state unknown. The independently compiled
-baseline mapped design reproduces the same behavior, so it has not been
-identified as a clock-gating-specific failure. GLS, LEC, CTS, and signoff are
-not claimed as passing evidence.
+Detailed evidence: [simulation map and checks](sim/README.md#regression-evidence),
+[CDC scenario matrix](sim/CDC_REGRESSION.md), [formal properties and assumptions](formal/STUDY_GUIDE.md),
+and [whole-top DC/PT results and coverage](syn/whole_top/RESULTS.md).
+The ROB proof uses a small bounded parameter configuration and legal AXI slave
+assumptions; its proven scope is control safety within that model.
 
-## Timing optimization and frequency characterization
+## Design scope and limitations
 
-The original depth-8 critical path computed ARADDR directly from
-`cmd_addr_r + (issue_elem << 2)`. The optimized RTL keeps the accepted-request
-address in `current_ar_addr_r`, drives ARADDR directly from that register, and
-updates it only after an AR handshake.
+- The AXI master implements the read-only AR/R subset; behavioral/formal memory
+  models stand in for a commercial memory subsystem. Bursts are not split at
+  4 KB boundaries, so callers must keep each burst within a page.
+- Timing and SAIF power results are pre-layout portfolio evidence. Physical
+  closure, multi-corner timing, CDC/RDC signoff and signoff power are not established;
+  reset timing exclusions and coverage limits are documented in the whole-top flow.
+- Mapped GLS remains inconclusive due to OSU cell-model unknown-state behavior,
+  also reproduced by the baseline. LEC is not established. The library assigns
+  zero area to its generic latch, so the gating area delta is not a credible result.
+- V3 defaults to outstanding depth 4; published depth-8 results select
+  `MAX_OUTSTANDING=8` explicitly.
 
-| Metric | Original depth-8 | Optimized depth-8 | Change |
-|---|---:|---:|---:|
-| QoR critical-path length | 5.50 ns | 4.05 ns | -26.36% |
-| Setup WNS at 10 ns | +3.5027 ns | +4.7923 ns | +1.2896 ns |
-| Logic levels | 31 | 11 | -20 |
+## Quick start
 
-ARADDR no longer appears in the optimized global top ten. At 10 ns, the global
-worst path is synchronous reset/control logic into `retire_elem`; the worst
-active functional path is the ROB read and wrapper-capture cone.
-
-No-RTL-change clock sweep:
-
-| Period | Frequency | Setup | WNS | Critical length | Main path class |
-|---:|---:|---|---:|---:|---|
-| 10 ns | 100 MHz | PASS | +4.7923 ns | 4.05 ns | reset/control |
-| 8 ns | 125 MHz | PASS | +1.3094 ns | 6.52 ns | address-state update mapping |
-| 6 ns | 166.7 MHz | PASS | +1.1860 ns | 4.64 ns | ROB read/data selection |
-| 5 ns | 200 MHz | PASS | +0.0389 ns | 4.80 ns | ROB read/data selection |
-
-At 200 MHz the functional limiter is:
-
-```text
-head_ptr
-  -> flat ROB read mux
-  -> engine_out_data
-  -> wrapper buf_a/stream_b capture
-```
-
-The 38.9 ps margin is useful frequency characterization, not robust physical
-margin. The project therefore keeps 100 MHz as its canonical target and stops
-further timing optimization.
-
-## Targeted `buf_a` power optimization
-
-Power Compiler is restricted to `buf_a_reg[*]`. Every other register is
-explicitly excluded before `compile_ultra -gate_clock`.
-
-```text
-Gated storage              4096 register bits
-Organization               256 x 16-bit word banks
-Inserted gate banks        256
-Implementation per bank    generic LATCH + AND2X1 (+ clock inverter)
-Other gated registers      0
-Gated setup WNS @ 10 ns    +2.4278 ns
-```
-
-The deterministic workload uses fixed 40-cycle memory latency, fixed OOO
-selection state, deterministic AR/stream backpressure, one measured length-64
-job, a 512-cycle idle interval, and follow-up length 1/16/33 jobs. VCS records
-unpacked memory activity through VPD; `vpd2vcd +includemda` preserves all
-`buf_a` and ROB words before `vcd2saif` creates separate active and idle SAIF
-windows.
-
-Both mapped designs consume the same two SAIF files. Ports, all 4232
-RTL-invariant sequential objects, and all 4096 `buf_a` bits are user annotated.
-
-| SAIF-driven pre-layout metric | Baseline | Gated | Change |
-|---|---:|---:|---:|
-| Active dynamic power | 76.1114 mW | 35.3225 mW | -53.59% |
-| Active total power | 76.1134 mW | 35.3242 mW | -53.59% |
-| Idle dynamic power | 71.6315 mW | 30.6423 mW | -57.22% |
-| Energy per measured job | 221.870 nJ | 102.970 nJ | -53.59% |
-
-The library reports zero area for its generic `LATCH`, so the mapped area delta
-has no credible physical interpretation and is intentionally omitted as a
-headline result.
-
-## Reproducing the results
-
-### RTL regressions with Icarus Verilog
+With Icarus Verilog installed, run from the repository root:
 
 ```bash
-# Standalone ROB, depth 8
-iverilog -g2012 -DENG_MAX_OUT=8 -o sim_ooo \
-  sim/tb_axi_read_engine_rob_ooo.v rtl/axi_read_engine_rob.v \
-  sim/axi_read_mem_model_ooo.v
-vvp sim_ooo
-
-# ROB DMA wrapper, depth 8
-iverilog -g2012 -DDMA_ROB_MAX_OUT=8 -o sim_dma_rob \
-  sim/tb_mac_dma_rob.v rtl/mac_dma_rob.v rtl/axi_read_engine_rob.v \
-  sim/axi_read_mem_model_ooo.v
-vvp sim_dma_rob
-
-# V3 full top, depth 8
-iverilog -g2012 -DV3_MAX_OUT=8 -o sim_dma_rob_top \
+# V3 full top: AXI-Lite → DMA/ROB → async FIFO → MAC → result CSR
+iverilog -g2012 -DV3_MAX_OUT=8 -s tb_mac_accel_dma_rob_top \
+  -o /tmp/mac_accel_dma_rob_top \
   sim/tb_mac_accel_dma_rob_top.v rtl/mac_accel_dma_rob_top.v \
   rtl/mac_dma_rob.v rtl/axi_read_engine_rob.v rtl/mac_pe.v \
   rtl/mac_fifo_async.v sim/axi_read_mem_model_ooo.v
-vvp sim_dma_rob_top
+vvp /tmp/mac_accel_dma_rob_top
 ```
 
-### Supplemental CDC matrix
+Expected result: **7 PASS / 0 FAIL**. Other flows:
+[RTL regressions](sim/README.md#depth-8-rob-and-dma-regressions),
+[CDC matrix](sim/CDC_REGRESSION.md), [formal](formal/STUDY_GUIDE.md),
+[block synthesis](syn/README.md#canonical-baseline-flow),
+[SAIF and clock gating](syn/README.md#reproduction),
+[whole-top DC](syn/whole_top/DC_FLOW.md) and [PrimeTime](syn/whole_top/PT_FLOW.md).
+Synopsys flows require the specified licensed tools and OSU library.
 
-```bash
-python3 sim/run_cdc_regression.py --simulator iverilog
-# On the configured UCSB Synopsys environment:
-python3 sim/run_cdc_regression.py --simulator vcs
-```
+## Repository map
 
-Each invocation snapshots inputs and stores reports in a new `/tmp` directory.
-See [the scenario matrix and checks](sim/CDC_REGRESSION.md).
+| Directory | Contents |
+|---|---|
+| [rtl/](rtl/README.md) | Accelerator versions, DMA/ROB, FIFO/MAC, register interface |
+| [sim/](sim/README.md) | Memory models, scoreboards, utilization and power workloads |
+| [formal/](formal/STUDY_GUIDE.md) | SymbiYosys property sets and proof guide |
+| [syn/](syn/README.md) | Block timing, frequency sweep and targeted power flows |
+| [syn/whole_top/](syn/whole_top/README.md) | Dual-clock whole-top DC and PrimeTime flow |
+| docs/figures/ | Checked-in architecture, ROB, timing and power figures |
+| scripts/ | Figure generator: `python3 scripts/render_readme_figures.py` |
 
-### Whole-top DC and PrimeTime
-
-Follow [DC mapping/readback and bundle creation](syn/whole_top/DC_FLOW.md), then
-[standalone PrimeTime](syn/whole_top/PT_FLOW.md). The launchers require the
-specified licensed tools and OSU library; these are not included in this repo.
-
-### Formal
-
-With OSS CAD Suite on `PATH`:
-
-```bash
-sby -f formal/mac_dma_bp.sby
-sby -f formal/mac_fifo_gray.sby
-sby -f formal/axi_read_engine_rob.sby
-```
-
-### Canonical synthesis
-
-On the UCSB ECE Synopsys environment:
-
-```bash
-MAX_OUTSTANDING=8 CLK_PERIOD=10.0 \
-RUN_ID=mac_dma_rob_mo8_10ns_final \
-bash syn/run_baseline_dc.sh
-```
-
-### Activity and targeted clock-gating comparison
-
-```bash
-RUN_ID=mac_dma_rob_mo8_power_activity_final \
-bash syn/run_power_activity.sh
-
-MODE=baseline \
-ACTIVITY_RUN=mac_dma_rob_mo8_power_activity_final \
-RUN_ID=mac_dma_rob_mo8_power_baseline_final \
-bash syn/run_power_targeted.sh
-
-MODE=gated \
-ACTIVITY_RUN=mac_dma_rob_mo8_power_activity_final \
-RUN_ID=mac_dma_rob_mo8_power_gated_final \
-bash syn/run_power_targeted.sh
-```
-
-Each launcher refuses to overwrite an existing run directory and stores input
-snapshots, hashes, logs, mapped outputs, timing/area reports, clock-gating
-reports, SAIF coverage, and power reports under `syn/runs/`.
-
-## Register map
-
-| Offset | Register | Access | Description |
-|---:|---|---|---|
-| `0x00` | CTRL | R/W | Start; busy, done, and DMA-error status |
-| `0x04` | SRC_A_ADDR | W | Vector A byte address |
-| `0x08` | SRC_B_ADDR | W | Vector B byte address |
-| `0x0C` | LENGTH | W | Elements per vector, 1 through `MAX_LEN` |
-| `0x10` | RESULT | R | Signed dot-product result |
-| `0x14` | LATENCY | R | MAC-clock cycles from start to done |
-
-Each operand occupies the low 16 bits of one 32-bit memory word. The DMA emits
-INCR bursts of up to 16 beats and chains bursts for longer vectors.
-
-## Limitations
-
-- AXI verification uses behavioral/formal memory models rather than a
-  commercial interconnect or memory controller.
-- The implemented master is the read-only AR/R subset needed by this project;
-  this is not a complete commercial AXI subsystem.
-- Synthesis timing is pre-layout with ideal clocks, a wire-load model, and no
-  CTS or extracted parasitics.
-- The OSU library has no dedicated ICG; the power experiment uses discrete
-  generic latch and logic cells.
-- Power results are SAIF-driven pre-layout estimates, not post-layout, CTS,
-  PrimeTime PX, or signoff power.
-- Mapped GLS is inconclusive because of OSU cell-model unknown-state behavior;
-  the baseline netlist reproduces it.
-- Formality/LEC is not established. Standalone PrimeTime analysis is available
-  for the whole top; multi-corner and physical signoff are not established.
-- The RTL top remains parameterized with a default outstanding depth of 4; the
-  final ROB, DMA, and V3 full-top regressions explicitly select depth 8.
-
-## Interview summary
-
-- Built a parameterized AXI read DMA that keeps up to eight bursts in flight
-  using unique IDs and credit-based issue control.
-- Designed a RID-indexed circular ROB that accepts interleaved/out-of-order R
-  responses while preserving strict in-order output.
-- Implemented the bus-to-MAC CDC with a Gray-pointer async FIFO and toggle/2-FF
-  event synchronizers.
-- Removed a 31-level AR address path and improved synthesized critical-path
-  length by 26.36% while preserving protocol behavior.
-- Characterized 100–200 MHz targets; 200 MHz passes the pre-layout model by
-  38.9 ps and exposes the flat ROB read/capture cone as the real limiter.
-- Built a deterministic VCS-to-SAIF power flow and demonstrated a 53.59%
-  active-dynamic reduction by gating only the 4096-bit A-operand buffer.
-
-## Repository structure
-
-```text
-rtl/       V1/V2/V3 accelerator, DMA, ROB, FIFO, and MAC RTL
-sim/       Behavioral memory models, functional regressions, power workload
-formal/    SymbiYosys property sets and study guide
-syn/       Canonical block timing and targeted power flows
-syn/whole_top/  Separate dual-clock whole-top DC and PrimeTime flow
-```
-
-See [`syn/README.md`](syn/README.md) for synthesis methodology and report
-interpretation.
+Architecture/ROB figures illustrate RTL behavior; timing/power figures use the
+published metric tables in `syn/README.md`.

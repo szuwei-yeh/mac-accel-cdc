@@ -1,10 +1,14 @@
 `timescale 1ns/1ps
 
+// CPU-fed dual-clock MAC core with a simplified register interface.
+// Wrapped by mac_accel_axi for the V1 AXI4-Lite peripheral; no DMA or ROB.
+// Basic core regression: sim/tb_mac_accel_cdc.v. See rtl/README.md for variants.
+
 module mac_accel #(
     parameter DATA_WIDTH = 16,
     parameter VEC_LEN    = 4
 )(
-    // bus clock domain (AXI / MicroBlaze)
+    // bus clock domain (simplified register interface; AXI lives in the wrapper)
     input  wire                     bus_clk,
     input  wire                     bus_rst,
 
