@@ -1,31 +1,38 @@
-# Vector MAC Accelerator — AXI DMA, ROB, CDC & RTL-to-GDS
+# Vector MAC Accelerator
 
+AXI read DMA · RID-indexed ROB · dual-clock CDC · RTL-to-GDS
+
+<a id="vector-mac-accelerator--axi-dma-rob-cdc--rtl-to-gds"></a>
 <a id="project-overview"></a>
 
-A parameterized signed Vector MAC with AXI4-Lite control, a multi-outstanding
-AXI read DMA, and a RID-indexed reorder buffer. V3 delivers ordered operands
-across two asynchronous clock domains to a signed multiply/accumulate pipeline.
-The project combines RTL scoreboards, scoped formal proofs and CDC analysis
-with a completed Nangate45 OpenROAD RTL-to-GDS research implementation.
+A parameterized accelerator computes signed vector dot products. A
+multi-outstanding AXI read DMA and RID-indexed reorder buffer deliver ordered
+operands across independent bus and MAC clocks. The design includes a verified
+Nangate45 OpenROAD RTL-to-GDS research implementation.
 
-[Highlights](#engineering-highlights) · [Architecture](#architecture-and-design-decisions) ·
-[Optimizations](#measured-performance-optimizations) · [Physical implementation](#physical-implementation) ·
-[Verification](#verification-strategy) · [Run and reproduce](#reproduction-and-documentation)
+![V3 architecture: AXI-Lite control and DMA/ROB in the bus domain; A storage and operand pairing feed an asynchronous FIFO and MAC in the independent MAC domain.](docs/figures/architecture.svg)
 
 <a id="results-at-a-glance"></a>
 
 ## Engineering highlights
 
-| Measured accomplishment | Engineering contribution and measurement scope |
-|---|---|
-| **4.0× simulated MAC-feed utilization** — 6.78% → 27.21% | Overlap **1 → 8 outstanding AXI read bursts** while restoring operand order. V2/V3 simulation: 256 elements/vector, 16-beat bursts, 100-cycle first-beat latency. |
-| **26.36% synthesized QoR critical-path reduction** — 5.50 → 4.05 ns | Move address arithmetic off the AR output into handshake-updated address state. **OSU 0.18 µm DMA-block synthesis**, depth 8, same 100 MHz configuration. |
-| **53.59% pre-layout active dynamic power reduction** — 76.1114 → 35.3225 mW | Target clock gating to the A-operand buffer. **SAIF-driven OSU DMA-block estimate**, with identical baseline/gated activity files. |
-| **Full V3 RTL-to-GDS with positive extracted setup/hold slack and zero supported DRC violations** | **Nangate45 full top**, 29,175 standard cells, 40.552% standard-cell utilization; bus 10 ns / MAC 7.5 ns. OpenRCX extraction, independent OpenSTA and supported router/KLayout checks. |
+- **4.0× simulated MAC-feed utilization** — 6.78% → 27.21%.
+  V2/V3 simulation; operand delivery, not whole-system speedup.
+- **26.36% synthesized QoR critical-path reduction** — 5.50 → 4.05 ns.
+  OSU 0.18 µm DMA-block synthesis.
+- **53.59% pre-layout active dynamic power reduction** — 76.1114 → 35.3225 mW.
+  SAIF-driven OSU DMA-block estimate.
+- **Full V3 RTL-to-GDS** — 29,175 standard cells; 40.552% utilization;
+  positive extracted setup/hold slack; zero supported DRC violations.
+  Nangate45 full-top research implementation.
 
 The simulation comparison, OSU block experiments and Nangate45 full-top
 implementation answer different engineering questions. They are **not a
 matched-process PPA comparison**; no routed Nangate45 power reduction is claimed.
+
+[Highlights](#engineering-highlights) · [Architecture](#architecture-and-design-decisions) ·
+[Optimizations](#measured-performance-optimizations) · [Physical implementation](#physical-implementation) ·
+[Verification](#verification-strategy) · [Run and reproduce](#reproduction-and-documentation)
 
 <a id="architecture"></a>
 
@@ -33,8 +40,6 @@ matched-process PPA comparison**; no routed Nangate45 power reduction is claimed
 
 **Data flow:** AXI4-Lite control → AXI DMA / RID-indexed ROB → operand pairing →
 asynchronous FIFO → signed MAC pipeline → result CSR.
-
-![V3 architecture: AXI-Lite control and DMA/ROB in the bus domain; A storage and operand pairing feed an asynchronous FIFO and MAC in the independent MAC domain.](docs/figures/architecture.svg)
 
 V3 first fetches vector A into `buf_a`, then streams vector B and pairs each
 beat with stored A. The `{last,a,b}` stream crosses the FIFO into the MAC;
