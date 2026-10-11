@@ -27,6 +27,26 @@ for readability. Lower metal, vias and FEOL are omitted from this overview.*
 
 The timing uses extracted OpenRCX SPEF and propagated clocks, independently checked in standalone OpenSTA. These are single-corner research results at 1.1 V / 25 °C, with the preserved I/O/reset contract and zero clock uncertainty. Supported DRC success and timing margin do not establish foundry signoff, multi-corner closure, MTBF, RDC, or dynamic IR/EM.
 
+### Physical design decisions and trade-offs
+
+The configured inputs and repair guards below come from the accepted flow's
+[hashed templates/platform pins](pins.json). OpenROAD determined placement,
+clock-tree topology, sizing, repair cells and routes within that contract.
+
+| Configured input or guard | Tool behavior and demonstrated trade-off |
+|---|---|
+| [P3 configuration](templates/p3/config.mk): `CORE_UTILIZATION=40`, `PLACE_DENSITY_LB_ADDON=0.20`; timing-/routability-driven placement enabled | Utilization drives floorplan sizing; the density addon is a separate placer control. OpenROAD derives the row/site-aligned floorplan and optimizes placement. **40% is an input**, while **40.552% is final measured standard-cell utilization** after physical repair; an optimal density is not established. |
+| [SDC](templates/p2/constraint.sdc): bus 10 ns / MAC 7.5 ns, I/O min 0 / max 1 ns, no added uncertainty; targeted CDC bounds/exceptions | Timing repair operates under fixed budgets. Synchronizer interstages remain timed; asynchronous grouping does not blanket-exclude all crossings. Positive extracted margins apply to this single-corner contract. |
+| [Synchronizer guards](templates/p3/repair_guard_pre.tcl) and [checkpoint audits](templates/p3/repair_guard_post.tcl); `SKIP_GATE_CLONING=1` | Protection is temporarily released for physical repair/PG connections, then identities, direct chains and clock assignments are checked and protection restored. Physical repair freedom is constrained by retaining all 13 two-stage chains. |
+| Inherited Nangate45 [M1/M4/M7 PDN strategy](https://github.com/The-OpenROAD-Project/OpenROAD-flow-scripts/blob/e5ce907f878490bf9947347f4cd4b73e97451c80/flow/platforms/nangate45/grid_strategy-M1-M4-M7.tcl) | The platform supplies rail/strap geometry; PDN generation creates the shapes/connections. PG connectivity checks pass, but do not establish IR/EM performance. This is an inherited platform grid. |
+| [P4 configuration](templates/p4/config.mk): `HOLD_SLACK_MARGIN=0.05` ns; explicit [three-buffer antenna repair](templates/p4/insert_clock_antenna_buffers.py) | The 50 ps margin is an optimization target, not a relaxed SDC requirement. OpenROAD selects hold-repair cells and legalizes/reroutes the explicitly seeded clock-input buffers. The accepted outcome adds 406 hold buffers and three `CLKBUF_X3` cells, with area and capture-latency costs. |
+
+The measured 415.15 × 414.40 µm core and 417.39 × 417.39 µm die are
+floorplan outcomes, not manually entered dimensions in the design configs.
+[Results](RESULTS.md) and [matched-path hold analysis](HOLD_ANALYSIS.md) retain
+the measurements and changed worst endpoint. The archive records the settings
+and repair mechanics; it does not establish that these settings minimize PPA.
+
 ## Evidence and reproduction
 
 - [Measured PPA, clocks, timing and routing comparison](RESULTS.md)

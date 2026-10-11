@@ -47,7 +47,13 @@ installation, OpenROAD, extraction, LVS, or full physical acceptance. Historical
 formal/physical results remain recorded evidence. A passing lightweight job
 does not establish physical signoff or a fresh RTL-to-GDS replay.
 
-The published baseline commit `3e81562` completed the
-[GitHub-hosted workflow successfully](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38152191558).
-That run passed every check step. Local changes require a new hosted run after
-publication; the recorded baseline success is not a result for an unpushed revision.
+## Verified hosted results
+
+| Published commit | Hosted run | Verified result |
+|---|---|---|
+| [`5a45665`](https://github.com/szuwei-yeh/mac-accel-cdc/commit/5a456654b6847f50c89f4166355593a5f5427242) | [38171676828](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38171676828) | Completed successfully; every job/check step passed; job completed 2026-10-11 20:19:15 UTC |
+| [`3e81562`](https://github.com/szuwei-yeh/mac-accel-cdc/commit/3e815629718f3f1c9c8a1504cad0c7306ff95b91) | [38152191558](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38152191558) | Earlier published baseline; successful hosted run |
+
+The run and job records were checked through GitHub's public Actions API.
+These results belong to the listed commits. Local P10 changes require a new
+hosted run after publication; neither result is evidence for an unpushed revision.

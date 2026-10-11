@@ -146,7 +146,8 @@ See the [before/after engineering graphic](docs/figures/timing_optimization.svg)
 | Idle dynamic power | 71.6315 mW | **30.6423 mW (−57.22%)** |
 | Estimated energy per job | 221.870 nJ | **102.970 nJ** |
 
-Power Compiler gates only the **4096 `buf_a` bits in 256 16-bit banks**;
+Power Compiler gates only the **4,096 `buf_a` register bits**. In this experiment
+`buf_a` is an array of **256 16-bit storage entries**;
 control, ROB, FIFO, MAC and CDC logic are outside the gating scope. Baseline
 and gated designs consume identical active/idle SAIF files: a deterministic
 length-64 job, 40-cycle memory latency, OOO responses/backpressure, and a
@@ -156,6 +157,8 @@ its zero-area generic latch prevents a credible gating-area claim.
 
 See the [gating-scope graphic](docs/figures/power_comparison.svg) and
 [power methodology, coverage and results](syn/README.md#targeted-buf_a-clock-gating-experiment).
+The preserved graphic's “banks” label describes word-level clock gating;
+it does not establish independent memory banks in the RTL.
 
 **Block experiment boundary:** timing/power benchmarks target `mac_dma_rob`,
 depth 8, Design Compiler R-2020.09-SP4 and `osu018_stdcells.db`, with a 10 ns
@@ -212,6 +215,7 @@ SDCs remain byte-identical. This is measured checkpoint analysis with estimated
 versus extracted RC, not a same-RC counterfactual or a claim of improved skew.
 
 Continue with [matched-path hold decomposition](physical/HOLD_ANALYSIS.md),
+[physical design decisions and trade-offs](physical/README.md#physical-design-decisions-and-trade-offs),
 [detailed PPA, area/cell-count evolution and routing](physical/RESULTS.md),
 [routed-metal close-up](physical/README.md#routed-metal-detail), and
 [placement / power-grid views](physical/README.md#placement-and-power-distribution).
@@ -231,7 +235,7 @@ Standalone OpenSTA independently checks the final netlist, SDC and SPEF;
 | Whole-top OSU DC / PrimeTime | Mapped dual-clock timing, CDC connectivity and all 13 two-flop chains | Bus/MAC setup/hold: **0 violations** in a single-corner ideal-clock model; [coverage and timing](syn/whole_top/RESULTS.md) |
 | Nangate45 mapped / routed GLS | Targeted full-top integration on qualified functional cell models | Exact final routed netlist **7/7 PASS, zero-delay**; not SDF timing simulation or exhaustive equivalence |
 | Post-route independent STA / physical checks | Final Verilog/SDC/SPEF, annotation, clocks, CDC bounds, electrical checks and supported routing/GDS rules | Positive extracted setup/hold, zero supported DRC/antenna/electrical violations; [physical methodology](physical/METHODOLOGY.md) |
-| GitHub-hosted CI | Full-top/fast RTL, CDC matrix, syntax, validator unit tests and documentation/hash checks | Published commit `3e81562`: **[hosted run PASS](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38152191558)**; [workflow](.github/workflows/rtl-ci.yml), [local instructions](docs/CI.md) |
+| GitHub-hosted CI | Full-top/fast RTL, CDC matrix, syntax, validator unit tests and documentation/hash checks | Published commit `5a45665`: **[hosted run PASS](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38171676828)**; [workflow](.github/workflows/rtl-ci.yml), [local instructions](docs/CI.md) |
 
 Formal evidence establishes scoped control properties under its model; full
 V3 formal equivalence is not established. OSU whole-top PT worst setup slack
@@ -240,7 +244,7 @@ is **+5.114273 ns (bus) / +0.020727 ns (MAC)** and hold slack is
 pre-layout OSU model, not the routed Nangate45 result. OSU mapped GLS remains
 inconclusive due to cell-model unknown-state behavior, also seen in the baseline.
 
-The hosted result above is for the linked baseline commit. Lightweight CI does
+The hosted result above is for the linked published commit. Lightweight CI does
 not rerun formal, mapped GLS, synthesis or physical implementation.
 
 <a id="reproduction-and-limitations"></a>
