@@ -1,0 +1,225 @@
+{
+  "scope": "Presentation only; accepted measurements and original images unchanged. No EDA execution.",
+  "renderer": {
+    "matplotlib": "3.9.2",
+    "numpy": "1.26.4"
+  },
+  "stage_labels": {
+    "P2 synthesis": "Post-Synthesis",
+    "P3 placement": "Post-Placement",
+    "P3 CTS": "Post-CTS",
+    "P4 routed": "Post-Route"
+  },
+  "timing_models": {
+    "Post-Synthesis": "Pre-layout / ideal clocks",
+    "Post-Placement": "Estimated RC / ideal clocks",
+    "Post-CTS": "Estimated RC / propagated clocks",
+    "Post-Route": "Extracted RC / propagated clocks"
+  },
+  "inputs_sha256": {
+    "physical/summary.json": "bf1fceaec74e2c59b35f4fdc16ddcedc7ff1e8ea8a53b552d4eee0527c2bbbd5",
+    "physical/hold-analysis.json": "8cc7855a0b00cc3e157038b3d3a350ec402f202e6a7a8a0e7ed2e397730b631f",
+    "physical/figures/provenance.json": "358c4f5772720edcc76eb9341c7d717836c8140cd541cf92d5c0048c8a9d79d5",
+    "physical/figures/p9_provenance.json": "04749e7b8b8aa97d317ff2e5d3dd32233004ea1f6f081020bf7187f0e243d03e",
+    "docs/figures/power_comparison.svg": "1c8388edba32ba734c84540bfd7e58036c8059321d9bcf579315c172f1d98a67",
+    "syn/README.md": "c3e444bf2913ba3397d59e2f8bc949237e012f4abb947580e8a8b7956f45f964",
+    "rtl/mac_dma_rob.v": "38f18f58d541c70e5e2b97130e7dca0e1c74f5bffcd9cd74b24d3c2218ba0f32",
+    "scripts/render_presentation_figures.py": "15cdee03b160056819b5b7c5ee1a2a538643c3498d0cf6baff1fc5cec4b8bc4f",
+    "physical/figures/overview_dark.png": "0a82f80ca577d3043384e26e70070b99a4a126a47de710facfd5807004c1e3c9",
+    "physical/figures/routing_detail.png": "32e3f5c8c2640010840b83a9adcdf629a112da74f1567d6e1b5ebc793d6946c6",
+    "physical/figures/placement_overview.png": "862d1784ec6be9bbcc70540007c10f421d45fc14b5cf12719f68e045063b96d9",
+    "physical/figures/pdn_detail.png": "a945826b20eb52e6717b9590feb058ed8518fb9f3c71f3ec3c8766b41eb41bf0"
+  },
+  "accepted_artifact_sha256": {
+    "gds": "95caed6aa2ccf1bb26e4bf4c66650ac19d73eaf0c782bce882026f854efd2a2c",
+    "odb": "da0a5238841ab87abf09cc76ba9c42ed65dbfde563a276e1799289360cecf658"
+  },
+  "figures": {
+    "timing-stages-presentation.svg": {
+      "sha256": "772ff0ccd2ca78f04c6dec0bf63f1cdf47d9cca7761e0b675d075ab9f37fe34e",
+      "repository_path": "physical/figures/timing-stages-presentation.svg",
+      "method": "Replot unchanged accepted data",
+      "source": "physical/summary.json: stages[*].timing; ns setup, ps hold",
+      "caption": "Bus 10 ns / MAC 7.5 ns; all TNS = 0 ns.\nSynthesis: pre-layout / ideal clocks. Placement: estimated RC / ideal clocks.\nCTS: estimated RC / propagated clocks. Route: OpenRCX / propagated clocks.",
+      "plotted_values": {
+        "bus_clk_max": [
+          8.157001,
+          7.995377,
+          7.660461,
+          7.583547
+        ],
+        "mac_clk_max": [
+          6.065259,
+          6.016321,
+          6.010626,
+          6.012479
+        ],
+        "bus_clk_min": [
+          59.436,
+          75.788,
+          0.954,
+          71.475
+        ],
+        "mac_clk_min": [
+          80.31,
+          80.5,
+          83.037,
+          82.81099999999999
+        ]
+      }
+    },
+    "area-stages-presentation.svg": {
+      "sha256": "5371a11954fc504cbafc4016a6ec750b657f13f5261c1506461809c0ed2517d2",
+      "repository_path": "physical/figures/area-stages-presentation.svg",
+      "method": "Replot unchanged accepted data",
+      "source": "physical/summary.json: stages[*].standard_area_um2 and standard_cells",
+      "caption": "Taps/fillers excluded. Core = 172,038.160 µm².\nCounts include functional clock buffers, CTS dummy loads and hold buffers.",
+      "plotted_values": {
+        "standard_area_um2": [
+          69018.754,
+          66592.834,
+          69436.374,
+          69764.352
+        ],
+        "standard_cells": [
+          27199,
+          26012,
+          28766,
+          29175
+        ]
+      }
+    },
+    "hold-path-contributions-presentation.svg": {
+      "sha256": "0619b2efefb6e50077e84e9571bd5bb446137bee680fc2e3d6562cf5a8a7a2df",
+      "repository_path": "physical/figures/hold-path-contributions-presentation.svg",
+      "method": "Replot unchanged accepted data",
+      "source": "physical/hold-analysis.json: comparisons[p3_worst,final_worst].deltas_ns × 1000",
+      "caption": "Matched input → D-pin paths: Post-CTS to Post-Route; estimated → extracted RC.\nCapture-clock / library-hold increases subtract from hold slack.\nDifferent worst endpoints; observational analysis, not a same-RC experiment.",
+      "plotted_values": {
+        "p3_worst": [
+          159.695,
+          0.323,
+          -71.61,
+          0.031,
+          88.43900000000001
+        ],
+        "final_worst": [
+          137.89100000000002,
+          -0.877,
+          -71.035,
+          0.121,
+          66.10000000000001
+        ]
+      }
+    },
+    "power-gating-presentation.svg": {
+      "sha256": "9c69abe51e2e1a67f4e47fee918176b20fd3c01f84fd7abd83dfa1cd2c7dbf76",
+      "repository_path": "docs/figures/power-gating-presentation.svg",
+      "method": "Replot unchanged accepted data",
+      "source": "syn/README.md: accepted SAIF power table; original docs/figures/power_comparison.svg preserved",
+      "caption": "Estimated energy/job: 221.870 → 102.970 nJ.\nIdentical deterministic active/idle SAIF files; 40-cycle memory latency.\nPre-layout estimates; no CTS, extracted power or Nangate45 power claim.",
+      "plotted_values": {
+        "active_dynamic_mw": [
+          76.1114,
+          35.3225
+        ],
+        "idle_dynamic_mw": [
+          71.6315,
+          30.6423
+        ],
+        "energy_per_job_nj": [
+          221.87,
+          102.97
+        ]
+      }
+    },
+    "routed-overview-presentation.svg": {
+      "sha256": "1dea4f81c90c42052862dc9d877ebf8aa69e09da9bf6420d7c91244db36a67b6",
+      "repository_path": "physical/figures/routed-overview-presentation.svg",
+      "method": "SVG composition of exact accepted PNG raster body with new outer text strips; no geometry re-render",
+      "source": "physical/figures/overview_dark.png",
+      "source_sha256": "0a82f80ca577d3043384e26e70070b99a4a126a47de710facfd5807004c1e3c9",
+      "preserved_body_pixels": {
+        "x": 0,
+        "y": 200,
+        "width": 2200,
+        "height": 2180
+      },
+      "source_geometry": "Accepted final P4 GDS",
+      "visible_geometry": "M3–M7 metal; lower metal, vias and FEOL omitted",
+      "window": "Full die: 417.39 × 417.39 µm",
+      "title": "Vector MAC V3 | Final routed layout",
+      "subtitle": "Nangate45 | M3–M7 | Die: 417.39 × 417.39 µm",
+      "footer": [
+        "Accepted post-route GDS • selected routing layers • full die physical coordinates",
+        "mac_accel_dma_rob_top • actual accepted geometry • source rendered in KLayout 0.28.17"
+      ]
+    },
+    "routing-detail-presentation.svg": {
+      "sha256": "47f7f52b2375240b2929f79ae4559291f0869ccc33a149a10936ab0199abc44d",
+      "repository_path": "physical/figures/routing-detail-presentation.svg",
+      "method": "SVG composition of exact accepted PNG raster body with new outer text strips; no geometry re-render",
+      "source": "physical/figures/routing_detail.png",
+      "source_sha256": "32e3f5c8c2640010840b83a9adcdf629a112da74f1567d6e1b5ebc793d6946c6",
+      "preserved_body_pixels": {
+        "x": 0,
+        "y": 200,
+        "width": 2200,
+        "height": 2180
+      },
+      "source_geometry": "Accepted final P4 GDS",
+      "visible_geometry": "M1–M5 metal and V1–V4 via cuts",
+      "window": "x/y = 195–225 µm; 30 × 30 µm window",
+      "title": "Vector MAC V3 | Routed-metal detail",
+      "subtitle": "Post-Route GDS | M1–M5 and V1–V4 | 30 × 30 µm window",
+      "footer": [
+        "Accepted post-route GDS • x = 195–225 µm; y = 195–225 µm • selected layers",
+        "mac_accel_dma_rob_top • actual accepted geometry • source rendered in KLayout 0.28.17"
+      ]
+    },
+    "placement-power-presentation.svg": {
+      "sha256": "0a0de30e31543c6c88197c3e885ffa60e8ec59be97dc67d13825e3b6cae323dc",
+      "repository_path": "physical/figures/placement-power-presentation.svg",
+      "method": "SVG composition of exact accepted PNG raster body with new outer text strips; no geometry re-render",
+      "source": "physical/figures/placement_overview.png",
+      "source_sha256": "862d1784ec6be9bbcc70540007c10f421d45fc14b5cf12719f68e045063b96d9",
+      "preserved_body_pixels": {
+        "x": 0,
+        "y": 200,
+        "width": 2200,
+        "height": 2180
+      },
+      "source_geometry": "Accepted final P4 ODB",
+      "visible_geometry": "Standard-cell footprints plus power-only M1 rails, M4/M7 straps; taps/fillers omitted",
+      "window": "Full die; signal routes not displayed",
+      "title": "Vector MAC V3 | Placement and power grid",
+      "subtitle": "Post-Route ODB | 29,175 cell footprints | Power-only M1 / M4 / M7",
+      "footer": [
+        "Accepted final ODB • exact cell footprints and power shapes; fillers / taps omitted",
+        "mac_accel_dma_rob_top • signal routes not displayed • no IR/EM inference"
+      ]
+    },
+    "power-grid-detail-presentation.svg": {
+      "sha256": "36e7917aa12ee025427fdf307189477e24008d95a31130e9c39ea9e99a735670",
+      "repository_path": "physical/figures/power-grid-detail-presentation.svg",
+      "method": "SVG composition of exact accepted PNG raster body with new outer text strips; no geometry re-render",
+      "source": "physical/figures/pdn_detail.png",
+      "source_sha256": "a945826b20eb52e6717b9590feb058ed8518fb9f3c71f3ec3c8766b41eb41bf0",
+      "preserved_body_pixels": {
+        "x": 0,
+        "y": 200,
+        "width": 2200,
+        "height": 2180
+      },
+      "source_geometry": "Accepted final P4 ODB",
+      "visible_geometry": "Cell footprints and power-only M1/M4/M7 shapes; signal routes not displayed",
+      "window": "x = 170–230 µm, y = 195–255 µm; 60 × 60 µm window",
+      "title": "Vector MAC V3 | Cells and power-grid detail",
+      "subtitle": "Post-Route ODB | Cell footprints and power shapes | 60 × 60 µm window",
+      "footer": [
+        "Accepted final ODB • x = 170–230 µm; y = 195–255 µm • power-only view",
+        "mac_accel_dma_rob_top • signal routes not displayed • no IR/EM inference"
+      ]
+    }
+  }
+}

@@ -49,8 +49,7 @@ syn/
 Run from the repository root on the UCSB ECE server:
 
 ```bash
-cd /fs/student/szu-wei/work/mac-accel-cdc
-
+# Start in your local repository root.
 MAX_OUTSTANDING=8 \
 RUN_ID=mac_dma_rob_mo8_10ns \
 bash syn/run_baseline_dc.sh
@@ -188,7 +187,9 @@ set_clock_gating_style \
     -control_point none
 ```
 
-This produced 256 independent 16-bit banks and gated exactly 4096 registers.
+This gated exactly 4096 registers in the 256-entry, 16-bit `buf_a` array.
+The [RTL declaration](../rtl/mac_dma_rob.v) defines storage entries, not
+256 independent memory banks. The style above controls clock-gating grouping.
 No ROB, control, CDC, or other buffer register was gated. The correct wording
 is **synthesis-inserted latch-based clock gating using discrete LATCH + AND
 cells**. `osu018_stdcells.db` has no dedicated integrated clock-gating cell.

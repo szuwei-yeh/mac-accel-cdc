@@ -1,0 +1,41 @@
+name: Lightweight RTL and portfolio checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rtl-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rtl-and-docs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6.1.0
+        with:
+          python-version: '3.12'
+      - name: Install Icarus Verilog
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y iverilog
+      - name: V3 full top and fast RTL regressions
+        run: python3 scripts/run_ci_rtl.py
+      - name: Supplemental dual-clock CDC matrix
+        run: python3 sim/run_cdc_regression.py --simulator iverilog
+      - name: Check Python syntax
+        run: python3 scripts/check_portfolio.py --python-syntax
+      - name: Self-contained acceptance unit tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Check documentation and preserved source hashes
+        run: python3 scripts/check_portfolio.py
