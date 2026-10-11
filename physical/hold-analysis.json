@@ -1,0 +1,4323 @@
+{
+  "method": "Read-only native STA on preserved ODB/SDC/SPEF; same input/D-pin pairs; 6-digit ns report precision. Source-port cell_type is ignored; cells are identified only at cell-pin arcs.",
+  "checkpoint_changes": [
+    {
+      "before": "cts",
+      "after": "grt_hold50",
+      "added_standard": [
+        "hold3435",
+        "hold3436",
+        "hold3437",
+        "hold3438",
+        "hold3439",
+        "hold3440",
+        "hold3441",
+        "hold3442",
+        "hold3443",
+        "hold3444",
+        "hold3445",
+        "hold3446",
+        "hold3447",
+        "hold3448",
+        "hold3449",
+        "hold3450",
+        "hold3451",
+        "hold3452",
+        "hold3453",
+        "hold3454",
+        "hold3455",
+        "hold3456",
+        "hold3457",
+        "hold3458",
+        "hold3459",
+        "hold3460",
+        "hold3461",
+        "hold3462",
+        "hold3463",
+        "hold3464",
+        "hold3465",
+        "hold3466",
+        "hold3467",
+        "hold3468",
+        "hold3469",
+        "hold3470",
+        "hold3471",
+        "hold3472",
+        "hold3473",
+        "hold3474",
+        "hold3475",
+        "hold3476",
+        "hold3477",
+        "hold3478",
+        "hold3479",
+        "hold3480",
+        "hold3481",
+        "hold3482",
+        "hold3483",
+        "hold3484",
+        "hold3485",
+        "hold3486",
+        "hold3487",
+        "hold3488",
+        "hold3489",
+        "hold3490",
+        "hold3491",
+        "hold3492",
+        "hold3493",
+        "hold3494",
+        "hold3495",
+        "hold3496",
+        "hold3497",
+        "hold3498",
+        "hold3499",
+        "hold3500",
+        "hold3501",
+        "hold3502",
+        "hold3503",
+        "hold3504",
+        "hold3505",
+        "hold3506",
+        "hold3507",
+        "hold3508",
+        "hold3509",
+        "hold3510",
+        "hold3511",
+        "hold3512",
+        "hold3513",
+        "hold3514",
+        "hold3515",
+        "hold3516",
+        "hold3517",
+        "hold3518",
+        "hold3519",
+        "hold3520",
+        "hold3521",
+        "hold3522",
+        "hold3523",
+        "hold3524",
+        "hold3525",
+        "hold3526",
+        "hold3527",
+        "hold3528",
+        "hold3529",
+        "hold3530",
+        "hold3531",
+        "hold3532",
+        "hold3533",
+        "hold3534",
+        "hold3535",
+        "hold3536",
+        "hold3537",
+        "hold3538",
+        "hold3539",
+        "hold3540",
+        "hold3541",
+        "hold3542",
+        "hold3543",
+        "hold3544",
+        "hold3545",
+        "hold3546",
+        "hold3547",
+        "hold3548",
+        "hold3549",
+        "hold3550",
+        "hold3551",
+        "hold3552",
+        "hold3553",
+        "hold3554",
+        "hold3555",
+        "hold3556",
+        "hold3557",
+        "hold3558",
+        "hold3559",
+        "hold3560",
+        "hold3561",
+        "hold3562",
+        "hold3563",
+        "hold3564",
+        "hold3565",
+        "hold3566",
+        "hold3567",
+        "hold3568",
+        "hold3569"
+      ],
+      "added_holds": [
+        "hold3435",
+        "hold3436",
+        "hold3437",
+        "hold3438",
+        "hold3439",
+        "hold3440",
+        "hold3441",
+        "hold3442",
+        "hold3443",
+        "hold3444",
+        "hold3445",
+        "hold3446",
+        "hold3447",
+        "hold3448",
+        "hold3449",
+        "hold3450",
+        "hold3451",
+        "hold3452",
+        "hold3453",
+        "hold3454",
+        "hold3455",
+        "hold3456",
+        "hold3457",
+        "hold3458",
+        "hold3459",
+        "hold3460",
+        "hold3461",
+        "hold3462",
+        "hold3463",
+        "hold3464",
+        "hold3465",
+        "hold3466",
+        "hold3467",
+        "hold3468",
+        "hold3469",
+        "hold3470",
+        "hold3471",
+        "hold3472",
+        "hold3473",
+        "hold3474",
+        "hold3475",
+        "hold3476",
+        "hold3477",
+        "hold3478",
+        "hold3479",
+        "hold3480",
+        "hold3481",
+        "hold3482",
+        "hold3483",
+        "hold3484",
+        "hold3485",
+        "hold3486",
+        "hold3487",
+        "hold3488",
+        "hold3489",
+        "hold3490",
+        "hold3491",
+        "hold3492",
+        "hold3493",
+        "hold3494",
+        "hold3495",
+        "hold3496",
+        "hold3497",
+        "hold3498",
+        "hold3499",
+        "hold3500",
+        "hold3501",
+        "hold3502",
+        "hold3503",
+        "hold3504",
+        "hold3505",
+        "hold3506",
+        "hold3507",
+        "hold3508",
+        "hold3509",
+        "hold3510",
+        "hold3511",
+        "hold3512",
+        "hold3513",
+        "hold3514",
+        "hold3515",
+        "hold3516",
+        "hold3517",
+        "hold3518",
+        "hold3519",
+        "hold3520",
+        "hold3521",
+        "hold3522",
+        "hold3523",
+        "hold3524",
+        "hold3525",
+        "hold3526",
+        "hold3527",
+        "hold3528",
+        "hold3529",
+        "hold3530",
+        "hold3531",
+        "hold3532",
+        "hold3533",
+        "hold3534",
+        "hold3535",
+        "hold3536",
+        "hold3537",
+        "hold3538",
+        "hold3539",
+        "hold3540",
+        "hold3541",
+        "hold3542",
+        "hold3543",
+        "hold3544",
+        "hold3545",
+        "hold3546",
+        "hold3547",
+        "hold3548",
+        "hold3549",
+        "hold3550",
+        "hold3551",
+        "hold3552",
+        "hold3553",
+        "hold3554",
+        "hold3555",
+        "hold3556",
+        "hold3557",
+        "hold3558",
+        "hold3559",
+        "hold3560",
+        "hold3561",
+        "hold3562",
+        "hold3563",
+        "hold3564",
+        "hold3565",
+        "hold3566",
+        "hold3567",
+        "hold3568",
+        "hold3569"
+      ],
+      "removed_standard": [],
+      "resized": [],
+      "moved_standard": 327
+    },
+    {
+      "before": "grt_hold50",
+      "after": "route_hold50",
+      "added_standard": [],
+      "added_holds": [],
+      "removed_standard": [],
+      "resized": [],
+      "moved_standard": 0
+    },
+    {
+      "before": "route_hold50",
+      "after": "grt_split3",
+      "added_standard": [
+        "antenna_busclk_0",
+        "antenna_busclk_1",
+        "antenna_busclk_2",
+        "hold3570",
+        "hold3571",
+        "hold3572",
+        "hold3573",
+        "hold3574",
+        "hold3575",
+        "hold3576",
+        "hold3577",
+        "hold3578",
+        "hold3579",
+        "hold3580",
+        "hold3581",
+        "hold3582",
+        "hold3583",
+        "hold3584",
+        "hold3585",
+        "hold3586",
+        "hold3587",
+        "hold3588",
+        "hold3589",
+        "hold3590",
+        "hold3591",
+        "hold3592",
+        "hold3593",
+        "hold3594",
+        "hold3595",
+        "hold3596",
+        "hold3597",
+        "hold3598",
+        "hold3599",
+        "hold3600",
+        "hold3601",
+        "hold3602",
+        "hold3603",
+        "hold3604",
+        "hold3605",
+        "hold3606",
+        "hold3607",
+        "hold3608",
+        "hold3609",
+        "hold3610",
+        "hold3611",
+        "hold3612",
+        "hold3613",
+        "hold3614",
+        "hold3615",
+        "hold3616",
+        "hold3617",
+        "hold3618",
+        "hold3619",
+        "hold3620",
+        "hold3621",
+        "hold3622",
+        "hold3623",
+        "hold3624",
+        "hold3625",
+        "hold3626",
+        "hold3627",
+        "hold3628",
+        "hold3629",
+        "hold3630",
+        "hold3631",
+        "hold3632",
+        "hold3633",
+        "hold3634",
+        "hold3635",
+        "hold3636",
+        "hold3637",
+        "hold3638",
+        "hold3639",
+        "hold3640",
+        "hold3641",
+        "hold3642",
+        "hold3643",
+        "hold3644",
+        "hold3645",
+        "hold3646",
+        "hold3647",
+        "hold3648",
+        "hold3649",
+        "hold3650",
+        "hold3651",
+        "hold3652",
+        "hold3653",
+        "hold3654",
+        "hold3655",
+        "hold3656",
+        "hold3657",
+        "hold3658",
+        "hold3659",
+        "hold3660",
+        "hold3661",
+        "hold3662",
+        "hold3663",
+        "hold3664",
+        "hold3665",
+        "hold3666",
+        "hold3667",
+        "hold3668",
+        "hold3669",
+        "hold3670",
+        "hold3671",
+        "hold3672",
+        "hold3673",
+        "hold3674",
+        "hold3675",
+        "hold3676",
+        "hold3677",
+        "hold3678",
+        "hold3679",
+        "hold3680",
+        "hold3681",
+        "hold3682",
+        "hold3683",
+        "hold3684",
+        "hold3685",
+        "hold3686",
+        "hold3687",
+        "hold3688",
+        "hold3689",
+        "hold3690",
+        "hold3691",
+        "hold3692",
+        "hold3693",
+        "hold3694",
+        "hold3695",
+        "hold3696",
+        "hold3697",
+        "hold3698",
+        "hold3699",
+        "hold3700",
+        "hold3701",
+        "hold3702",
+        "hold3703",
+        "hold3704",
+        "hold3705",
+        "hold3706",
+        "hold3707",
+        "hold3708",
+        "hold3709",
+        "hold3710",
+        "hold3711",
+        "hold3712",
+        "hold3713",
+        "hold3714",
+        "hold3715",
+        "hold3716",
+        "hold3717",
+        "hold3718",
+        "hold3719",
+        "hold3720",
+        "hold3721",
+        "hold3722",
+        "hold3723",
+        "hold3724",
+        "hold3725",
+        "hold3726",
+        "hold3727",
+        "hold3728",
+        "hold3729",
+        "hold3730",
+        "hold3731",
+        "hold3732",
+        "hold3733",
+        "hold3734",
+        "hold3735",
+        "hold3736",
+        "hold3737",
+        "hold3738",
+        "hold3739",
+        "hold3740",
+        "hold3741",
+        "hold3742",
+        "hold3743",
+        "hold3744",
+        "hold3745",
+        "hold3746",
+        "hold3747",
+        "hold3748",
+        "hold3749",
+        "hold3750",
+        "hold3751",
+        "hold3752",
+        "hold3753",
+        "hold3754",
+        "hold3755",
+        "hold3756",
+        "hold3757",
+        "hold3758",
+        "hold3759",
+        "hold3760",
+        "hold3761",
+        "hold3762",
+        "hold3763",
+        "hold3764",
+        "hold3765",
+        "hold3766",
+        "hold3767",
+        "hold3768",
+        "hold3769",
+        "hold3770",
+        "hold3771",
+        "hold3772",
+        "hold3773",
+        "hold3774",
+        "hold3775",
+        "hold3776",
+        "hold3777",
+        "hold3778",
+        "hold3779",
+        "hold3780",
+        "hold3781",
+        "hold3782",
+        "hold3783",
+        "hold3784",
+        "hold3785",
+        "hold3786",
+        "hold3787",
+        "hold3788",
+        "hold3789",
+        "hold3790",
+        "hold3791",
+        "hold3792",
+        "hold3793",
+        "hold3794",
+        "hold3795",
+        "hold3796",
+        "hold3797",
+        "hold3798",
+        "hold3799",
+        "hold3800",
+        "hold3801",
+        "hold3802",
+        "hold3803",
+        "hold3804",
+        "hold3805",
+        "hold3806",
+        "hold3807",
+        "hold3808",
+        "hold3809",
+        "hold3810",
+        "hold3811",
+        "hold3812",
+        "hold3813",
+        "hold3814",
+        "hold3815",
+        "hold3816",
+        "hold3817",
+        "hold3818",
+        "hold3819",
+        "hold3820",
+        "hold3821",
+        "hold3822",
+        "hold3823",
+        "hold3824",
+        "hold3825",
+        "hold3826",
+        "hold3827",
+        "hold3828",
+        "hold3829",
+        "hold3830",
+        "hold3831",
+        "hold3832",
+        "hold3833",
+        "hold3834",
+        "hold3835",
+        "hold3836",
+        "hold3837",
+        "hold3838",
+        "hold3839",
+        "hold3840"
+      ],
+      "added_holds": [
+        "hold3570",
+        "hold3571",
+        "hold3572",
+        "hold3573",
+        "hold3574",
+        "hold3575",
+        "hold3576",
+        "hold3577",
+        "hold3578",
+        "hold3579",
+        "hold3580",
+        "hold3581",
+        "hold3582",
+        "hold3583",
+        "hold3584",
+        "hold3585",
+        "hold3586",
+        "hold3587",
+        "hold3588",
+        "hold3589",
+        "hold3590",
+        "hold3591",
+        "hold3592",
+        "hold3593",
+        "hold3594",
+        "hold3595",
+        "hold3596",
+        "hold3597",
+        "hold3598",
+        "hold3599",
+        "hold3600",
+        "hold3601",
+        "hold3602",
+        "hold3603",
+        "hold3604",
+        "hold3605",
+        "hold3606",
+        "hold3607",
+        "hold3608",
+        "hold3609",
+        "hold3610",
+        "hold3611",
+        "hold3612",
+        "hold3613",
+        "hold3614",
+        "hold3615",
+        "hold3616",
+        "hold3617",
+        "hold3618",
+        "hold3619",
+        "hold3620",
+        "hold3621",
+        "hold3622",
+        "hold3623",
+        "hold3624",
+        "hold3625",
+        "hold3626",
+        "hold3627",
+        "hold3628",
+        "hold3629",
+        "hold3630",
+        "hold3631",
+        "hold3632",
+        "hold3633",
+        "hold3634",
+        "hold3635",
+        "hold3636",
+        "hold3637",
+        "hold3638",
+        "hold3639",
+        "hold3640",
+        "hold3641",
+        "hold3642",
+        "hold3643",
+        "hold3644",
+        "hold3645",
+        "hold3646",
+        "hold3647",
+        "hold3648",
+        "hold3649",
+        "hold3650",
+        "hold3651",
+        "hold3652",
+        "hold3653",
+        "hold3654",
+        "hold3655",
+        "hold3656",
+        "hold3657",
+        "hold3658",
+        "hold3659",
+        "hold3660",
+        "hold3661",
+        "hold3662",
+        "hold3663",
+        "hold3664",
+        "hold3665",
+        "hold3666",
+        "hold3667",
+        "hold3668",
+        "hold3669",
+        "hold3670",
+        "hold3671",
+        "hold3672",
+        "hold3673",
+        "hold3674",
+        "hold3675",
+        "hold3676",
+        "hold3677",
+        "hold3678",
+        "hold3679",
+        "hold3680",
+        "hold3681",
+        "hold3682",
+        "hold3683",
+        "hold3684",
+        "hold3685",
+        "hold3686",
+        "hold3687",
+        "hold3688",
+        "hold3689",
+        "hold3690",
+        "hold3691",
+        "hold3692",
+        "hold3693",
+        "hold3694",
+        "hold3695",
+        "hold3696",
+        "hold3697",
+        "hold3698",
+        "hold3699",
+        "hold3700",
+        "hold3701",
+        "hold3702",
+        "hold3703",
+        "hold3704",
+        "hold3705",
+        "hold3706",
+        "hold3707",
+        "hold3708",
+        "hold3709",
+        "hold3710",
+        "hold3711",
+        "hold3712",
+        "hold3713",
+        "hold3714",
+        "hold3715",
+        "hold3716",
+        "hold3717",
+        "hold3718",
+        "hold3719",
+        "hold3720",
+        "hold3721",
+        "hold3722",
+        "hold3723",
+        "hold3724",
+        "hold3725",
+        "hold3726",
+        "hold3727",
+        "hold3728",
+        "hold3729",
+        "hold3730",
+        "hold3731",
+        "hold3732",
+        "hold3733",
+        "hold3734",
+        "hold3735",
+        "hold3736",
+        "hold3737",
+        "hold3738",
+        "hold3739",
+        "hold3740",
+        "hold3741",
+        "hold3742",
+        "hold3743",
+        "hold3744",
+        "hold3745",
+        "hold3746",
+        "hold3747",
+        "hold3748",
+        "hold3749",
+        "hold3750",
+        "hold3751",
+        "hold3752",
+        "hold3753",
+        "hold3754",
+        "hold3755",
+        "hold3756",
+        "hold3757",
+        "hold3758",
+        "hold3759",
+        "hold3760",
+        "hold3761",
+        "hold3762",
+        "hold3763",
+        "hold3764",
+        "hold3765",
+        "hold3766",
+        "hold3767",
+        "hold3768",
+        "hold3769",
+        "hold3770",
+        "hold3771",
+        "hold3772",
+        "hold3773",
+        "hold3774",
+        "hold3775",
+        "hold3776",
+        "hold3777",
+        "hold3778",
+        "hold3779",
+        "hold3780",
+        "hold3781",
+        "hold3782",
+        "hold3783",
+        "hold3784",
+        "hold3785",
+        "hold3786",
+        "hold3787",
+        "hold3788",
+        "hold3789",
+        "hold3790",
+        "hold3791",
+        "hold3792",
+        "hold3793",
+        "hold3794",
+        "hold3795",
+        "hold3796",
+        "hold3797",
+        "hold3798",
+        "hold3799",
+        "hold3800",
+        "hold3801",
+        "hold3802",
+        "hold3803",
+        "hold3804",
+        "hold3805",
+        "hold3806",
+        "hold3807",
+        "hold3808",
+        "hold3809",
+        "hold3810",
+        "hold3811",
+        "hold3812",
+        "hold3813",
+        "hold3814",
+        "hold3815",
+        "hold3816",
+        "hold3817",
+        "hold3818",
+        "hold3819",
+        "hold3820",
+        "hold3821",
+        "hold3822",
+        "hold3823",
+        "hold3824",
+        "hold3825",
+        "hold3826",
+        "hold3827",
+        "hold3828",
+        "hold3829",
+        "hold3830",
+        "hold3831",
+        "hold3832",
+        "hold3833",
+        "hold3834",
+        "hold3835",
+        "hold3836",
+        "hold3837",
+        "hold3838",
+        "hold3839",
+        "hold3840"
+      ],
+      "removed_standard": [],
+      "resized": [],
+      "moved_standard": 493
+    },
+    {
+      "before": "grt_split3",
+      "after": "final",
+      "added_standard": [],
+      "added_holds": [],
+      "removed_standard": [],
+      "resized": [],
+      "moved_standard": 0
+    }
+  ],
+  "paths": [
+    {
+      "stage": "p3_cts_qualified",
+      "id": "domain_worst",
+      "startpoint": "M_AXI_RDATA[6]",
+      "endpoint": "u_dma.u_read_engine.rob_data[52][6]$_DFFE_PP_/D",
+      "slack_ns": 0.000954,
+      "data_arrival_ns": 0.347048,
+      "required_ns": 0.346094,
+      "capture_clock_early_ns": 0.337208,
+      "clock_to_required_delta_ns": 0.008886000000000005,
+      "cell_delay_ns": 0.344582,
+      "wire_delay_ns": 0.002466,
+      "hold_chain": [
+        "hold3098",
+        "hold3095",
+        "hold3099",
+        "hold3100",
+        "hold3096",
+        "hold3101"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3098",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.048097
+        },
+        {
+          "instance": "hold3095",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027129
+        },
+        {
+          "instance": "hold3099",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02638299999999999
+        },
+        {
+          "instance": "input34",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.02552299999999999
+        },
+        {
+          "instance": "hold3100",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.034306
+        },
+        {
+          "instance": "hold3096",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.05133499999999999
+        },
+        {
+          "instance": "hold3101",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.08673800000000001
+        },
+        {
+          "instance": "_44159_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04507099999999997
+        }
+      ]
+    },
+    {
+      "stage": "p3_cts_qualified",
+      "id": "p3_worst",
+      "startpoint": "M_AXI_RDATA[6]",
+      "endpoint": "u_dma.u_read_engine.rob_data[52][6]$_DFFE_PP_/D",
+      "slack_ns": 0.000954,
+      "data_arrival_ns": 0.347048,
+      "required_ns": 0.346094,
+      "capture_clock_early_ns": 0.337208,
+      "clock_to_required_delta_ns": 0.008886000000000005,
+      "cell_delay_ns": 0.344582,
+      "wire_delay_ns": 0.002466,
+      "hold_chain": [
+        "hold3098",
+        "hold3095",
+        "hold3099",
+        "hold3100",
+        "hold3096",
+        "hold3101"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3098",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.048097
+        },
+        {
+          "instance": "hold3095",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027129
+        },
+        {
+          "instance": "hold3099",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02638299999999999
+        },
+        {
+          "instance": "input34",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.02552299999999999
+        },
+        {
+          "instance": "hold3100",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.034306
+        },
+        {
+          "instance": "hold3096",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.05133499999999999
+        },
+        {
+          "instance": "hold3101",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.08673800000000001
+        },
+        {
+          "instance": "_44159_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04507099999999997
+        }
+      ]
+    },
+    {
+      "stage": "p3_cts_qualified",
+      "id": "first_grt_worst",
+      "startpoint": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[56][0]$_DFFE_PP_/D",
+      "slack_ns": 0.019773,
+      "data_arrival_ns": 0.363466,
+      "required_ns": 0.343693,
+      "capture_clock_early_ns": 0.334764,
+      "clock_to_required_delta_ns": 0.00892900000000002,
+      "cell_delay_ns": 0.361221,
+      "wire_delay_ns": 0.002245,
+      "hold_chain": [
+        "hold3118",
+        "hold3112",
+        "hold3119",
+        "hold3120",
+        "hold3113"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3118",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.051832
+        },
+        {
+          "instance": "hold3112",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.030724999999999995
+        },
+        {
+          "instance": "hold3119",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029501
+        },
+        {
+          "instance": "input22",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.020914000000000002
+        },
+        {
+          "instance": "hold3120",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026781
+        },
+        {
+          "instance": "hold3113",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.07749800000000001
+        },
+        {
+          "instance": "place2838",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.077822
+        },
+        {
+          "instance": "_44270_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04614800000000002
+        }
+      ]
+    },
+    {
+      "stage": "p3_cts_qualified",
+      "id": "first_route_worst",
+      "startpoint": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[59][0]$_DFFE_PP_/D",
+      "slack_ns": 0.019772,
+      "data_arrival_ns": 0.363497,
+      "required_ns": 0.343725,
+      "capture_clock_early_ns": 0.334865,
+      "clock_to_required_delta_ns": 0.008859999999999979,
+      "cell_delay_ns": 0.360781,
+      "wire_delay_ns": 0.002716,
+      "hold_chain": [
+        "hold3118",
+        "hold3112",
+        "hold3119",
+        "hold3120",
+        "hold3113"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3118",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.051832
+        },
+        {
+          "instance": "hold3112",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.030724999999999995
+        },
+        {
+          "instance": "hold3119",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029501
+        },
+        {
+          "instance": "input22",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.020914000000000002
+        },
+        {
+          "instance": "hold3120",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026781
+        },
+        {
+          "instance": "hold3113",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.07749800000000001
+        },
+        {
+          "instance": "place2838",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.077822
+        },
+        {
+          "instance": "_44356_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.045708000000000026
+        }
+      ]
+    },
+    {
+      "stage": "p3_cts_qualified",
+      "id": "second_grt_worst",
+      "startpoint": "M_AXI_RDATA[8]",
+      "endpoint": "u_dma.u_read_engine.rob_data[30][8]$_DFFE_PP_/D",
+      "slack_ns": 0.008448,
+      "data_arrival_ns": 0.352615,
+      "required_ns": 0.344167,
+      "capture_clock_early_ns": 0.335506,
+      "clock_to_required_delta_ns": 0.008660999999999974,
+      "cell_delay_ns": 0.349171,
+      "wire_delay_ns": 0.003444,
+      "hold_chain": [
+        "hold3142",
+        "hold3138",
+        "hold3135",
+        "hold3139",
+        "hold3140",
+        "hold3136",
+        "hold3137"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3142",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.048983000000000006
+        },
+        {
+          "instance": "hold3138",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029408000000000004
+        },
+        {
+          "instance": "hold3135",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028524000000000008
+        },
+        {
+          "instance": "hold3139",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028655999999999987
+        },
+        {
+          "instance": "input36",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.026112999999999997
+        },
+        {
+          "instance": "hold3140",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.034231999999999985
+        },
+        {
+          "instance": "hold3136",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.08180900000000002
+        },
+        {
+          "instance": "_43519_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.044213
+        },
+        {
+          "instance": "hold3137",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027233000000000007
+        }
+      ]
+    },
+    {
+      "stage": "p3_cts_qualified",
+      "id": "final_worst",
+      "startpoint": "M_AXI_RDATA[1]",
+      "endpoint": "u_dma.u_read_engine.rob_data[37][1]$_DFFE_PP_/D",
+      "slack_ns": 0.005375,
+      "data_arrival_ns": 0.354799,
+      "required_ns": 0.34942399999999996,
+      "capture_clock_early_ns": 0.340457,
+      "clock_to_required_delta_ns": 0.008966999999999947,
+      "cell_delay_ns": 0.34335,
+      "wire_delay_ns": 0.011449,
+      "hold_chain": [
+        "hold3211",
+        "hold3207",
+        "hold3204",
+        "hold3208",
+        "hold3209",
+        "hold3205"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3211",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.049285999999999996
+        },
+        {
+          "instance": "hold3207",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029932
+        },
+        {
+          "instance": "hold3204",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028693999999999997
+        },
+        {
+          "instance": "hold3208",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029544
+        },
+        {
+          "instance": "input29",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.021501999999999993
+        },
+        {
+          "instance": "hold3209",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02988099999999999
+        },
+        {
+          "instance": "hold3205",
+          "master": "CLKBUF_X3",
+          "cell_delay_ns": 0.04137100000000002
+        },
+        {
+          "instance": "place2805",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.06822199999999998
+        },
+        {
+          "instance": "_43744_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.044918000000000013
+        }
+      ]
+    },
+    {
+      "stage": "p4_grt_hold50_qualified",
+      "id": "domain_worst",
+      "startpoint": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[56][0]$_DFFE_PP_/D",
+      "slack_ns": 0.045878,
+      "data_arrival_ns": 0.3991,
+      "required_ns": 0.35322200000000004,
+      "capture_clock_early_ns": 0.34394,
+      "clock_to_required_delta_ns": 0.009282000000000012,
+      "cell_delay_ns": 0.3947,
+      "wire_delay_ns": 0.0044,
+      "hold_chain": [
+        "hold3558",
+        "hold3118",
+        "hold3112",
+        "hold3119",
+        "hold3120",
+        "hold3113"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3558",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.049415
+        },
+        {
+          "instance": "hold3118",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.031091
+        },
+        {
+          "instance": "hold3112",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029312000000000005
+        },
+        {
+          "instance": "hold3119",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02961599999999999
+        },
+        {
+          "instance": "input22",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.021028999999999992
+        },
+        {
+          "instance": "hold3120",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027295999999999987
+        },
+        {
+          "instance": "hold3113",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.083142
+        },
+        {
+          "instance": "place2838",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.07666400000000001
+        },
+        {
+          "instance": "_44270_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04713499999999998
+        }
+      ]
+    },
+    {
+      "stage": "p4_grt_hold50_qualified",
+      "id": "p3_worst",
+      "startpoint": "M_AXI_RDATA[6]",
+      "endpoint": "u_dma.u_read_engine.rob_data[52][6]$_DFFE_PP_/D",
+      "slack_ns": 0.070796,
+      "data_arrival_ns": 0.426262,
+      "required_ns": 0.35546599999999995,
+      "capture_clock_early_ns": 0.346558,
+      "clock_to_required_delta_ns": 0.008907999999999971,
+      "cell_delay_ns": 0.422952,
+      "wire_delay_ns": 0.00331,
+      "hold_chain": [
+        "hold3441",
+        "hold3098",
+        "hold3442",
+        "hold3095",
+        "hold3443",
+        "hold3099",
+        "hold3100",
+        "hold3096",
+        "hold3101"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3441",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.049289
+        },
+        {
+          "instance": "hold3098",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028252
+        },
+        {
+          "instance": "hold3442",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025499999999999995
+        },
+        {
+          "instance": "hold3095",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025213
+        },
+        {
+          "instance": "hold3443",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02641300000000002
+        },
+        {
+          "instance": "hold3099",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026983000000000007
+        },
+        {
+          "instance": "input34",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.025549000000000016
+        },
+        {
+          "instance": "hold3100",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.03450599999999998
+        },
+        {
+          "instance": "hold3096",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.05024899999999999
+        },
+        {
+          "instance": "hold3101",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.08599700000000005
+        },
+        {
+          "instance": "_44159_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04500100000000001
+        }
+      ]
+    },
+    {
+      "stage": "p4_grt_hold50_qualified",
+      "id": "first_grt_worst",
+      "startpoint": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[56][0]$_DFFE_PP_/D",
+      "slack_ns": 0.045878,
+      "data_arrival_ns": 0.3991,
+      "required_ns": 0.35322200000000004,
+      "capture_clock_early_ns": 0.34394,
+      "clock_to_required_delta_ns": 0.009282000000000012,
+      "cell_delay_ns": 0.3947,
+      "wire_delay_ns": 0.0044,
+      "hold_chain": [
+        "hold3558",
+        "hold3118",
+        "hold3112",
+        "hold3119",
+        "hold3120",
+        "hold3113"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3558",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.049415
+        },
+        {
+          "instance": "hold3118",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.031091
+        },
+        {
+          "instance": "hold3112",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029312000000000005
+        },
+        {
+          "instance": "hold3119",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02961599999999999
+        },
+        {
+          "instance": "input22",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.021028999999999992
+        },
+        {
+          "instance": "hold3120",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027295999999999987
+        },
+        {
+          "instance": "hold3113",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.083142
+        },
+        {
+          "instance": "place2838",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.07666400000000001
+        },
+        {
+          "instance": "_44270_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04713499999999998
+        }
+      ]
+    },
+    {
+      "stage": "p4_grt_hold50_qualified",
+      "id": "first_route_worst",
+      "startpoint": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[59][0]$_DFFE_PP_/D",
+      "slack_ns": 0.046965,
+      "data_arrival_ns": 0.398657,
+      "required_ns": 0.351692,
+      "capture_clock_early_ns": 0.342805,
+      "clock_to_required_delta_ns": 0.008886999999999978,
+      "cell_delay_ns": 0.393617,
+      "wire_delay_ns": 0.00504,
+      "hold_chain": [
+        "hold3558",
+        "hold3118",
+        "hold3112",
+        "hold3119",
+        "hold3120",
+        "hold3113"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3558",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.049415
+        },
+        {
+          "instance": "hold3118",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.031091
+        },
+        {
+          "instance": "hold3112",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029312000000000005
+        },
+        {
+          "instance": "hold3119",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02961599999999999
+        },
+        {
+          "instance": "input22",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.021028999999999992
+        },
+        {
+          "instance": "hold3120",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027295999999999987
+        },
+        {
+          "instance": "hold3113",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.083142
+        },
+        {
+          "instance": "place2838",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.07666400000000001
+        },
+        {
+          "instance": "_44356_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04605200000000004
+        }
+      ]
+    },
+    {
+      "stage": "p4_grt_hold50_qualified",
+      "id": "second_grt_worst",
+      "startpoint": "M_AXI_RDATA[8]",
+      "endpoint": "u_dma.u_read_engine.rob_data[30][8]$_DFFE_PP_/D",
+      "slack_ns": 0.055647,
+      "data_arrival_ns": 0.408397,
+      "required_ns": 0.35275,
+      "capture_clock_early_ns": 0.344089,
+      "clock_to_required_delta_ns": 0.00866100000000003,
+      "cell_delay_ns": 0.404189,
+      "wire_delay_ns": 0.004208,
+      "hold_chain": [
+        "hold3453",
+        "hold3142",
+        "hold3454",
+        "hold3138",
+        "hold3135",
+        "hold3139",
+        "hold3140",
+        "hold3136",
+        "hold3137"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3453",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.050184
+        },
+        {
+          "instance": "hold3142",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028147000000000005
+        },
+        {
+          "instance": "hold3454",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026371000000000006
+        },
+        {
+          "instance": "hold3138",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028202000000000005
+        },
+        {
+          "instance": "hold3135",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029342000000000007
+        },
+        {
+          "instance": "hold3139",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029354999999999992
+        },
+        {
+          "instance": "input36",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.025462000000000012
+        },
+        {
+          "instance": "hold3140",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.03375899999999998
+        },
+        {
+          "instance": "hold3136",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.08143
+        },
+        {
+          "instance": "_43519_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.044985
+        },
+        {
+          "instance": "hold3137",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026951999999999976
+        }
+      ]
+    },
+    {
+      "stage": "p4_grt_hold50_qualified",
+      "id": "final_worst",
+      "startpoint": "M_AXI_RDATA[1]",
+      "endpoint": "u_dma.u_read_engine.rob_data[37][1]$_DFFE_PP_/D",
+      "slack_ns": 0.054824,
+      "data_arrival_ns": 0.414302,
+      "required_ns": 0.359478,
+      "capture_clock_early_ns": 0.350416,
+      "clock_to_required_delta_ns": 0.009062000000000014,
+      "cell_delay_ns": 0.403541,
+      "wire_delay_ns": 0.010761,
+      "hold_chain": [
+        "hold3458",
+        "hold3211",
+        "hold3459",
+        "hold3207",
+        "hold3204",
+        "hold3208",
+        "hold3209",
+        "hold3205"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3458",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.049164
+        },
+        {
+          "instance": "hold3211",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029064
+        },
+        {
+          "instance": "hold3459",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027592999999999993
+        },
+        {
+          "instance": "hold3207",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02933899999999999
+        },
+        {
+          "instance": "hold3204",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.030788999999999983
+        },
+        {
+          "instance": "hold3208",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.03004799999999999
+        },
+        {
+          "instance": "input29",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.021411999999999987
+        },
+        {
+          "instance": "hold3209",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.031312000000000006
+        },
+        {
+          "instance": "hold3205",
+          "master": "CLKBUF_X3",
+          "cell_delay_ns": 0.043347000000000024
+        },
+        {
+          "instance": "place2805",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.06642999999999999
+        },
+        {
+          "instance": "_43744_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.045043
+        }
+      ]
+    },
+    {
+      "stage": "p4_route_hold50_qualified",
+      "id": "domain_worst",
+      "startpoint": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[59][0]$_DFFE_PP_/D",
+      "slack_ns": 0.064723,
+      "data_arrival_ns": 0.377577,
+      "required_ns": 0.31285399999999997,
+      "capture_clock_early_ns": 0.304135,
+      "clock_to_required_delta_ns": 0.008718999999999977,
+      "cell_delay_ns": 0.373869,
+      "wire_delay_ns": 0.003708,
+      "hold_chain": [
+        "hold3558",
+        "hold3118",
+        "hold3112",
+        "hold3119",
+        "hold3120",
+        "hold3113"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3558",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.048708
+        },
+        {
+          "instance": "hold3118",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028864
+        },
+        {
+          "instance": "hold3112",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02742900000000001
+        },
+        {
+          "instance": "hold3119",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028234999999999996
+        },
+        {
+          "instance": "input22",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.020217000000000013
+        },
+        {
+          "instance": "hold3120",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026531
+        },
+        {
+          "instance": "hold3113",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.07323799999999997
+        },
+        {
+          "instance": "place2838",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.075343
+        },
+        {
+          "instance": "_44356_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04530400000000001
+        }
+      ]
+    },
+    {
+      "stage": "p4_route_hold50_qualified",
+      "id": "p3_worst",
+      "startpoint": "M_AXI_RDATA[6]",
+      "endpoint": "u_dma.u_read_engine.rob_data[52][6]$_DFFE_PP_/D",
+      "slack_ns": 0.089441,
+      "data_arrival_ns": 0.404723,
+      "required_ns": 0.315282,
+      "capture_clock_early_ns": 0.306426,
+      "clock_to_required_delta_ns": 0.00885600000000003,
+      "cell_delay_ns": 0.401854,
+      "wire_delay_ns": 0.002869,
+      "hold_chain": [
+        "hold3441",
+        "hold3098",
+        "hold3442",
+        "hold3095",
+        "hold3443",
+        "hold3099",
+        "hold3100",
+        "hold3096",
+        "hold3101"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3441",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.047908
+        },
+        {
+          "instance": "hold3098",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02690900000000001
+        },
+        {
+          "instance": "hold3442",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.024903999999999996
+        },
+        {
+          "instance": "hold3095",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.024984999999999993
+        },
+        {
+          "instance": "hold3443",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.024858000000000005
+        },
+        {
+          "instance": "hold3099",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025888999999999995
+        },
+        {
+          "instance": "input34",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.02285200000000001
+        },
+        {
+          "instance": "hold3100",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.030745000000000022
+        },
+        {
+          "instance": "hold3096",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.046736
+        },
+        {
+          "instance": "hold3101",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.081816
+        },
+        {
+          "instance": "_44159_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04425199999999996
+        }
+      ]
+    },
+    {
+      "stage": "p4_route_hold50_qualified",
+      "id": "first_grt_worst",
+      "startpoint": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[56][0]$_DFFE_PP_/D",
+      "slack_ns": 0.064723,
+      "data_arrival_ns": 0.378123,
+      "required_ns": 0.3134,
+      "capture_clock_early_ns": 0.304421,
+      "clock_to_required_delta_ns": 0.008979000000000015,
+      "cell_delay_ns": 0.375097,
+      "wire_delay_ns": 0.003026,
+      "hold_chain": [
+        "hold3558",
+        "hold3118",
+        "hold3112",
+        "hold3119",
+        "hold3120",
+        "hold3113"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3558",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.048708
+        },
+        {
+          "instance": "hold3118",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028864
+        },
+        {
+          "instance": "hold3112",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02742900000000001
+        },
+        {
+          "instance": "hold3119",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028234999999999996
+        },
+        {
+          "instance": "input22",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.020217000000000013
+        },
+        {
+          "instance": "hold3120",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026531
+        },
+        {
+          "instance": "hold3113",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.07323799999999997
+        },
+        {
+          "instance": "place2838",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.075343
+        },
+        {
+          "instance": "_44270_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04653199999999996
+        }
+      ]
+    },
+    {
+      "stage": "p4_route_hold50_qualified",
+      "id": "first_route_worst",
+      "startpoint": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[59][0]$_DFFE_PP_/D",
+      "slack_ns": 0.064723,
+      "data_arrival_ns": 0.377577,
+      "required_ns": 0.31285399999999997,
+      "capture_clock_early_ns": 0.304135,
+      "clock_to_required_delta_ns": 0.008718999999999977,
+      "cell_delay_ns": 0.373869,
+      "wire_delay_ns": 0.003708,
+      "hold_chain": [
+        "hold3558",
+        "hold3118",
+        "hold3112",
+        "hold3119",
+        "hold3120",
+        "hold3113"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3558",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.048708
+        },
+        {
+          "instance": "hold3118",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028864
+        },
+        {
+          "instance": "hold3112",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02742900000000001
+        },
+        {
+          "instance": "hold3119",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028234999999999996
+        },
+        {
+          "instance": "input22",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.020217000000000013
+        },
+        {
+          "instance": "hold3120",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026531
+        },
+        {
+          "instance": "hold3113",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.07323799999999997
+        },
+        {
+          "instance": "place2838",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.075343
+        },
+        {
+          "instance": "_44356_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04530400000000001
+        }
+      ]
+    },
+    {
+      "stage": "p4_route_hold50_qualified",
+      "id": "second_grt_worst",
+      "startpoint": "M_AXI_RDATA[8]",
+      "endpoint": "u_dma.u_read_engine.rob_data[30][8]$_DFFE_PP_/D",
+      "slack_ns": 0.076331,
+      "data_arrival_ns": 0.390025,
+      "required_ns": 0.31369400000000003,
+      "capture_clock_early_ns": 0.3051,
+      "clock_to_required_delta_ns": 0.008594000000000046,
+      "cell_delay_ns": 0.386267,
+      "wire_delay_ns": 0.003758,
+      "hold_chain": [
+        "hold3453",
+        "hold3142",
+        "hold3454",
+        "hold3138",
+        "hold3135",
+        "hold3139",
+        "hold3140",
+        "hold3136",
+        "hold3137"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3453",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.048142000000000004
+        },
+        {
+          "instance": "hold3142",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027091999999999998
+        },
+        {
+          "instance": "hold3454",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025022000000000003
+        },
+        {
+          "instance": "hold3138",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02656800000000001
+        },
+        {
+          "instance": "hold3135",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027255
+        },
+        {
+          "instance": "hold3139",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027413999999999994
+        },
+        {
+          "instance": "input36",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.023734000000000005
+        },
+        {
+          "instance": "hold3140",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.031349000000000016
+        },
+        {
+          "instance": "hold3136",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.07884100000000002
+        },
+        {
+          "instance": "_43519_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.043899999999999995
+        },
+        {
+          "instance": "hold3137",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02695000000000003
+        }
+      ]
+    },
+    {
+      "stage": "p4_route_hold50_qualified",
+      "id": "final_worst",
+      "startpoint": "M_AXI_RDATA[1]",
+      "endpoint": "u_dma.u_read_engine.rob_data[37][1]$_DFFE_PP_/D",
+      "slack_ns": 0.077209,
+      "data_arrival_ns": 0.392837,
+      "required_ns": 0.315628,
+      "capture_clock_early_ns": 0.306783,
+      "clock_to_required_delta_ns": 0.008845000000000047,
+      "cell_delay_ns": 0.382324,
+      "wire_delay_ns": 0.010513,
+      "hold_chain": [
+        "hold3458",
+        "hold3211",
+        "hold3459",
+        "hold3207",
+        "hold3204",
+        "hold3208",
+        "hold3209",
+        "hold3205"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3458",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.047975000000000004
+        },
+        {
+          "instance": "hold3211",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027045000000000007
+        },
+        {
+          "instance": "hold3459",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025331999999999993
+        },
+        {
+          "instance": "hold3207",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026777999999999996
+        },
+        {
+          "instance": "hold3204",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027249999999999996
+        },
+        {
+          "instance": "hold3208",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027998999999999996
+        },
+        {
+          "instance": "input29",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.020728999999999997
+        },
+        {
+          "instance": "hold3209",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029118000000000005
+        },
+        {
+          "instance": "hold3205",
+          "master": "CLKBUF_X3",
+          "cell_delay_ns": 0.04091100000000003
+        },
+        {
+          "instance": "place2805",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.06486800000000004
+        },
+        {
+          "instance": "_43744_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.044319
+        }
+      ]
+    },
+    {
+      "stage": "p4_grt_split3_qualified",
+      "id": "domain_worst",
+      "startpoint": "M_AXI_RDATA[8]",
+      "endpoint": "u_dma.u_read_engine.rob_data[30][8]$_DFFE_PP_/D",
+      "slack_ns": 0.049611,
+      "data_arrival_ns": 0.511233,
+      "required_ns": 0.46162200000000003,
+      "capture_clock_early_ns": 0.452961,
+      "clock_to_required_delta_ns": 0.00866100000000003,
+      "cell_delay_ns": 0.506932,
+      "wire_delay_ns": 0.004301,
+      "hold_chain": [
+        "hold3618",
+        "hold3453",
+        "hold3619",
+        "hold3142",
+        "hold3620",
+        "hold3454",
+        "hold3621",
+        "hold3138",
+        "hold3135",
+        "hold3139",
+        "hold3140",
+        "hold3136",
+        "hold3137"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3618",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.04902
+        },
+        {
+          "instance": "hold3453",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027858
+        },
+        {
+          "instance": "hold3619",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026457999999999995
+        },
+        {
+          "instance": "hold3142",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026336
+        },
+        {
+          "instance": "hold3620",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026174000000000003
+        },
+        {
+          "instance": "hold3454",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026149000000000006
+        },
+        {
+          "instance": "hold3621",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02562499999999998
+        },
+        {
+          "instance": "hold3138",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028025000000000022
+        },
+        {
+          "instance": "hold3135",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029342000000000007
+        },
+        {
+          "instance": "hold3139",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02935600000000005
+        },
+        {
+          "instance": "input36",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.025461999999999985
+        },
+        {
+          "instance": "hold3140",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.03375899999999998
+        },
+        {
+          "instance": "hold3136",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.08143099999999998
+        },
+        {
+          "instance": "_43519_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.044985
+        },
+        {
+          "instance": "hold3137",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026951999999999976
+        }
+      ]
+    },
+    {
+      "stage": "p4_grt_split3_qualified",
+      "id": "p3_worst",
+      "startpoint": "M_AXI_RDATA[6]",
+      "endpoint": "u_dma.u_read_engine.rob_data[52][6]$_DFFE_PP_/D",
+      "slack_ns": 0.064704,
+      "data_arrival_ns": 0.529042,
+      "required_ns": 0.46433800000000003,
+      "capture_clock_early_ns": 0.45543,
+      "clock_to_required_delta_ns": 0.008908000000000027,
+      "cell_delay_ns": 0.525648,
+      "wire_delay_ns": 0.003394,
+      "hold_chain": [
+        "hold3761",
+        "hold3441",
+        "hold3762",
+        "hold3098",
+        "hold3763",
+        "hold3442",
+        "hold3764",
+        "hold3095",
+        "hold3443",
+        "hold3099",
+        "hold3100",
+        "hold3096",
+        "hold3101"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3761",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.048780000000000004
+        },
+        {
+          "instance": "hold3441",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027963999999999996
+        },
+        {
+          "instance": "hold3762",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027248999999999995
+        },
+        {
+          "instance": "hold3098",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02565300000000001
+        },
+        {
+          "instance": "hold3763",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025408000000000014
+        },
+        {
+          "instance": "hold3442",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025424000000000002
+        },
+        {
+          "instance": "hold3764",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025260000000000005
+        },
+        {
+          "instance": "hold3095",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025212000000000012
+        },
+        {
+          "instance": "hold3443",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02641300000000002
+        },
+        {
+          "instance": "hold3099",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02698299999999998
+        },
+        {
+          "instance": "input34",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.025548000000000015
+        },
+        {
+          "instance": "hold3100",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.03450599999999998
+        },
+        {
+          "instance": "hold3096",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.05025000000000002
+        },
+        {
+          "instance": "hold3101",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.08599699999999999
+        },
+        {
+          "instance": "_44159_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04500100000000001
+        }
+      ]
+    },
+    {
+      "stage": "p4_grt_split3_qualified",
+      "id": "first_grt_worst",
+      "startpoint": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[56][0]$_DFFE_PP_/D",
+      "slack_ns": 0.064652,
+      "data_arrival_ns": 0.526746,
+      "required_ns": 0.46209400000000006,
+      "capture_clock_early_ns": 0.452812,
+      "clock_to_required_delta_ns": 0.009282000000000068,
+      "cell_delay_ns": 0.52224,
+      "wire_delay_ns": 0.004506,
+      "hold_chain": [
+        "hold3570",
+        "hold3558",
+        "hold3571",
+        "hold3118",
+        "hold3572",
+        "hold3112",
+        "hold3573",
+        "hold3119",
+        "hold3574",
+        "hold3120",
+        "hold3113"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3570",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.049503
+        },
+        {
+          "instance": "hold3558",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027497
+        },
+        {
+          "instance": "hold3571",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025519
+        },
+        {
+          "instance": "hold3118",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027343999999999993
+        },
+        {
+          "instance": "hold3572",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027813000000000004
+        },
+        {
+          "instance": "hold3112",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027775999999999995
+        },
+        {
+          "instance": "hold3573",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026888999999999996
+        },
+        {
+          "instance": "hold3119",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026671
+        },
+        {
+          "instance": "hold3574",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028198
+        },
+        {
+          "instance": "input22",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.020797999999999983
+        },
+        {
+          "instance": "hold3120",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027291999999999983
+        },
+        {
+          "instance": "hold3113",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.08314099999999996
+        },
+        {
+          "instance": "place2838",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.07666500000000004
+        },
+        {
+          "instance": "_44270_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04713400000000001
+        }
+      ]
+    },
+    {
+      "stage": "p4_grt_split3_qualified",
+      "id": "first_route_worst",
+      "startpoint": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[59][0]$_DFFE_PP_/D",
+      "slack_ns": 0.06574,
+      "data_arrival_ns": 0.526303,
+      "required_ns": 0.46056299999999994,
+      "capture_clock_early_ns": 0.451677,
+      "clock_to_required_delta_ns": 0.00888599999999995,
+      "cell_delay_ns": 0.521158,
+      "wire_delay_ns": 0.005145,
+      "hold_chain": [
+        "hold3570",
+        "hold3558",
+        "hold3571",
+        "hold3118",
+        "hold3572",
+        "hold3112",
+        "hold3573",
+        "hold3119",
+        "hold3574",
+        "hold3120",
+        "hold3113"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3570",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.049503
+        },
+        {
+          "instance": "hold3558",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027497
+        },
+        {
+          "instance": "hold3571",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025519
+        },
+        {
+          "instance": "hold3118",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027343999999999993
+        },
+        {
+          "instance": "hold3572",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027813000000000004
+        },
+        {
+          "instance": "hold3112",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027775999999999995
+        },
+        {
+          "instance": "hold3573",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026888999999999996
+        },
+        {
+          "instance": "hold3119",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026671
+        },
+        {
+          "instance": "hold3574",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028198
+        },
+        {
+          "instance": "input22",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.020797999999999983
+        },
+        {
+          "instance": "hold3120",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027291999999999983
+        },
+        {
+          "instance": "hold3113",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.08314099999999996
+        },
+        {
+          "instance": "place2838",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.07666500000000004
+        },
+        {
+          "instance": "_44356_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04605200000000004
+        }
+      ]
+    },
+    {
+      "stage": "p4_grt_split3_qualified",
+      "id": "second_grt_worst",
+      "startpoint": "M_AXI_RDATA[8]",
+      "endpoint": "u_dma.u_read_engine.rob_data[30][8]$_DFFE_PP_/D",
+      "slack_ns": 0.049611,
+      "data_arrival_ns": 0.511233,
+      "required_ns": 0.46162200000000003,
+      "capture_clock_early_ns": 0.452961,
+      "clock_to_required_delta_ns": 0.00866100000000003,
+      "cell_delay_ns": 0.506932,
+      "wire_delay_ns": 0.004301,
+      "hold_chain": [
+        "hold3618",
+        "hold3453",
+        "hold3619",
+        "hold3142",
+        "hold3620",
+        "hold3454",
+        "hold3621",
+        "hold3138",
+        "hold3135",
+        "hold3139",
+        "hold3140",
+        "hold3136",
+        "hold3137"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3618",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.04902
+        },
+        {
+          "instance": "hold3453",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027858
+        },
+        {
+          "instance": "hold3619",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026457999999999995
+        },
+        {
+          "instance": "hold3142",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026336
+        },
+        {
+          "instance": "hold3620",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026174000000000003
+        },
+        {
+          "instance": "hold3454",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026149000000000006
+        },
+        {
+          "instance": "hold3621",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02562499999999998
+        },
+        {
+          "instance": "hold3138",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028025000000000022
+        },
+        {
+          "instance": "hold3135",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029342000000000007
+        },
+        {
+          "instance": "hold3139",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02935600000000005
+        },
+        {
+          "instance": "input36",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.025461999999999985
+        },
+        {
+          "instance": "hold3140",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.03375899999999998
+        },
+        {
+          "instance": "hold3136",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.08143099999999998
+        },
+        {
+          "instance": "_43519_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.044985
+        },
+        {
+          "instance": "hold3137",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026951999999999976
+        }
+      ]
+    },
+    {
+      "stage": "p4_grt_split3_qualified",
+      "id": "final_worst",
+      "startpoint": "M_AXI_RDATA[1]",
+      "endpoint": "u_dma.u_read_engine.rob_data[37][1]$_DFFE_PP_/D",
+      "slack_ns": 0.051474,
+      "data_arrival_ns": 0.519824,
+      "required_ns": 0.46834999999999993,
+      "capture_clock_early_ns": 0.459288,
+      "clock_to_required_delta_ns": 0.009061999999999959,
+      "cell_delay_ns": 0.50893,
+      "wire_delay_ns": 0.010894,
+      "hold_chain": [
+        "hold3626",
+        "hold3458",
+        "hold3627",
+        "hold3211",
+        "hold3628",
+        "hold3459",
+        "hold3629",
+        "hold3207",
+        "hold3204",
+        "hold3208",
+        "hold3209",
+        "hold3205"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3626",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.049266000000000004
+        },
+        {
+          "instance": "hold3458",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.028034000000000003
+        },
+        {
+          "instance": "hold3627",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02632799999999999
+        },
+        {
+          "instance": "hold3211",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027351
+        },
+        {
+          "instance": "hold3628",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02651099999999998
+        },
+        {
+          "instance": "hold3459",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027387000000000022
+        },
+        {
+          "instance": "hold3629",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026584999999999998
+        },
+        {
+          "instance": "hold3207",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029088000000000003
+        },
+        {
+          "instance": "hold3204",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.03078800000000001
+        },
+        {
+          "instance": "hold3208",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.03004800000000002
+        },
+        {
+          "instance": "input29",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.021411999999999987
+        },
+        {
+          "instance": "hold3209",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.03131199999999995
+        },
+        {
+          "instance": "hold3205",
+          "master": "CLKBUF_X3",
+          "cell_delay_ns": 0.043347000000000024
+        },
+        {
+          "instance": "place2805",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.06642999999999999
+        },
+        {
+          "instance": "_43744_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.045043
+        }
+      ]
+    },
+    {
+      "stage": "p4_route_split3_qualified",
+      "id": "domain_worst",
+      "startpoint": "M_AXI_RDATA[1]",
+      "endpoint": "u_dma.u_read_engine.rob_data[37][1]$_DFFE_PP_/D",
+      "slack_ns": 0.071475,
+      "data_arrival_ns": 0.491813,
+      "required_ns": 0.420338,
+      "capture_clock_early_ns": 0.411492,
+      "clock_to_required_delta_ns": 0.008845999999999965,
+      "cell_delay_ns": 0.481241,
+      "wire_delay_ns": 0.010572,
+      "hold_chain": [
+        "hold3626",
+        "hold3458",
+        "hold3627",
+        "hold3211",
+        "hold3628",
+        "hold3459",
+        "hold3629",
+        "hold3207",
+        "hold3204",
+        "hold3208",
+        "hold3209",
+        "hold3205"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3626",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.047894
+        },
+        {
+          "instance": "hold3458",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026810000000000007
+        },
+        {
+          "instance": "hold3627",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.024922
+        },
+        {
+          "instance": "hold3211",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025054999999999994
+        },
+        {
+          "instance": "hold3628",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.024956000000000006
+        },
+        {
+          "instance": "hold3459",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02498699999999998
+        },
+        {
+          "instance": "hold3629",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.024853999999999987
+        },
+        {
+          "instance": "hold3207",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02667999999999998
+        },
+        {
+          "instance": "hold3204",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027249000000000023
+        },
+        {
+          "instance": "hold3208",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027998999999999996
+        },
+        {
+          "instance": "input29",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.020728999999999997
+        },
+        {
+          "instance": "hold3209",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029117000000000004
+        },
+        {
+          "instance": "hold3205",
+          "master": "CLKBUF_X3",
+          "cell_delay_ns": 0.040986999999999996
+        },
+        {
+          "instance": "place2805",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.06471499999999997
+        },
+        {
+          "instance": "_43744_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04428700000000002
+        }
+      ]
+    },
+    {
+      "stage": "p4_route_split3_qualified",
+      "id": "p3_worst",
+      "startpoint": "M_AXI_RDATA[6]",
+      "endpoint": "u_dma.u_read_engine.rob_data[52][6]$_DFFE_PP_/D",
+      "slack_ns": 0.089393,
+      "data_arrival_ns": 0.507066,
+      "required_ns": 0.417673,
+      "capture_clock_early_ns": 0.408818,
+      "clock_to_required_delta_ns": 0.008855000000000002,
+      "cell_delay_ns": 0.504277,
+      "wire_delay_ns": 0.002789,
+      "hold_chain": [
+        "hold3761",
+        "hold3441",
+        "hold3762",
+        "hold3098",
+        "hold3763",
+        "hold3442",
+        "hold3764",
+        "hold3095",
+        "hold3443",
+        "hold3099",
+        "hold3100",
+        "hold3096",
+        "hold3101"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3761",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.048325
+        },
+        {
+          "instance": "hold3441",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027070999999999998
+        },
+        {
+          "instance": "hold3762",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025872000000000006
+        },
+        {
+          "instance": "hold3098",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025390999999999997
+        },
+        {
+          "instance": "hold3763",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.024909000000000014
+        },
+        {
+          "instance": "hold3442",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02481899999999998
+        },
+        {
+          "instance": "hold3764",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.024817000000000006
+        },
+        {
+          "instance": "hold3095",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02498399999999998
+        },
+        {
+          "instance": "hold3443",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02485800000000002
+        },
+        {
+          "instance": "hold3099",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025888000000000022
+        },
+        {
+          "instance": "input34",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.022851999999999983
+        },
+        {
+          "instance": "hold3100",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.030745000000000022
+        },
+        {
+          "instance": "hold3096",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.04670400000000002
+        },
+        {
+          "instance": "hold3101",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.08266299999999999
+        },
+        {
+          "instance": "_44159_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.044378999999999946
+        }
+      ]
+    },
+    {
+      "stage": "p4_route_split3_qualified",
+      "id": "first_grt_worst",
+      "startpoint": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[56][0]$_DFFE_PP_/D",
+      "slack_ns": 0.085175,
+      "data_arrival_ns": 0.501059,
+      "required_ns": 0.41588400000000003,
+      "capture_clock_early_ns": 0.406904,
+      "clock_to_required_delta_ns": 0.008980000000000044,
+      "cell_delay_ns": 0.498037,
+      "wire_delay_ns": 0.003022,
+      "hold_chain": [
+        "hold3570",
+        "hold3558",
+        "hold3571",
+        "hold3118",
+        "hold3572",
+        "hold3112",
+        "hold3573",
+        "hold3119",
+        "hold3574",
+        "hold3120",
+        "hold3113"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3570",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.048408
+        },
+        {
+          "instance": "hold3558",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027305999999999997
+        },
+        {
+          "instance": "hold3571",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02534700000000001
+        },
+        {
+          "instance": "hold3118",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02591199999999999
+        },
+        {
+          "instance": "hold3572",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025936000000000015
+        },
+        {
+          "instance": "hold3112",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026059
+        },
+        {
+          "instance": "hold3573",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025998999999999994
+        },
+        {
+          "instance": "hold3119",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02593799999999999
+        },
+        {
+          "instance": "hold3574",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02664600000000003
+        },
+        {
+          "instance": "input22",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.019921999999999995
+        },
+        {
+          "instance": "hold3120",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026525999999999994
+        },
+        {
+          "instance": "hold3113",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.07334400000000002
+        },
+        {
+          "instance": "place2838",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.07438299999999998
+        },
+        {
+          "instance": "_44270_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04631099999999999
+        }
+      ]
+    },
+    {
+      "stage": "p4_route_split3_qualified",
+      "id": "first_route_worst",
+      "startpoint": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[59][0]$_DFFE_PP_/D",
+      "slack_ns": 0.085426,
+      "data_arrival_ns": 0.50084,
+      "required_ns": 0.41541399999999995,
+      "capture_clock_early_ns": 0.406681,
+      "clock_to_required_delta_ns": 0.008732999999999935,
+      "cell_delay_ns": 0.496818,
+      "wire_delay_ns": 0.004022,
+      "hold_chain": [
+        "hold3570",
+        "hold3558",
+        "hold3571",
+        "hold3118",
+        "hold3572",
+        "hold3112",
+        "hold3573",
+        "hold3119",
+        "hold3574",
+        "hold3120",
+        "hold3113"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3570",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.048408
+        },
+        {
+          "instance": "hold3558",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027305999999999997
+        },
+        {
+          "instance": "hold3571",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02534700000000001
+        },
+        {
+          "instance": "hold3118",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02591199999999999
+        },
+        {
+          "instance": "hold3572",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025936000000000015
+        },
+        {
+          "instance": "hold3112",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026059
+        },
+        {
+          "instance": "hold3573",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025998999999999994
+        },
+        {
+          "instance": "hold3119",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02593799999999999
+        },
+        {
+          "instance": "hold3574",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02664600000000003
+        },
+        {
+          "instance": "input22",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.019921999999999995
+        },
+        {
+          "instance": "hold3120",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026525999999999994
+        },
+        {
+          "instance": "hold3113",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.07334400000000002
+        },
+        {
+          "instance": "place2838",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.07438299999999998
+        },
+        {
+          "instance": "_44356_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.045091999999999965
+        }
+      ]
+    },
+    {
+      "stage": "p4_route_split3_qualified",
+      "id": "second_grt_worst",
+      "startpoint": "M_AXI_RDATA[8]",
+      "endpoint": "u_dma.u_read_engine.rob_data[30][8]$_DFFE_PP_/D",
+      "slack_ns": 0.073533,
+      "data_arrival_ns": 0.489701,
+      "required_ns": 0.416168,
+      "capture_clock_early_ns": 0.407576,
+      "clock_to_required_delta_ns": 0.008591999999999989,
+      "cell_delay_ns": 0.485903,
+      "wire_delay_ns": 0.003798,
+      "hold_chain": [
+        "hold3618",
+        "hold3453",
+        "hold3619",
+        "hold3142",
+        "hold3620",
+        "hold3454",
+        "hold3621",
+        "hold3138",
+        "hold3135",
+        "hold3139",
+        "hold3140",
+        "hold3136",
+        "hold3137"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3618",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.047768000000000005
+        },
+        {
+          "instance": "hold3453",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026826999999999997
+        },
+        {
+          "instance": "hold3619",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02488900000000001
+        },
+        {
+          "instance": "hold3142",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025162000000000004
+        },
+        {
+          "instance": "hold3620",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.024984999999999993
+        },
+        {
+          "instance": "hold3454",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02510599999999999
+        },
+        {
+          "instance": "hold3621",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02510599999999999
+        },
+        {
+          "instance": "hold3138",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026599999999999985
+        },
+        {
+          "instance": "hold3135",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027254000000000028
+        },
+        {
+          "instance": "hold3139",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027413999999999994
+        },
+        {
+          "instance": "input36",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.023734000000000033
+        },
+        {
+          "instance": "hold3140",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.031349000000000016
+        },
+        {
+          "instance": "hold3136",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.07883699999999999
+        },
+        {
+          "instance": "_43519_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04392499999999999
+        },
+        {
+          "instance": "hold3137",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026947
+        }
+      ]
+    },
+    {
+      "stage": "p4_route_split3_qualified",
+      "id": "final_worst",
+      "startpoint": "M_AXI_RDATA[1]",
+      "endpoint": "u_dma.u_read_engine.rob_data[37][1]$_DFFE_PP_/D",
+      "slack_ns": 0.071475,
+      "data_arrival_ns": 0.491813,
+      "required_ns": 0.420338,
+      "capture_clock_early_ns": 0.411492,
+      "clock_to_required_delta_ns": 0.008845999999999965,
+      "cell_delay_ns": 0.481241,
+      "wire_delay_ns": 0.010572,
+      "hold_chain": [
+        "hold3626",
+        "hold3458",
+        "hold3627",
+        "hold3211",
+        "hold3628",
+        "hold3459",
+        "hold3629",
+        "hold3207",
+        "hold3204",
+        "hold3208",
+        "hold3209",
+        "hold3205"
+      ],
+      "cell_chain": [
+        {
+          "instance": "hold3626",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.047894
+        },
+        {
+          "instance": "hold3458",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.026810000000000007
+        },
+        {
+          "instance": "hold3627",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.024922
+        },
+        {
+          "instance": "hold3211",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.025054999999999994
+        },
+        {
+          "instance": "hold3628",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.024956000000000006
+        },
+        {
+          "instance": "hold3459",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02498699999999998
+        },
+        {
+          "instance": "hold3629",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.024853999999999987
+        },
+        {
+          "instance": "hold3207",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.02667999999999998
+        },
+        {
+          "instance": "hold3204",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027249000000000023
+        },
+        {
+          "instance": "hold3208",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.027998999999999996
+        },
+        {
+          "instance": "input29",
+          "master": "BUF_X1",
+          "cell_delay_ns": 0.020728999999999997
+        },
+        {
+          "instance": "hold3209",
+          "master": "CLKBUF_X1",
+          "cell_delay_ns": 0.029117000000000004
+        },
+        {
+          "instance": "hold3205",
+          "master": "CLKBUF_X3",
+          "cell_delay_ns": 0.040986999999999996
+        },
+        {
+          "instance": "place2805",
+          "master": "BUF_X2",
+          "cell_delay_ns": 0.06471499999999997
+        },
+        {
+          "instance": "_43744_",
+          "master": "MUX2_X1",
+          "cell_delay_ns": 0.04428700000000002
+        }
+      ]
+    }
+  ],
+  "comparisons": [
+    {
+      "id": "p3_worst",
+      "start": "M_AXI_RDATA[6]",
+      "endpoint": "u_dma.u_read_engine.rob_data[52][6]$_DFFE_PP_/D",
+      "p3": {
+        "stage": "p3_cts_qualified",
+        "id": "p3_worst",
+        "startpoint": "M_AXI_RDATA[6]",
+        "endpoint": "u_dma.u_read_engine.rob_data[52][6]$_DFFE_PP_/D",
+        "slack_ns": 0.000954,
+        "data_arrival_ns": 0.347048,
+        "required_ns": 0.346094,
+        "capture_clock_early_ns": 0.337208,
+        "clock_to_required_delta_ns": 0.008886000000000005,
+        "cell_delay_ns": 0.344582,
+        "wire_delay_ns": 0.002466,
+        "hold_chain": [
+          "hold3098",
+          "hold3095",
+          "hold3099",
+          "hold3100",
+          "hold3096",
+          "hold3101"
+        ],
+        "cell_chain": [
+          {
+            "instance": "hold3098",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.048097
+          },
+          {
+            "instance": "hold3095",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.027129
+          },
+          {
+            "instance": "hold3099",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02638299999999999
+          },
+          {
+            "instance": "input34",
+            "master": "BUF_X1",
+            "cell_delay_ns": 0.02552299999999999
+          },
+          {
+            "instance": "hold3100",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.034306
+          },
+          {
+            "instance": "hold3096",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.05133499999999999
+          },
+          {
+            "instance": "hold3101",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.08673800000000001
+          },
+          {
+            "instance": "_44159_",
+            "master": "MUX2_X1",
+            "cell_delay_ns": 0.04507099999999997
+          }
+        ]
+      },
+      "p4": {
+        "stage": "p4_route_split3_qualified",
+        "id": "p3_worst",
+        "startpoint": "M_AXI_RDATA[6]",
+        "endpoint": "u_dma.u_read_engine.rob_data[52][6]$_DFFE_PP_/D",
+        "slack_ns": 0.089393,
+        "data_arrival_ns": 0.507066,
+        "required_ns": 0.417673,
+        "capture_clock_early_ns": 0.408818,
+        "clock_to_required_delta_ns": 0.008855000000000002,
+        "cell_delay_ns": 0.504277,
+        "wire_delay_ns": 0.002789,
+        "hold_chain": [
+          "hold3761",
+          "hold3441",
+          "hold3762",
+          "hold3098",
+          "hold3763",
+          "hold3442",
+          "hold3764",
+          "hold3095",
+          "hold3443",
+          "hold3099",
+          "hold3100",
+          "hold3096",
+          "hold3101"
+        ],
+        "cell_chain": [
+          {
+            "instance": "hold3761",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.048325
+          },
+          {
+            "instance": "hold3441",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.027070999999999998
+          },
+          {
+            "instance": "hold3762",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.025872000000000006
+          },
+          {
+            "instance": "hold3098",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.025390999999999997
+          },
+          {
+            "instance": "hold3763",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.024909000000000014
+          },
+          {
+            "instance": "hold3442",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02481899999999998
+          },
+          {
+            "instance": "hold3764",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.024817000000000006
+          },
+          {
+            "instance": "hold3095",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02498399999999998
+          },
+          {
+            "instance": "hold3443",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02485800000000002
+          },
+          {
+            "instance": "hold3099",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.025888000000000022
+          },
+          {
+            "instance": "input34",
+            "master": "BUF_X1",
+            "cell_delay_ns": 0.022851999999999983
+          },
+          {
+            "instance": "hold3100",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.030745000000000022
+          },
+          {
+            "instance": "hold3096",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.04670400000000002
+          },
+          {
+            "instance": "hold3101",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.08266299999999999
+          },
+          {
+            "instance": "_44159_",
+            "master": "MUX2_X1",
+            "cell_delay_ns": 0.044378999999999946
+          }
+        ]
+      },
+      "added_holds": [
+        "hold3441",
+        "hold3442",
+        "hold3443",
+        "hold3761",
+        "hold3762",
+        "hold3763",
+        "hold3764"
+      ],
+      "removed_holds": [],
+      "deltas_ns": {
+        "slack_ns": 0.088439,
+        "data_arrival_ns": 0.160018,
+        "required_ns": 0.071579,
+        "capture_clock_early_ns": 0.07161,
+        "clock_to_required_delta_ns": -3.1e-05,
+        "cell_delay_ns": 0.159695,
+        "wire_delay_ns": 0.000323
+      }
+    },
+    {
+      "id": "first_grt_worst",
+      "start": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[56][0]$_DFFE_PP_/D",
+      "p3": {
+        "stage": "p3_cts_qualified",
+        "id": "first_grt_worst",
+        "startpoint": "M_AXI_RDATA[0]",
+        "endpoint": "u_dma.u_read_engine.rob_data[56][0]$_DFFE_PP_/D",
+        "slack_ns": 0.019773,
+        "data_arrival_ns": 0.363466,
+        "required_ns": 0.343693,
+        "capture_clock_early_ns": 0.334764,
+        "clock_to_required_delta_ns": 0.00892900000000002,
+        "cell_delay_ns": 0.361221,
+        "wire_delay_ns": 0.002245,
+        "hold_chain": [
+          "hold3118",
+          "hold3112",
+          "hold3119",
+          "hold3120",
+          "hold3113"
+        ],
+        "cell_chain": [
+          {
+            "instance": "hold3118",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.051832
+          },
+          {
+            "instance": "hold3112",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.030724999999999995
+          },
+          {
+            "instance": "hold3119",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.029501
+          },
+          {
+            "instance": "input22",
+            "master": "BUF_X1",
+            "cell_delay_ns": 0.020914000000000002
+          },
+          {
+            "instance": "hold3120",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.026781
+          },
+          {
+            "instance": "hold3113",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.07749800000000001
+          },
+          {
+            "instance": "place2838",
+            "master": "BUF_X2",
+            "cell_delay_ns": 0.077822
+          },
+          {
+            "instance": "_44270_",
+            "master": "MUX2_X1",
+            "cell_delay_ns": 0.04614800000000002
+          }
+        ]
+      },
+      "p4": {
+        "stage": "p4_route_split3_qualified",
+        "id": "first_grt_worst",
+        "startpoint": "M_AXI_RDATA[0]",
+        "endpoint": "u_dma.u_read_engine.rob_data[56][0]$_DFFE_PP_/D",
+        "slack_ns": 0.085175,
+        "data_arrival_ns": 0.501059,
+        "required_ns": 0.41588400000000003,
+        "capture_clock_early_ns": 0.406904,
+        "clock_to_required_delta_ns": 0.008980000000000044,
+        "cell_delay_ns": 0.498037,
+        "wire_delay_ns": 0.003022,
+        "hold_chain": [
+          "hold3570",
+          "hold3558",
+          "hold3571",
+          "hold3118",
+          "hold3572",
+          "hold3112",
+          "hold3573",
+          "hold3119",
+          "hold3574",
+          "hold3120",
+          "hold3113"
+        ],
+        "cell_chain": [
+          {
+            "instance": "hold3570",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.048408
+          },
+          {
+            "instance": "hold3558",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.027305999999999997
+          },
+          {
+            "instance": "hold3571",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02534700000000001
+          },
+          {
+            "instance": "hold3118",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02591199999999999
+          },
+          {
+            "instance": "hold3572",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.025936000000000015
+          },
+          {
+            "instance": "hold3112",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.026059
+          },
+          {
+            "instance": "hold3573",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.025998999999999994
+          },
+          {
+            "instance": "hold3119",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02593799999999999
+          },
+          {
+            "instance": "hold3574",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02664600000000003
+          },
+          {
+            "instance": "input22",
+            "master": "BUF_X1",
+            "cell_delay_ns": 0.019921999999999995
+          },
+          {
+            "instance": "hold3120",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.026525999999999994
+          },
+          {
+            "instance": "hold3113",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.07334400000000002
+          },
+          {
+            "instance": "place2838",
+            "master": "BUF_X2",
+            "cell_delay_ns": 0.07438299999999998
+          },
+          {
+            "instance": "_44270_",
+            "master": "MUX2_X1",
+            "cell_delay_ns": 0.04631099999999999
+          }
+        ]
+      },
+      "added_holds": [
+        "hold3558",
+        "hold3570",
+        "hold3571",
+        "hold3572",
+        "hold3573",
+        "hold3574"
+      ],
+      "removed_holds": [],
+      "deltas_ns": {
+        "slack_ns": 0.065402,
+        "data_arrival_ns": 0.137593,
+        "required_ns": 0.072191,
+        "capture_clock_early_ns": 0.07214,
+        "clock_to_required_delta_ns": 5.1e-05,
+        "cell_delay_ns": 0.136816,
+        "wire_delay_ns": 0.000777
+      }
+    },
+    {
+      "id": "first_route_worst",
+      "start": "M_AXI_RDATA[0]",
+      "endpoint": "u_dma.u_read_engine.rob_data[59][0]$_DFFE_PP_/D",
+      "p3": {
+        "stage": "p3_cts_qualified",
+        "id": "first_route_worst",
+        "startpoint": "M_AXI_RDATA[0]",
+        "endpoint": "u_dma.u_read_engine.rob_data[59][0]$_DFFE_PP_/D",
+        "slack_ns": 0.019772,
+        "data_arrival_ns": 0.363497,
+        "required_ns": 0.343725,
+        "capture_clock_early_ns": 0.334865,
+        "clock_to_required_delta_ns": 0.008859999999999979,
+        "cell_delay_ns": 0.360781,
+        "wire_delay_ns": 0.002716,
+        "hold_chain": [
+          "hold3118",
+          "hold3112",
+          "hold3119",
+          "hold3120",
+          "hold3113"
+        ],
+        "cell_chain": [
+          {
+            "instance": "hold3118",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.051832
+          },
+          {
+            "instance": "hold3112",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.030724999999999995
+          },
+          {
+            "instance": "hold3119",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.029501
+          },
+          {
+            "instance": "input22",
+            "master": "BUF_X1",
+            "cell_delay_ns": 0.020914000000000002
+          },
+          {
+            "instance": "hold3120",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.026781
+          },
+          {
+            "instance": "hold3113",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.07749800000000001
+          },
+          {
+            "instance": "place2838",
+            "master": "BUF_X2",
+            "cell_delay_ns": 0.077822
+          },
+          {
+            "instance": "_44356_",
+            "master": "MUX2_X1",
+            "cell_delay_ns": 0.045708000000000026
+          }
+        ]
+      },
+      "p4": {
+        "stage": "p4_route_split3_qualified",
+        "id": "first_route_worst",
+        "startpoint": "M_AXI_RDATA[0]",
+        "endpoint": "u_dma.u_read_engine.rob_data[59][0]$_DFFE_PP_/D",
+        "slack_ns": 0.085426,
+        "data_arrival_ns": 0.50084,
+        "required_ns": 0.41541399999999995,
+        "capture_clock_early_ns": 0.406681,
+        "clock_to_required_delta_ns": 0.008732999999999935,
+        "cell_delay_ns": 0.496818,
+        "wire_delay_ns": 0.004022,
+        "hold_chain": [
+          "hold3570",
+          "hold3558",
+          "hold3571",
+          "hold3118",
+          "hold3572",
+          "hold3112",
+          "hold3573",
+          "hold3119",
+          "hold3574",
+          "hold3120",
+          "hold3113"
+        ],
+        "cell_chain": [
+          {
+            "instance": "hold3570",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.048408
+          },
+          {
+            "instance": "hold3558",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.027305999999999997
+          },
+          {
+            "instance": "hold3571",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02534700000000001
+          },
+          {
+            "instance": "hold3118",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02591199999999999
+          },
+          {
+            "instance": "hold3572",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.025936000000000015
+          },
+          {
+            "instance": "hold3112",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.026059
+          },
+          {
+            "instance": "hold3573",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.025998999999999994
+          },
+          {
+            "instance": "hold3119",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02593799999999999
+          },
+          {
+            "instance": "hold3574",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02664600000000003
+          },
+          {
+            "instance": "input22",
+            "master": "BUF_X1",
+            "cell_delay_ns": 0.019921999999999995
+          },
+          {
+            "instance": "hold3120",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.026525999999999994
+          },
+          {
+            "instance": "hold3113",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.07334400000000002
+          },
+          {
+            "instance": "place2838",
+            "master": "BUF_X2",
+            "cell_delay_ns": 0.07438299999999998
+          },
+          {
+            "instance": "_44356_",
+            "master": "MUX2_X1",
+            "cell_delay_ns": 0.045091999999999965
+          }
+        ]
+      },
+      "added_holds": [
+        "hold3558",
+        "hold3570",
+        "hold3571",
+        "hold3572",
+        "hold3573",
+        "hold3574"
+      ],
+      "removed_holds": [],
+      "deltas_ns": {
+        "slack_ns": 0.065654,
+        "data_arrival_ns": 0.137343,
+        "required_ns": 0.071689,
+        "capture_clock_early_ns": 0.071816,
+        "clock_to_required_delta_ns": -0.000127,
+        "cell_delay_ns": 0.136037,
+        "wire_delay_ns": 0.001306
+      }
+    },
+    {
+      "id": "second_grt_worst",
+      "start": "M_AXI_RDATA[8]",
+      "endpoint": "u_dma.u_read_engine.rob_data[30][8]$_DFFE_PP_/D",
+      "p3": {
+        "stage": "p3_cts_qualified",
+        "id": "second_grt_worst",
+        "startpoint": "M_AXI_RDATA[8]",
+        "endpoint": "u_dma.u_read_engine.rob_data[30][8]$_DFFE_PP_/D",
+        "slack_ns": 0.008448,
+        "data_arrival_ns": 0.352615,
+        "required_ns": 0.344167,
+        "capture_clock_early_ns": 0.335506,
+        "clock_to_required_delta_ns": 0.008660999999999974,
+        "cell_delay_ns": 0.349171,
+        "wire_delay_ns": 0.003444,
+        "hold_chain": [
+          "hold3142",
+          "hold3138",
+          "hold3135",
+          "hold3139",
+          "hold3140",
+          "hold3136",
+          "hold3137"
+        ],
+        "cell_chain": [
+          {
+            "instance": "hold3142",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.048983000000000006
+          },
+          {
+            "instance": "hold3138",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.029408000000000004
+          },
+          {
+            "instance": "hold3135",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.028524000000000008
+          },
+          {
+            "instance": "hold3139",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.028655999999999987
+          },
+          {
+            "instance": "input36",
+            "master": "BUF_X1",
+            "cell_delay_ns": 0.026112999999999997
+          },
+          {
+            "instance": "hold3140",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.034231999999999985
+          },
+          {
+            "instance": "hold3136",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.08180900000000002
+          },
+          {
+            "instance": "_43519_",
+            "master": "MUX2_X1",
+            "cell_delay_ns": 0.044213
+          },
+          {
+            "instance": "hold3137",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.027233000000000007
+          }
+        ]
+      },
+      "p4": {
+        "stage": "p4_route_split3_qualified",
+        "id": "second_grt_worst",
+        "startpoint": "M_AXI_RDATA[8]",
+        "endpoint": "u_dma.u_read_engine.rob_data[30][8]$_DFFE_PP_/D",
+        "slack_ns": 0.073533,
+        "data_arrival_ns": 0.489701,
+        "required_ns": 0.416168,
+        "capture_clock_early_ns": 0.407576,
+        "clock_to_required_delta_ns": 0.008591999999999989,
+        "cell_delay_ns": 0.485903,
+        "wire_delay_ns": 0.003798,
+        "hold_chain": [
+          "hold3618",
+          "hold3453",
+          "hold3619",
+          "hold3142",
+          "hold3620",
+          "hold3454",
+          "hold3621",
+          "hold3138",
+          "hold3135",
+          "hold3139",
+          "hold3140",
+          "hold3136",
+          "hold3137"
+        ],
+        "cell_chain": [
+          {
+            "instance": "hold3618",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.047768000000000005
+          },
+          {
+            "instance": "hold3453",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.026826999999999997
+          },
+          {
+            "instance": "hold3619",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02488900000000001
+          },
+          {
+            "instance": "hold3142",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.025162000000000004
+          },
+          {
+            "instance": "hold3620",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.024984999999999993
+          },
+          {
+            "instance": "hold3454",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02510599999999999
+          },
+          {
+            "instance": "hold3621",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02510599999999999
+          },
+          {
+            "instance": "hold3138",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.026599999999999985
+          },
+          {
+            "instance": "hold3135",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.027254000000000028
+          },
+          {
+            "instance": "hold3139",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.027413999999999994
+          },
+          {
+            "instance": "input36",
+            "master": "BUF_X1",
+            "cell_delay_ns": 0.023734000000000033
+          },
+          {
+            "instance": "hold3140",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.031349000000000016
+          },
+          {
+            "instance": "hold3136",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.07883699999999999
+          },
+          {
+            "instance": "_43519_",
+            "master": "MUX2_X1",
+            "cell_delay_ns": 0.04392499999999999
+          },
+          {
+            "instance": "hold3137",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.026947
+          }
+        ]
+      },
+      "added_holds": [
+        "hold3453",
+        "hold3454",
+        "hold3618",
+        "hold3619",
+        "hold3620",
+        "hold3621"
+      ],
+      "removed_holds": [],
+      "deltas_ns": {
+        "slack_ns": 0.065085,
+        "data_arrival_ns": 0.137086,
+        "required_ns": 0.072001,
+        "capture_clock_early_ns": 0.07207,
+        "clock_to_required_delta_ns": -6.9e-05,
+        "cell_delay_ns": 0.136732,
+        "wire_delay_ns": 0.000354
+      }
+    },
+    {
+      "id": "final_worst",
+      "start": "M_AXI_RDATA[1]",
+      "endpoint": "u_dma.u_read_engine.rob_data[37][1]$_DFFE_PP_/D",
+      "p3": {
+        "stage": "p3_cts_qualified",
+        "id": "final_worst",
+        "startpoint": "M_AXI_RDATA[1]",
+        "endpoint": "u_dma.u_read_engine.rob_data[37][1]$_DFFE_PP_/D",
+        "slack_ns": 0.005375,
+        "data_arrival_ns": 0.354799,
+        "required_ns": 0.34942399999999996,
+        "capture_clock_early_ns": 0.340457,
+        "clock_to_required_delta_ns": 0.008966999999999947,
+        "cell_delay_ns": 0.34335,
+        "wire_delay_ns": 0.011449,
+        "hold_chain": [
+          "hold3211",
+          "hold3207",
+          "hold3204",
+          "hold3208",
+          "hold3209",
+          "hold3205"
+        ],
+        "cell_chain": [
+          {
+            "instance": "hold3211",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.049285999999999996
+          },
+          {
+            "instance": "hold3207",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.029932
+          },
+          {
+            "instance": "hold3204",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.028693999999999997
+          },
+          {
+            "instance": "hold3208",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.029544
+          },
+          {
+            "instance": "input29",
+            "master": "BUF_X1",
+            "cell_delay_ns": 0.021501999999999993
+          },
+          {
+            "instance": "hold3209",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02988099999999999
+          },
+          {
+            "instance": "hold3205",
+            "master": "CLKBUF_X3",
+            "cell_delay_ns": 0.04137100000000002
+          },
+          {
+            "instance": "place2805",
+            "master": "BUF_X2",
+            "cell_delay_ns": 0.06822199999999998
+          },
+          {
+            "instance": "_43744_",
+            "master": "MUX2_X1",
+            "cell_delay_ns": 0.044918000000000013
+          }
+        ]
+      },
+      "p4": {
+        "stage": "p4_route_split3_qualified",
+        "id": "final_worst",
+        "startpoint": "M_AXI_RDATA[1]",
+        "endpoint": "u_dma.u_read_engine.rob_data[37][1]$_DFFE_PP_/D",
+        "slack_ns": 0.071475,
+        "data_arrival_ns": 0.491813,
+        "required_ns": 0.420338,
+        "capture_clock_early_ns": 0.411492,
+        "clock_to_required_delta_ns": 0.008845999999999965,
+        "cell_delay_ns": 0.481241,
+        "wire_delay_ns": 0.010572,
+        "hold_chain": [
+          "hold3626",
+          "hold3458",
+          "hold3627",
+          "hold3211",
+          "hold3628",
+          "hold3459",
+          "hold3629",
+          "hold3207",
+          "hold3204",
+          "hold3208",
+          "hold3209",
+          "hold3205"
+        ],
+        "cell_chain": [
+          {
+            "instance": "hold3626",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.047894
+          },
+          {
+            "instance": "hold3458",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.026810000000000007
+          },
+          {
+            "instance": "hold3627",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.024922
+          },
+          {
+            "instance": "hold3211",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.025054999999999994
+          },
+          {
+            "instance": "hold3628",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.024956000000000006
+          },
+          {
+            "instance": "hold3459",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02498699999999998
+          },
+          {
+            "instance": "hold3629",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.024853999999999987
+          },
+          {
+            "instance": "hold3207",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.02667999999999998
+          },
+          {
+            "instance": "hold3204",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.027249000000000023
+          },
+          {
+            "instance": "hold3208",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.027998999999999996
+          },
+          {
+            "instance": "input29",
+            "master": "BUF_X1",
+            "cell_delay_ns": 0.020728999999999997
+          },
+          {
+            "instance": "hold3209",
+            "master": "CLKBUF_X1",
+            "cell_delay_ns": 0.029117000000000004
+          },
+          {
+            "instance": "hold3205",
+            "master": "CLKBUF_X3",
+            "cell_delay_ns": 0.040986999999999996
+          },
+          {
+            "instance": "place2805",
+            "master": "BUF_X2",
+            "cell_delay_ns": 0.06471499999999997
+          },
+          {
+            "instance": "_43744_",
+            "master": "MUX2_X1",
+            "cell_delay_ns": 0.04428700000000002
+          }
+        ]
+      },
+      "added_holds": [
+        "hold3458",
+        "hold3459",
+        "hold3626",
+        "hold3627",
+        "hold3628",
+        "hold3629"
+      ],
+      "removed_holds": [],
+      "deltas_ns": {
+        "slack_ns": 0.0661,
+        "data_arrival_ns": 0.137014,
+        "required_ns": 0.070914,
+        "capture_clock_early_ns": 0.071035,
+        "clock_to_required_delta_ns": -0.000121,
+        "cell_delay_ns": 0.137891,
+        "wire_delay_ns": -0.000877
+      }
+    }
+  ],
+  "sdc_p3_p4_byte_identical": true
+}

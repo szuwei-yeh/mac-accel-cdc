@@ -1,0 +1,5 @@
+set p3_sync_cells {{start_sync_mac[0]$_DFF_PP0_} {start_sync_mac[1]$_DFF_PP0_} {done_sync_bus[0]$_DFF_PN0_} {done_sync_bus[1]$_DFF_PN0_} {busy_sync_bus[0]$_DFF_PN0_} {busy_sync_bus[1]$_DFF_PN0_} {u_fifo.wr_ptr_gray_sync1[0]$_DFF_PP0_} {u_fifo.wr_ptr_gray_sync2[0]$_DFF_PP0_} {u_fifo.wr_ptr_gray_sync1[1]$_DFF_PP0_} {u_fifo.wr_ptr_gray_sync2[1]$_DFF_PP0_} {u_fifo.wr_ptr_gray_sync1[2]$_DFF_PP0_} {u_fifo.wr_ptr_gray_sync2[2]$_DFF_PP0_} {u_fifo.wr_ptr_gray_sync1[3]$_DFF_PP0_} {u_fifo.wr_ptr_gray_sync2[3]$_DFF_PP0_} {u_fifo.wr_ptr_gray_sync1[4]$_DFF_PP0_} {u_fifo.wr_ptr_gray_sync2[4]$_DFF_PP0_} {u_fifo.rd_ptr_gray_sync1[0]$_DFF_PN0_} {u_fifo.rd_ptr_gray_sync2[0]$_DFF_PN0_} {u_fifo.rd_ptr_gray_sync1[1]$_DFF_PN0_} {u_fifo.rd_ptr_gray_sync2[1]$_DFF_PN0_} {u_fifo.rd_ptr_gray_sync1[2]$_DFF_PN0_} {u_fifo.rd_ptr_gray_sync2[2]$_DFF_PN0_} {u_fifo.rd_ptr_gray_sync1[3]$_DFF_PN0_} {u_fifo.rd_ptr_gray_sync2[3]$_DFF_PN0_} {u_fifo.rd_ptr_gray_sync1[4]$_DFF_PN0_} {u_fifo.rd_ptr_gray_sync2[4]$_DFF_PN0_}}
+set cells [get_cells $p3_sync_cells]
+if {[llength $cells]!=26} {error "P3 synchronizer identity changed"}
+set_dont_touch $cells
+puts "P4_PROTECTED_SYNCHRONIZER_CELLS=26"

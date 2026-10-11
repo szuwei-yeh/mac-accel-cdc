@@ -45,3 +45,14 @@ syn/runs/
 
 # Development testbenches
 sim_0/
+
+# Physical experiments and large generated artifacts stay outside Git.
+/physical/runs/
+/physical/replay-*/
+*.odb
+*.gds
+*.def
+*.spef
+*.vvp
+*.lyrdb
+__pycache__/

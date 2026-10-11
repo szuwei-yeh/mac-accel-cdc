@@ -1,0 +1,83 @@
+{
+  "renderer_versions": {
+    "matplotlib": "3.10.8",
+    "Pillow": "11.1.0"
+  },
+  "figures": {
+    "timing-comparison": {
+      "caption": "Bus 10 ns / MAC 7.5 ns. P2: pre-layout; P3: estimated RC; P4: extracted RC. All TNS = 0 ns.",
+      "source": "summary.json; preserved P2\u2013P4 timing reports",
+      "output_sha256": {
+        "png": "30fa97738bbf8ec006239872eb61463b4e3df0f3b41350fb5b003b8df069c6c2",
+        "pdf": "c2563d40a1fc7f4308cc8a23f41de7624f2586c1c26ae1b07b8f052c9cdf7cb3"
+      },
+      "source_summary_sha256": "bf1fceaec74e2c59b35f4fdc16ddcedc7ff1e8ea8a53b552d4eee0527c2bbbd5"
+    },
+    "area-comparison": {
+      "caption": "Taps and fillers excluded. Standard cells include clock buffers, dummy CTS loads and hold buffers. Core = 172,038.160 \u00b5m\u00b2.",
+      "source": "summary.json; actual OpenDB inventories",
+      "output_sha256": {
+        "png": "c0c9101b3f32f0dc8d96ef60a177c79141f35ee695df4b517a0c7795afc9e2b5",
+        "pdf": "cdafd70dbe9d8f961468cafb5146a1667af28c6513f12dbf6e2eea4fcf953a51"
+      },
+      "source_summary_sha256": "bf1fceaec74e2c59b35f4fdc16ddcedc7ff1e8ea8a53b552d4eee0527c2bbbd5"
+    },
+    "hold-decomposition": {
+      "caption": "Matched input \u2192 D-pin paths; library hold contribution = \u2212\u0394(required \u2212 capture clock). Models change from estimated to extracted RC.",
+      "source": "hold-analysis.json; read-only STA, saved P3/P4 ODB/SDC/SPEF",
+      "output_sha256": {
+        "png": "c3d8199e8f7ca189d5d330e2f1a274514926e65d5ed2819528e94d4e005e6d25",
+        "pdf": "e67b5d0ee0343f3953c7992b71463ff0a5431369ebc7bcca4dedec93bb906d8a"
+      },
+      "source_hold_analysis_sha256": "8cc7855a0b00cc3e157038b3d3a350ec402f202e6a7a8a0e7ed2e397730b631f"
+    },
+    "placement": {
+      "caption": "Actual saved placement ODB. Blue: registers; gray: combinational cells.",
+      "source": "P3 checkpoints/placement/placement.odb; geometry from native OpenDB",
+      "output_sha256": {
+        "png": "7944de42d9ec48492cc8f78281e504518ad9fe2ecbbd64b3770323d2548d79d1",
+        "pdf": "ddd394722abec192038f6ffdbb1cb25ba8a2e41bb1751368160490632cd3e8d1"
+      },
+      "source_odb_sha256": "7d933f014d007f5b2a41740fd6158442dd45fc01d9bc53bdfa7c570fd183b473",
+      "geometry_export_sha256": "c74a4b9f5c1049284f45e349b58f55013667e3a5bf7010f9fd7eaafcb07a40fa"
+    },
+    "cts": {
+      "caption": "Actual saved cts ODB. Blue: registers; gray: combinational cells. Gold: CTS buffers and buffer-to-buffer connectivity (not routed wires).",
+      "source": "P3 checkpoints/cts/cts.odb; geometry from native OpenDB",
+      "output_sha256": {
+        "png": "73b1fc948c6e00e8bd4038b0d4eefbdacadcb6acec64fb0121a262545b63c7c0",
+        "pdf": "c624c12ca18b9875c3834d98192e0eb2b5d3c69d0f8a42006d142987566d7b3b"
+      },
+      "source_odb_sha256": "138dc0f09cbc5eb0a4c3dfa851b1c61555c5c16e6c23f091657da16edeae114d",
+      "geometry_export_sha256": "d643f3755b99646124ca31e90f6ad3af0673802dac4429364eb6335e69518a37"
+    },
+    "floorplan": {
+      "caption": "Actual P3 OpenROAD floorplan view. Die: 417.39 \u00d7 417.39 \u00b5m; core: 415.15 \u00d7 414.40 \u00b5m; 296 rows.",
+      "source": "P3 floorplan.png; source SHA256 bbcd72504f3e381b0010f6ad60809c3661c210b60bda91f68eef10a8cca55d56",
+      "output_sha256": {
+        "png": "840f61e65f6f0663171950a5f8ae623dc7484a6837ed50366a73f2c4f858f2af",
+        "pdf": "a3eb21f927b7ade542e9c7b713a5358b6aea32b9347dcba87921e4d4c918dae9"
+      }
+    },
+    "overview": {
+      "caption": "Actual KLayout GDS view: M2\u2013M10 shown; FEOL, M1 and vias hidden for readability. M2 gray; M3 slate; M4 blue; M5 amber; M6 purple.",
+      "source": "P4 mac_accel_dma_rob_top.gds SHA256 95caed6aa2ccf1bb26e4bf4c66650ac19d73eaf0c782bce882026f854efd2a2c; p5 render_gds.py",
+      "output_sha256": {
+        "png": "60fdaa845729c599acc56d31396d25c13dcc5c66104e9980c55b4c7c98243c31",
+        "pdf": "9c08679481eeef81557754d1565c8c7216248452f76d6be2998f559dbcd749e7"
+      },
+      "visible_layers": "M2\u2013M10",
+      "gds_sha256": "95caed6aa2ccf1bb26e4bf4c66650ac19d73eaf0c782bce882026f854efd2a2c"
+    },
+    "routing-detail": {
+      "caption": "Actual KLayout GDS view at (195,195)\u2013(225,225) \u00b5m: M1\u2013M10 shown; vias/FEOL hidden. M2 gray; M3 slate; M4 blue; M5 amber; M6 purple.",
+      "source": "P4 mac_accel_dma_rob_top.gds SHA256 95caed6aa2ccf1bb26e4bf4c66650ac19d73eaf0c782bce882026f854efd2a2c; p5 render_gds.py",
+      "output_sha256": {
+        "png": "30624e13470b3efaaf6f77b9bfc063933f6132828ea5de385057d728c5154eae",
+        "pdf": "a781695c61891497525fadc9892972d4fd6f9ea67e43a628727846a2d67f9b1f"
+      },
+      "visible_layers": "M1\u2013M10",
+      "gds_sha256": "95caed6aa2ccf1bb26e4bf4c66650ac19d73eaf0c782bce882026f854efd2a2c"
+    }
+  }
+}

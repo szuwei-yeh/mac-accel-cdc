@@ -63,7 +63,7 @@ manifest = {
 }
 (run / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 env = os.environ.copy()
-env.setdefault("LM_LICENSE_FILE", "1781@license.ece.ucsb.edu")
+# Supply license configuration externally; no server address is published.
 env.update(RUN_ROOT=str(run), INPUT_ROOT=str(inputs), WTOP_STAGE=args.stage)
 print("RUN_ROOT=" + str(run), flush=True)
 start = time.time()

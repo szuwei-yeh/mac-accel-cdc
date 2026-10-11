@@ -1,0 +1,503 @@
+{
+  "schema_version": 1,
+  "scope": "Nangate45 typical 1.1 V 25 C research implementation; not foundry signoff",
+  "top": "mac_accel_dma_rob_top",
+  "rtl_commit": "38d6353712ac7ba680868f0729cf9006e7bff93d",
+  "parameters": {
+    "AXI_ADDR_WIDTH": 32,
+    "AXI_DATA_WIDTH": 32,
+    "AXI_ID_WIDTH": 4,
+    "BURST_LEN": 16,
+    "DATA_WIDTH": 16,
+    "MAX_LEN": 256,
+    "MAX_OUTSTANDING": 8,
+    "S_AXI_ADDR_WIDTH": 8
+  },
+  "clock_period_ns": {
+    "bus_clk": 10,
+    "mac_clk": 7.5
+  },
+  "stages": [
+    {
+      "stage": "P2 synthesis",
+      "model": "pre-layout; ideal clock; no extracted RC",
+      "standard_cells": 27199,
+      "standard_area_um2": 69018.754,
+      "core_area_um2": null,
+      "standard_utilization_percent": null,
+      "functional_clock_buffers": 0,
+      "cts_dummy_load_cells": 0,
+      "hold_repair_buffers": 0,
+      "timing": {
+        "bus_clk": {
+          "max": {
+            "wns_ns": 8.157001,
+            "tns_ns": 0,
+            "violating_endpoints": 0
+          },
+          "min": {
+            "wns_ns": 0.059436,
+            "tns_ns": 0,
+            "violating_endpoints": 0
+          }
+        },
+        "mac_clk": {
+          "max": {
+            "wns_ns": 6.065259,
+            "tns_ns": 0,
+            "violating_endpoints": 0
+          },
+          "min": {
+            "wns_ns": 0.08031,
+            "tns_ns": 0,
+            "violating_endpoints": 0
+          }
+        }
+      },
+      "electrical": {
+        "max slew": 2,
+        "max fanout": 2,
+        "max capacitance": 13
+      },
+      "tns_evidence": "Per-domain zeros derived from measured overall setup/hold TNS = 0 ns; all four per-domain WNS values measured."
+    },
+    {
+      "stage": "P3 placement",
+      "model": "placement-estimated RC; ideal clock",
+      "standard_cells": 26012,
+      "standard_area_um2": 66592.834,
+      "core_area_um2": 172038.16,
+      "standard_utilization_percent": 38.70817613952625,
+      "functional_clock_buffers": 0,
+      "cts_dummy_load_cells": 0,
+      "hold_repair_buffers": 0,
+      "timing": {
+        "bus_clk": {
+          "max": {
+            "wns_ns": 7.995377,
+            "tns_ns": 0,
+            "violating_endpoints": 0
+          },
+          "min": {
+            "wns_ns": 0.075788,
+            "tns_ns": 0,
+            "violating_endpoints": 0
+          }
+        },
+        "mac_clk": {
+          "max": {
+            "wns_ns": 6.016321,
+            "tns_ns": 0,
+            "violating_endpoints": 0
+          },
+          "min": {
+            "wns_ns": 0.0805,
+            "tns_ns": 0,
+            "violating_endpoints": 0
+          }
+        }
+      },
+      "electrical": {
+        "slew": 0,
+        "fanout": 0,
+        "capacitance": 0
+      },
+      "placement_data_buffer_groups": {
+        "place": 1006,
+        "input": 71,
+        "output": 83,
+        "max_cap": 1
+      },
+      "placement_data_buffers": 1161,
+      "all_buffer_master_cells": 1161
+    },
+    {
+      "stage": "P3 CTS",
+      "model": "placement-estimated RC; propagated clocks",
+      "standard_cells": 28766,
+      "standard_area_um2": 69436.374,
+      "core_area_um2": 172038.16,
+      "standard_utilization_percent": 40.361030366751194,
+      "functional_clock_buffers": 1302,
+      "cts_dummy_load_cells": 857,
+      "hold_repair_buffers": 595,
+      "timing": {
+        "bus_clk": {
+          "max": {
+            "wns_ns": 7.660461,
+            "tns_ns": 0,
+            "violating_endpoints": 0
+          },
+          "min": {
+            "wns_ns": 0.000954,
+            "tns_ns": 0,
+            "violating_endpoints": 0
+          }
+        },
+        "mac_clk": {
+          "max": {
+            "wns_ns": 6.010626,
+            "tns_ns": 0,
+            "violating_endpoints": 0
+          },
+          "min": {
+            "wns_ns": 0.083037,
+            "tns_ns": 0,
+            "violating_endpoints": 0
+          }
+        }
+      },
+      "electrical": {
+        "slew": 0,
+        "fanout": 0,
+        "capacitance": 0
+      },
+      "placement_data_buffer_groups": {
+        "place": 1006,
+        "input": 71,
+        "output": 83,
+        "max_cap": 1
+      },
+      "placement_data_buffers": 1161,
+      "all_buffer_master_cells": 3608
+    },
+    {
+      "stage": "P4 routed",
+      "model": "OpenRCX extracted RC; propagated clocks",
+      "standard_cells": 29175,
+      "standard_area_um2": 69764.352,
+      "core_area_um2": 172038.16,
+      "standard_utilization_percent": 40.55167295441895,
+      "functional_clock_buffers": 1305,
+      "cts_dummy_load_cells": 857,
+      "hold_repair_buffers": 1001,
+      "timing": {
+        "bus_clk": {
+          "max": {
+            "wns_ns": 7.583547,
+            "tns_ns": 0.0,
+            "violating_endpoints": 0
+          },
+          "min": {
+            "wns_ns": 0.071475,
+            "tns_ns": 0.0,
+            "violating_endpoints": 0
+          }
+        },
+        "mac_clk": {
+          "max": {
+            "wns_ns": 6.012479,
+            "tns_ns": 0.0,
+            "violating_endpoints": 0
+          },
+          "min": {
+            "wns_ns": 0.082811,
+            "tns_ns": 0.0,
+            "violating_endpoints": 0
+          }
+        }
+      },
+      "electrical": {
+        "slew": 0,
+        "fanout": 0,
+        "capacitance": 0
+      },
+      "placement_data_buffer_groups": {
+        "place": 1006,
+        "input": 71,
+        "output": 83,
+        "max_cap": 1
+      },
+      "placement_data_buffers": 1161,
+      "all_buffer_master_cells": 4017
+    }
+  ],
+  "clock_statistics": {
+    "P3 CTS": {
+      "bus_clk": {
+        "functional_sinks": 7281,
+        "clock_buffers": 1264,
+        "dummy_loads": 833,
+        "rise_min_ns": 0.314247,
+        "rise_max_ns": 0.343584,
+        "rise_global_spread_ns": 0.029336,
+        "fall_min_ns": 0.332256,
+        "fall_max_ns": 0.363268,
+        "fall_global_spread_ns": 0.031013,
+        "path_skew_ns": 0.027693
+      },
+      "mac_clk": {
+        "functional_sinks": 222,
+        "clock_buffers": 38,
+        "dummy_loads": 24,
+        "rise_min_ns": 0.129517,
+        "rise_max_ns": 0.140478,
+        "rise_global_spread_ns": 0.010961,
+        "fall_min_ns": 0.13407,
+        "fall_max_ns": 0.145684,
+        "fall_global_spread_ns": 0.011615,
+        "path_skew_ns": 0.010522
+      }
+    },
+    "P4 routed": {
+      "bus_clk": {
+        "rise": {
+          "min_ns": 0.384221,
+          "max_ns": 0.415071,
+          "skew_ns": 0.03085
+        },
+        "fall": {
+          "min_ns": 0.403148,
+          "max_ns": 0.435666,
+          "skew_ns": 0.032518
+        },
+        "setup_timing_path_skew_ns": 0.028087,
+        "hold_timing_path_skew_ns": 0.028087
+      },
+      "mac_clk": {
+        "rise": {
+          "min_ns": 0.123816,
+          "max_ns": 0.133843,
+          "skew_ns": 0.010027
+        },
+        "fall": {
+          "min_ns": 0.127563,
+          "max_ns": 0.138139,
+          "skew_ns": 0.010576
+        },
+        "setup_timing_path_skew_ns": 0.009514,
+        "hold_timing_path_skew_ns": 0.009514
+      }
+    }
+  },
+  "verification": {
+    "rtl_cases": 66,
+    "formal_tasks": 7,
+    "formal_scope": "Selected properties and reduced configurations; no whole-design depth-8 proof or formal equivalence",
+    "postroute_zero_delay_gls_cases": 7,
+    "synchronizer_chains": 13,
+    "synchronizer_registers": 26,
+    "bounded_crossings": 602,
+    "total_crossings": 605,
+    "cdc_bounds": {
+      "write_gray": {
+        "count": 5,
+        "worst_slack_ns": 7.357976
+      },
+      "read_gray": {
+        "count": 5,
+        "worst_slack_ns": 7.348492
+      },
+      "payload": {
+        "count": 528,
+        "worst_slack_ns": 7.100448
+      },
+      "result": {
+        "count": 32,
+        "worst_slack_ns": 9.811222
+      },
+      "latency": {
+        "count": 32,
+        "worst_slack_ns": 9.814015
+      }
+    },
+    "synchronizers": [
+      {
+        "chain": "start_sync_mac",
+        "stage1": "start_sync_mac[0]$_DFF_PP0_",
+        "stage2": "start_sync_mac[1]$_DFF_PP0_",
+        "manhattan_um": "9.88",
+        "max_slack_ns": "7.362542",
+        "min_slack_ns": "0.085186"
+      },
+      {
+        "chain": "done_sync_bus",
+        "stage1": "done_sync_bus[0]$_DFF_PN0_",
+        "stage2": "done_sync_bus[1]$_DFF_PN0_",
+        "manhattan_um": "3.8",
+        "max_slack_ns": "9.865541",
+        "min_slack_ns": "0.082784"
+      },
+      {
+        "chain": "busy_sync_bus",
+        "stage1": "busy_sync_bus[0]$_DFF_PN0_",
+        "stage2": "busy_sync_bus[1]$_DFF_PN0_",
+        "manhattan_um": "35.67",
+        "max_slack_ns": "9.858267",
+        "min_slack_ns": "0.086220"
+      },
+      {
+        "chain": "wr_gray[0]",
+        "stage1": "u_fifo.wr_ptr_gray_sync1[0]$_DFF_PP0_",
+        "stage2": "u_fifo.wr_ptr_gray_sync2[0]$_DFF_PP0_",
+        "manhattan_um": "3.8",
+        "max_slack_ns": "7.365386",
+        "min_slack_ns": "0.082811"
+      },
+      {
+        "chain": "wr_gray[1]",
+        "stage1": "u_fifo.wr_ptr_gray_sync1[1]$_DFF_PP0_",
+        "stage2": "u_fifo.wr_ptr_gray_sync2[1]$_DFF_PP0_",
+        "manhattan_um": "2.54",
+        "max_slack_ns": "7.364073",
+        "min_slack_ns": "0.083932"
+      },
+      {
+        "chain": "wr_gray[2]",
+        "stage1": "u_fifo.wr_ptr_gray_sync1[2]$_DFF_PP0_",
+        "stage2": "u_fifo.wr_ptr_gray_sync2[2]$_DFF_PP0_",
+        "manhattan_um": "3.8",
+        "max_slack_ns": "7.365379",
+        "min_slack_ns": "0.082821"
+      },
+      {
+        "chain": "wr_gray[3]",
+        "stage1": "u_fifo.wr_ptr_gray_sync1[3]$_DFF_PP0_",
+        "stage2": "u_fifo.wr_ptr_gray_sync2[3]$_DFF_PP0_",
+        "manhattan_um": "3.8",
+        "max_slack_ns": "7.365329",
+        "min_slack_ns": "0.082901"
+      },
+      {
+        "chain": "wr_gray[4]",
+        "stage1": "u_fifo.wr_ptr_gray_sync1[4]$_DFF_PP0_",
+        "stage2": "u_fifo.wr_ptr_gray_sync2[4]$_DFF_PP0_",
+        "manhattan_um": "4.82",
+        "max_slack_ns": "7.365041",
+        "min_slack_ns": "0.083075"
+      },
+      {
+        "chain": "rd_gray[0]",
+        "stage1": "u_fifo.rd_ptr_gray_sync1[0]$_DFF_PN0_",
+        "stage2": "u_fifo.rd_ptr_gray_sync2[0]$_DFF_PN0_",
+        "manhattan_um": "14.7",
+        "max_slack_ns": "9.861039",
+        "min_slack_ns": "0.085637"
+      },
+      {
+        "chain": "rd_gray[1]",
+        "stage1": "u_fifo.rd_ptr_gray_sync1[1]$_DFF_PN0_",
+        "stage2": "u_fifo.rd_ptr_gray_sync2[1]$_DFF_PN0_",
+        "manhattan_um": "11.92",
+        "max_slack_ns": "9.861828",
+        "min_slack_ns": "0.085194"
+      },
+      {
+        "chain": "rd_gray[2]",
+        "stage1": "u_fifo.rd_ptr_gray_sync1[2]$_DFF_PN0_",
+        "stage2": "u_fifo.rd_ptr_gray_sync2[2]$_DFF_PN0_",
+        "manhattan_um": "16.03",
+        "max_slack_ns": "9.859695",
+        "min_slack_ns": "0.086382"
+      },
+      {
+        "chain": "rd_gray[3]",
+        "stage1": "u_fifo.rd_ptr_gray_sync1[3]$_DFF_PN0_",
+        "stage2": "u_fifo.rd_ptr_gray_sync2[3]$_DFF_PN0_",
+        "manhattan_um": "7.98",
+        "max_slack_ns": "9.862393",
+        "min_slack_ns": "0.084687"
+      },
+      {
+        "chain": "rd_gray[4]",
+        "stage1": "u_fifo.rd_ptr_gray_sync1[4]$_DFF_PN0_",
+        "stage2": "u_fifo.rd_ptr_gray_sync2[4]$_DFF_PN0_",
+        "manhattan_um": "12.49",
+        "max_slack_ns": "9.861430",
+        "min_slack_ns": "0.085468"
+      }
+    ],
+    "router_drc": 0,
+    "klayout_drc_markers": 0,
+    "klayout_rule_categories": 133,
+    "klayout_antenna_markers": 0,
+    "native_antenna": "INCONCLUSIVE",
+    "lvs": "UNSUPPORTED",
+    "active_unannotated_nets": 0
+  },
+  "routing": {
+    "wirelength_um": 410557,
+    "vias": 198562,
+    "global_route_overflow": 0,
+    "global_route_demand": 142128,
+    "global_route_resource": 953760,
+    "layer_wirelength_um": {
+      "metal2": 166050,
+      "metal3": 190041,
+      "metal4": 37608,
+      "metal5": 14524,
+      "metal6": 2070,
+      "metal7": 154,
+      "metal8": 98,
+      "metal9": 8
+    }
+  },
+  "extraction": {
+    "nets": 36372,
+    "resistor_segments": 149312,
+    "capacitance_nodes": 149312,
+    "coupling_segments": 276037
+  },
+  "artifacts": {
+    "odb": {
+      "filename": "mac_accel_dma_rob_top.odb",
+      "bytes": 46298255,
+      "sha256": "da0a5238841ab87abf09cc76ba9c42ed65dbfde563a276e1799289360cecf658"
+    },
+    "def": {
+      "filename": "mac_accel_dma_rob_top.def",
+      "bytes": 26279415,
+      "sha256": "5d9e02b6c9e9cce69fc804cc21c8027ffa12999a7b2b1cd75f70001c5cd60834"
+    },
+    "v": {
+      "filename": "mac_accel_dma_rob_top.v",
+      "bytes": 3854233,
+      "sha256": "5691ee81fbf8f15a1aeb67f56069dd0cc8ef9cf34dcda427f41ebe9ecdff4250"
+    },
+    "sdc": {
+      "filename": "mac_accel_dma_rob_top.sdc",
+      "bytes": 129022,
+      "sha256": "753f0ea4f6f07fdc864692cad92a5a9d192bb0fbc95babae4ece5bd9a1511e1e"
+    },
+    "spef": {
+      "filename": "mac_accel_dma_rob_top.spef",
+      "bytes": 30928891,
+      "sha256": "ae8de5cea8b015425c7f19c91a16973c45ddbae6a0ef5ac51572480e54a87568"
+    },
+    "gds": {
+      "filename": "mac_accel_dma_rob_top.gds",
+      "bytes": 25223246,
+      "sha256": "95caed6aa2ccf1bb26e4bf4c66650ac19d73eaf0c782bce882026f854efd2a2c"
+    }
+  },
+  "resources": {
+    "P2": {
+      "command_seconds": 108.34891106095165,
+      "peak_rss_kib": 470388
+    },
+    "P3": {
+      "sum_nonoverlapping_command_seconds": 249.0084355371073,
+      "peak_rss_kib": 577476,
+      "disk_bytes_at_packaging": 1097021181
+    },
+    "P4": {
+      "total_active_command_seconds_no_nested_double_count": 2324.0144849978387,
+      "peak_rss_kib": 2131500,
+      "threads": 2,
+      "cpu_affinity": "0,1",
+      "make_jobs": 1,
+      "apparent_bytes_at_sealing": 1368832547,
+      "allocated_bytes_at_sealing": 1370091520
+    }
+  },
+  "provenance": {
+    "P2": "P2_v3_20261010T200353564218Z",
+    "P3": "P3_v3_20261010T203048488005Z",
+    "P4": "P4_v3_20261010T210404869162Z",
+    "summary_sha256": {
+      "P2": "a05037ac95a98da704e44585d5448a94bd0286a69eeefc41a50c982e549c95e5",
+      "P3": "770ba90f85f27f21b3352009ab4d3f77ddf654f66c4ea4dd26d1d0642b46b68c",
+      "P4": "ef003577886c69f82c4de3c656dc2c090fa42fa759b0ae7756b8fe4f6f080266"
+    }
+  }
+}

@@ -20,7 +20,7 @@ and prints its location. Alternatively supply `--run-root /absolute/new/path`;
 an existing directory is refused. Each stage starts from source; `synthesis`
 includes elaboration and constraint checks. Python 3.6+ and DC
 `/ece/synopsys/syn/R-2020.09-SP4/bin/dc_shell` are required. The launcher uses
-the existing license environment, or the audited UCSB license server default.
+the externally supplied license environment; no license-server default is published.
 It does not modify a shell startup file or a system library.
 
 Every run snapshots RTL/scripts, Git state, source hashes and the library

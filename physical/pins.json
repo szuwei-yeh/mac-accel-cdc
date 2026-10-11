@@ -1,0 +1,359 @@
+{
+  "rtl_commit": "38d6353712ac7ba680868f0729cf9006e7bff93d",
+  "orfs_commit": "e5ce907f878490bf9947347f4cd4b73e97451c80",
+  "openroad_version": "26Q2-1164-g08f67ee5ec",
+  "openroad_commit": "08f67ee5ecd14db5a42be8c610bbfd1ccf079299",
+  "opensta_version": "3.1.0",
+  "opensta_commit": "76c4d6df3537ccce331b5caa812196c3330ba7c4",
+  "yosys_version": "0.65+57",
+  "yosys_commit": "9d0cdb8551d7262a3b41533b048295719eaf5142",
+  "klayout_version": "0.28.17",
+  "source_sha256": {
+    "rtl/mac_accel.v": "0bc79e04ad36b35658b05f30e7c683dc9de6cec74eb5a7a63b0d1cba9990011e",
+    "rtl/mac_accel_dma_rob_top.v": "f811c3fad110563e0a1b930b4955357a349b129852291e8f3acd05c5eb3d32fd",
+    "rtl/README.md": "55c0b37e50c999bad4eebfa974eeed63585210c5f21d93786eaf54518d7a235b",
+    "rtl/mac_accel_axi.v": "b6abb8793defa2c0f7ea24a44af8cc5bd54e2769dadee734a08902131419d21a",
+    "rtl/mac_fifo_async.v": "cfeb105db0846f9ffc4072a2f20ffa5a79a13f6502454c77d8f0aeb3fc82c23e",
+    "rtl/mac_dma.v": "eac52487e2fb5f053ee0278fb26576a2468bc57c7a8049a6c194ebc9690e0660",
+    "rtl/mac_dma_rob.v": "38f18f58d541c70e5e2b97130e7dca0e1c74f5bffcd9cd74b24d3c2218ba0f32",
+    "rtl/mac_accel_dma_top.v": "34a2310835728d0bd79f9222914528dfa3eeb5f553db8d885e97942363f91e60",
+    "rtl/mac_pe.v": "a33d7b864149cf7eb58371199d6956c04bfb535b909c859273f78dfc2c2d5c39",
+    "rtl/axi_read_engine_rob.v": "b5234cde4eaa4d7b0579fbc14b9f55a3216f20727c70c5d6302879f8a757d3dc",
+    "sim/axi_read_mem_model_mo.v": "8109c767a210266c2111b8e95b612f044affea2a5284cf579b29077842e6ab2e",
+    "sim/axi_read_mem_model.v": "ae33f4464b5532437670503544e31fee4e3b73c4c9f1b7c1f7013bd3399b42b7",
+    "sim/CDC_REGRESSION.md": "8f37a89c7adcdb23f339450420855885462786b3d2bea4cfd2588b8972c1a1f9",
+    "sim/README.md": "6b5ba3ccac75eb11df2b4b60b10acf4a13edb1ac0a8e97a1ea680113a4b081e3",
+    "sim/tb_mac_accel_dma_rob_cdc.sv": "1f570f31bcc9a63769960e32a846492600ed7cf3f77bdb8690e107fe91cce13d",
+    "sim/tb_axi_read_engine_rob.v": "a2ccae1a7bb9b04bc07868158c36a51aa7cba9f52d1f996ea3df5f130dafeca8",
+    "sim/run_cdc_regression.py": "4848b2414853edfd9781a01ff08c749730dc11d472b2ca446d227bc5ef9a14cd",
+    "sim/tb_mac_dma_rob.v": "91752ffb6ae58049cfe31ada183be59b3d5be0d0b2bedfd2de3c604b5ae3f7c0",
+    "sim/tb_mac_accel_dma_bp.v": "99c496d7afeaaa995bf4e7151b073af9512d98905b819d83f7e681f50a005039",
+    "sim/axi_read_mem_model_ooo.v": "9bde399f80bd4351b9c76a1e54377475ea69b1632f515a772e80c0796ead43a4",
+    "sim/tb_mac_dma_rob_sweep.v": "ef983c3e33758cf952c429fdd52071d3499c1ad1a63f32ba6d6e2592f8b1e249",
+    "sim/tb_mac_accel_cdc.v": "02047958773baf1cbac30f1a49287a95d0cd1ac1410dda519fdf5288b0a7fce2",
+    "sim/tb_mac_dma_rob_power.v": "36ed280df0ea6c417e0b451b22c356d2766319d30b7a949051b05e683dd5e655",
+    "sim/tb_axi_read_engine_rob_ooo.v": "773cddcaca114674dd2f40503d9307b849f42b0f21e8cee38a4fa8a0998eb5c2",
+    "sim/tb_mac_dma_baseline.v": "4f77b099a940d12ac6d77877387543ab76b355ee8364a2e03312bcf774bfa91e",
+    "sim/tb_mac_accel_dma_rob_top.v": "d84ccdf6b361a4c687947c13c93252f02e132b15ecaad58eb33a633e647c6608",
+    "sim/tb_mac_accel_dma.v": "a58ea491b3ff12af101fd06ad3853c891684ac32fe85420a52abfee7d29d5ac4",
+    "formal/.gitignore": "9d89c3e14979cfa5221fb223eca152555b89c5e9c2a060198ebbeff8f1b3cad8",
+    "formal/STUDY_GUIDE.md": "2964f97888f50c557c9afa1fedf6eea265443c1d28bbfde104a37550129b7d18",
+    "formal/mac_fifo_gray.sby": "4915567cd2444c56aa9001d1589391df30263729febe3679c46c45d8cb38c7ca",
+    "formal/mac_dma_bp.sby": "c3c44c4dea02cee1bb75c40d84197306fe6050fea41947b4c971902d207c3e85",
+    "formal/axi_read_engine_rob.sby": "a06c46ba38c705edc2cdd072d4bfe9fc4e0ed30aa74f3c15aaa50b6db9ea50c1"
+  },
+  "platform_sha256": {
+    "FreePDK45.lyp": "924ed17e9d77366c88e68698d53dd90240b88550ff05205297c89fc298337065",
+    "FreePDK45.lyt": "45382e7c1ad2c3727fec79fc0249dceff8ce8fab8ef815017ad5de3350a87a12",
+    "LICENSE": "0d542e0c8804e39aa7f37eb00da5a762149dc682d7829451287e11b938e94594",
+    "README.md": "0e3c8a8cbe5429552764c6531dc454d64f6aa7c1f7128175b5f06070a3de578d",
+    "cdl/NangateOpenCellLibrary.cdl": "457f0e3836b369f56d2cb04aab2a16d0e40b56d32bf2c62f19475b0abca2f6b3",
+    "cells_adders.v": "952b214f36f4a608cc6fdacbefcb2f169cc87917fe158a47326bbe6db10867bf",
+    "cells_clkgate.v": "5ea0a6fb7aee5e17c11c00ad751fd5c1cc9f8e4791426643fc96ecc19ffbf8f7",
+    "cells_latch.v": "7e2330df874405c28f92d37f17be088b371b9f378a913e7ca3dbda25ca4c7802",
+    "config.mk": "91e13c3c014b82ba3f8a8d3e22fde8ee7eae21c2c16136adb3b7cd9d31c3ef8c",
+    "drc/FreePDK45.lydrc": "4e35cad6786f21c6e233fb606bea59bb44e1a12713008cf7367d65a1a3de2147",
+    "fakeram.cfg": "ee22aa996dfc8eb657016b0227f0e76d4eec0233809633662476387fd3600b3a",
+    "fakeram.tcl": "8d6e1348627dd17730054397c1c6d417c35065ab93aa4c807044bab84551cc2b",
+    "fastroute.tcl": "6ee39fe360a870b0dd4731a206882d2a2b6c1e54ad8612152460e36c9e95e0dc",
+    "gds/NangateOpenCellLibrary.gds": "7fdbd7f4e46283fdd9b9a369e1cae1a7f6f742c8e75cfe943c17f451626fe8e8",
+    "grid_strategy-M1-M4-M7.tcl": "13f6979391f4e5373b6e0b9e9df6f8f07f69787e970e13e5d170f830b83006db",
+    "lef/NangateOpenCellLibrary.macro.lef": "840b01e500826096d1edcc752350834da647fdbf360798f243f8122b52b357c3",
+    "lef/NangateOpenCellLibrary.macro.mod.lef": "a43aea339f12a57a63497783e508ba16f3da2dc056d3247dec7d99707c2dedef",
+    "lef/NangateOpenCellLibrary.macro.rect.lef": "ecd161bee2e7ae275f8481d4923077e173f4b6a0b2c9f98729729cd1c1350cfc",
+    "lef/NangateOpenCellLibrary.tech.lef": "834a79295054cd4209178d1bade67c353863c47bb4b3c22ee38b862b7cec37f2",
+    "lef/fakeram45_1024x32.lef": "9ed78783be3cd409ede4d49ca946fab89ad2e7b835f5a50e7a21e9f653de7ac6",
+    "lef/fakeram45_128x116.lef": "9881aa38562ae4dff81d496d4a3c60033c1b90a65d18180b2e0ea54f135d9b97",
+    "lef/fakeram45_128x256.lef": "1a62c3fc1ed7cb3e468478bb35e9bc3b72d3d518d6fb007c8c1efe21aa3fb042",
+    "lef/fakeram45_128x32.lef": "45b98044e51064ddb9b60e8ead0aab1488012343d2e3a448735e02f82b812a7f",
+    "lef/fakeram45_2048x39.lef": "45deb6479b953073225c88018f164f51f2775d39275246eee5b25241fb797dfa",
+    "lef/fakeram45_256x16.lef": "963800bda44bd5f13c1f6ee9ecf1f51b3805d58c2780d922b129bbaa7eb5f775",
+    "lef/fakeram45_256x32.lef": "f96f49d4f9e52f0da5834b53917d20b7032c7d611131e5484991cf0e5f05d641",
+    "lef/fakeram45_256x34.lef": "2445d41d3cd0621a4e8bd9e768ae208b52944a1b66dfe420a7c83e2a34e5025d",
+    "lef/fakeram45_256x48.lef": "7755bf50bc4c7f78fdd80ae9ac08554d5ca65428700f50c2dd86cc65e6601cb3",
+    "lef/fakeram45_256x95.lef": "afbe00bd14ddabd4ccc48d4c51d50809696834747e8de9cf8b24129bcdb19a4f",
+    "lef/fakeram45_256x96.lef": "105674a9751a29cfefd16895a4ceef6daf05a15afa5c198af2584fcd80544b5d",
+    "lef/fakeram45_32x32.lef": "46220bf102a9fdf491a2a3c064c57693004a3309063fa3fcbf8b96ebd1c66509",
+    "lef/fakeram45_32x64.lef": "e0007608c5373918db19e645a1a7aa3a3d0d089309885a20412114a7536a1603",
+    "lef/fakeram45_512x64.lef": "2d88d8204b5990182efad59f783c62253395a7a11c60b2c998a0b0088f496f62",
+    "lef/fakeram45_64x124.lef": "987aa6da66056c4c32bf6c7bd91613acda40ba84c25e43b461ebff749bec5a7e",
+    "lef/fakeram45_64x15.lef": "526de533cdec659d926b658a9cb41d44cdcf8c3f64d4854ac00a58854b9d2a96",
+    "lef/fakeram45_64x21.lef": "ff1fba6e051992ad118bff1fc0f115d7068c81ccdf25af909e8c127e1fa6ee4d",
+    "lef/fakeram45_64x32.lef": "7b7ee9ce7519684b4430b407d333ab23621fc725b9615480121ecf8c32e35ee3",
+    "lef/fakeram45_64x62.lef": "18033439e2713a8716bfce371f8b6b153ecd6cca9d9ecafc3cdf092d23759abf",
+    "lef/fakeram45_64x64.lef": "01090d7a9acb7d8000e271fa839ecc95aa00e3c2506ddbee13b0e898a57dcc17",
+    "lef/fakeram45_64x7.lef": "dff8ccf9124e87c68887d864a54d4991a022cf8bc48d947bdb0c6808880ddf0d",
+    "lef/fakeram45_64x96.lef": "242402aea41d73efea77e1fd7b86ebe066466f3c3eb9b67d54520c9d9cb51478",
+    "lib/NangateOpenCellLibrary_typical.lib": "8d540a4d4cf6d09d27c87ad067857a9c0c2eeb023ab7a56e058cd3113db4e9b1",
+    "lib/fakeram45_1024x32.lib": "713385b60a8e3b0268525b6f5b8ebfcf546f7ff4da2270c13c8b26feb9eb3418",
+    "lib/fakeram45_128x116.lib": "eb3039e74fdc6ba46f4dc3989d2d45b728c39878572b55d5085218cf1bef5716",
+    "lib/fakeram45_128x256.lib": "768fff11c01f97f6385b5512cd48bf6891765caa73f1c6bada12f3044b8284a0",
+    "lib/fakeram45_128x32.lib": "3a15fb9b8e8b29a4308f0ef0cde52d7ef8e1027ffbdcce998ad47610c5c765de",
+    "lib/fakeram45_2048x39.lib": "d131db4a5eea3f8d945783e0da8de2edd74d089c7611baa651e9480abc88d5c4",
+    "lib/fakeram45_256x16.lib": "1226b624618d90376b0af26ed788adcfe8e8a57e78e2c10b3583f656f7a039e0",
+    "lib/fakeram45_256x32.lib": "69f18164c84e37486480eaff0461538bd0e32eb7da31588ac5de8fcee516f0ef",
+    "lib/fakeram45_256x34.lib": "a927beee6594a4fdba8d752084c811c525421d644288899d52be813e98d21202",
+    "lib/fakeram45_256x48.lib": "9b814b660708903a56520c0dd9e7c1c55b54181eb2c36eb80b7316968d48a4f1",
+    "lib/fakeram45_256x95.lib": "a8bb6321ca273617790a2ea3d024c04ae7013351b010012b00c08cddffab0cc7",
+    "lib/fakeram45_256x96.lib": "549a865aaee23fdb2009c73bc79cadbe91ccc3e5a19dabe8b97ca6512b1fb33f",
+    "lib/fakeram45_32x32.lib": "8b66a6d8205714e968c16f53267fbb368ec212669d05fd61a1663ed5444d6a01",
+    "lib/fakeram45_32x64.lib": "78749bfc16598494fb7c10491d96f5e6dbcb155afc8844687bd5c18109d79652",
+    "lib/fakeram45_512x64.lib": "52bec9c35e3ed922459e336aa0e3f9a9e90c1caff6a6d9fff1743902e00e5dce",
+    "lib/fakeram45_64x124.lib": "a73a04715e10d70e26b46ebfcfb7151ebfd8181eb0072d0a27b3955c6e29498d",
+    "lib/fakeram45_64x15.lib": "ad3f23637f276d65f8e2b44037a89feee8c4970b866492da8e6150395e6ef5f9",
+    "lib/fakeram45_64x21.lib": "3f1a01bcb63318f2c91b2438ead6b20a5443a7434e428ae0b0f6e156071127ab",
+    "lib/fakeram45_64x32.lib": "bcf9eb40daf072b0fdeb1d98f13b0b9cfebc07e446f3c6dadc5702eaa3e9e8a7",
+    "lib/fakeram45_64x62.lib": "59926d5345188e165d2e69e81bd75289634346b6e87cf9e466115bf2426fd622",
+    "lib/fakeram45_64x64.lib": "8d1b523a1deb90f7790aac4aae3b62a75bd0f3f2fcb3a1ef1fcf70830f76a4a2",
+    "lib/fakeram45_64x7.lib": "ba1159fae40f3a57bc261eca0225c2a0453edf911e8a66a427c395dffe84dfe7",
+    "lib/fakeram45_64x96.lib": "86fa0230648545219a13bf78e1d9a03892d21f953d63e1702df5beb35417456e",
+    "magic.tech": "73327b46ff3e9f45d03c6166c03768529816f74a41600284762586b59566ad85",
+    "make_tracks.tcl": "8f8fbff8d8e0dfd232307058f6766973742e36f8f27bd1c717ea001e142cba99",
+    "rcx_patterns.rules": "2f65fafbe2c704b378563c53a680b93cef080c2799997019d43df7d1e5a563e9",
+    "setRC.tcl": "4c0fdc4f96c4377e15aef8fb8f8397acad62be2660afffe7cc55223535542480",
+    "tapcell.tcl": "ed63997dc12c57c5542e4058338c63e63b13773ded5e0f4b261ac41f769299c0",
+    "template_pga.cfg": "81d0a5dd9898fb85cc3f33cb2cbd4009dc2be2683dc1d2b73d096cde4f51ad2d"
+  },
+  "template_provenance": {
+    "p2/run.py": {
+      "accepted_script_sha256": "8e0956d4864a66740c784d08e54572374703a6153b527afae89d12f452a7ad51",
+      "template_sha256": "e88efdefd0b600147c6ace6562b64b531b328286026bca59287de87e0bc24959"
+    },
+    "p2/config.mk": {
+      "accepted_script_sha256": "20953755e430b4bcaf1e49d677ecd5a4807c149d2e0f725e1b944648e7b46e52",
+      "template_sha256": "397fd3ba5e5ac1f439a6052bc6a0f0a411a803441ff632d9e565ff8fc627bc1d"
+    },
+    "p2/synth.tcl": {
+      "accepted_script_sha256": "584c39b1660867e7050121ac8b6ec5cd83398cdd2e0ab52103dbd4c3a193a684",
+      "template_sha256": "7c8a3c1fb2544fe2086d517faf4fbd0dc8f5425c33a78f67e4e8afae074c5f4d"
+    },
+    "p2/canonicalize.tcl": {
+      "accepted_script_sha256": "8e66a1c3b0366eddb7b759aa1201894f7f17be091f6bdb40e3790c414271ac05",
+      "template_sha256": "8e66a1c3b0366eddb7b759aa1201894f7f17be091f6bdb40e3790c414271ac05"
+    },
+    "p2/constraint.sdc": {
+      "accepted_script_sha256": "bcb1672baf968d8801002ac254d94cc8f44155ae240f65b88894b03085bc32a8",
+      "template_sha256": "bcb1672baf968d8801002ac254d94cc8f44155ae240f65b88894b03085bc32a8"
+    },
+    "p2/audit_mapping.py": {
+      "accepted_script_sha256": "424b2b6ec817b8cd93b22a73234d40655c1a2565360129389e59675323d44b55",
+      "template_sha256": "424b2b6ec817b8cd93b22a73234d40655c1a2565360129389e59675323d44b55"
+    },
+    "p2/elaboration_audit.py": {
+      "accepted_script_sha256": "d084a5495d3aa45a2eabbd97446563308c2f5d2501ba636d923bc1340518e5c1",
+      "template_sha256": "d084a5495d3aa45a2eabbd97446563308c2f5d2501ba636d923bc1340518e5c1"
+    },
+    "p2/qualified_readback.tcl": {
+      "accepted_script_sha256": "e9c1e7d5fbf4bf081f2ef0fc66b456cb3151cb53950f847e3a92881bade955fb",
+      "template_sha256": "abb7af7083b468738806d7487b9520f755d7d062542808de1cb87253b0eeadfa"
+    },
+    "p2/sta_audit.tcl": {
+      "accepted_script_sha256": "d5f58212c117fc808f2f8861350ee019a550b5a1f3a9c961924b7a6120828e63",
+      "template_sha256": "069759fdbd8cc252eb5befdb9ff888010bf0377b8242995982f5a0c038e5e895",
+      "p5_template_sha256": "0241946a0b2c7b4d965401f0a440ecfa19fdcb519c6bfaca3d65e386e0c70c77",
+      "repair": "P6R fail-closed acceptance gate"
+    },
+    "p2/sta_audit_openroad.tcl": {
+      "accepted_script_sha256": "fbb282f78b9d217674268b23f889b52816db5af1434edf4923c6e29d6b720c01",
+      "template_sha256": "57be531379ba62425d47d66c5175a3d3d58d1afa272892c19aac96111183ddad",
+      "p5_template_sha256": "992c192cd020813cea28f906d04a108660135903deb1b4ac6dece99bd9af4b5e",
+      "repair": "P6R fail-closed acceptance gate"
+    },
+    "p2/coverage.py": {
+      "accepted_script_sha256": "4b7ec70505f00b6c84af3718718a3f171be509ccefe464983051c3306defe70a",
+      "template_sha256": "4b7ec70505f00b6c84af3718718a3f171be509ccefe464983051c3306defe70a"
+    },
+    "p2/coverage_records.tcl": {
+      "accepted_script_sha256": "43a56279b6a99c98f95a42574328694191b0897420aa26e33b48b9ebc46ab84b",
+      "template_sha256": "43a56279b6a99c98f95a42574328694191b0897420aa26e33b48b9ebc46ab84b"
+    },
+    "p2/verify_rtl.py": {
+      "accepted_script_sha256": "9031f35b33ab9443d2bad63d9bd083c214ce5b7854ab9cdcb8232303661faabc",
+      "template_sha256": "9031f35b33ab9443d2bad63d9bd083c214ce5b7854ab9cdcb8232303661faabc"
+    },
+    "p2/verify_formal.py": {
+      "accepted_script_sha256": "5f77fd36a0ae008ebba50fc0dbc70aa4af3c47f5f3ca5d0f686ba9e0fd6601f3",
+      "template_sha256": "5f77fd36a0ae008ebba50fc0dbc70aa4af3c47f5f3ca5d0f686ba9e0fd6601f3"
+    },
+    "p2/verify_gls.py": {
+      "accepted_script_sha256": "925942bf7d10087ede17dacbb7684ecd603a832cc0090c492cc49056b619ca31",
+      "template_sha256": "925942bf7d10087ede17dacbb7684ecd603a832cc0090c492cc49056b619ca31"
+    },
+    "p2/constraints_micro.v": {
+      "accepted_script_sha256": "773fa21de2a64c840e905001f159d449a00bb4d9a62185de6355514e3bae262b",
+      "template_sha256": "773fa21de2a64c840e905001f159d449a00bb4d9a62185de6355514e3bae262b"
+    },
+    "p2/constraints_micro_network.tcl": {
+      "accepted_script_sha256": "9e74d4d6b5500e61cc91a70389dfc2b9cd682d76587ec35cc25a4779e517ea1a",
+      "template_sha256": "21574ec10f6d43bc06ef2879e159786cb659d6c456e1124bc05feff045084b97"
+    },
+    "p2/constraints_micro_openroad.tcl": {
+      "accepted_script_sha256": "8543fe69d8bc4f4bfa79ab986d4696ab8973d9f53781b260ff17c9f4499ca6e7",
+      "template_sha256": "b97ce8479b5d77ffe99688efaf81dac728f4503bb40c5c0ebe8ea0607b8d53ab"
+    },
+    "p3/run.py": {
+      "accepted_script_sha256": "19fe23daacd093f36b07a678605cb2a3a6bf6a6ca50d41b88fb80cf30279654f",
+      "template_sha256": "96c74a89572bc0c4254d355685ab937a1cf78ef43fe5f82cf65d2c1f2db4f88d"
+    },
+    "p3/config.mk": {
+      "accepted_script_sha256": "d42a61c9cb2392351cd4f44695a0b1c7606a43d47680c4182836bcb86ff44d58",
+      "template_sha256": "1b57b2b5138cf009bfb25df829e5f5570dd8e81f0a6709d078420cfd8cd12ad3"
+    },
+    "p3/protect.tcl": {
+      "accepted_script_sha256": "87c791974d45eae6babb0fd0a9bf6509851210845a48dcb7895b9f5a39f0d407",
+      "template_sha256": "87c791974d45eae6babb0fd0a9bf6509851210845a48dcb7895b9f5a39f0d407"
+    },
+    "p3/pre_pdn.tcl": {
+      "accepted_script_sha256": "c689e65beaf73f5301131a836038cc08692604248198253ffd8dab9e936b2ade",
+      "template_sha256": "c689e65beaf73f5301131a836038cc08692604248198253ffd8dab9e936b2ade"
+    },
+    "p3/repair_guard_pre.tcl": {
+      "accepted_script_sha256": "ec581e23583f480dbf9c406a320d41d109c90206c6535b5290ab0fe781eb05eb",
+      "template_sha256": "ec581e23583f480dbf9c406a320d41d109c90206c6535b5290ab0fe781eb05eb"
+    },
+    "p3/repair_guard_post.tcl": {
+      "accepted_script_sha256": "e3e575b53c5ebdc4412b7fa130da6c5cef810273701f26fd2e6bb2f5b32677f0",
+      "template_sha256": "e3e575b53c5ebdc4412b7fa130da6c5cef810273701f26fd2e6bb2f5b32677f0"
+    },
+    "p3/cts_post.tcl": {
+      "accepted_script_sha256": "922c983fb9964aace602f11c38198f56903c4b1a76fb087c28d7e20a0b573565",
+      "template_sha256": "922c983fb9964aace602f11c38198f56903c4b1a76fb087c28d7e20a0b573565"
+    },
+    "p3/physical_audit.tcl": {
+      "accepted_script_sha256": "4fc02f02407b309a9f16dc6cd9b54c829ac08e0e1236f7644d383581e41e1d74",
+      "template_sha256": "5b2d7d40a7c37ead65c7feb072dd37238381a373cbb43ac2b6ff43ba1c9416ba",
+      "p5_template_sha256": "7932f9771b10f819b7fac5aa992384b68b2ecae895fbe8b706f3077c70643eb6",
+      "repair": "P6R fail-closed acceptance gate"
+    },
+    "p3/mapped_audit.py": {
+      "accepted_script_sha256": "dde2359c7dfca10161b2201a622a7a4fcd68460d18067f8a233f922a64e9297d",
+      "template_sha256": "dde2359c7dfca10161b2201a622a7a4fcd68460d18067f8a233f922a64e9297d"
+    },
+    "p3/coverage.py": {
+      "accepted_script_sha256": "767e45a407dec29661a5605e982e831d34b3f1c48e68597da57a0c71fae33b05",
+      "template_sha256": "767e45a407dec29661a5605e982e831d34b3f1c48e68597da57a0c71fae33b05"
+    },
+    "p3/coverage_records.tcl": {
+      "accepted_script_sha256": "71c825e9594b47d88492284a723ff401fd1bcf2c5ddcbee1caed8154ba27eff9",
+      "template_sha256": "71c825e9594b47d88492284a723ff401fd1bcf2c5ddcbee1caed8154ba27eff9"
+    },
+    "p3/verify_gls.py": {
+      "accepted_script_sha256": "97c3728b530f084a8076410bc4a57c72208b7a532d70ae622ccf49a50e2702fb",
+      "template_sha256": "97c3728b530f084a8076410bc4a57c72208b7a532d70ae622ccf49a50e2702fb"
+    },
+    "p4/run.py": {
+      "accepted_script_sha256": "91510121093288043c6760e2a48a1a52396fe164d0a5ab716c6ae894c307b2ae",
+      "template_sha256": "2b62ea8361894de9fc33768ad8075efb31d467ad56454c581a39c2524a674e2b"
+    },
+    "p4/config.mk": {
+      "accepted_script_sha256": "1ec2dd873610d983a54bb23d64e763158b3f999ba64d7c7c205c4c5a81cb2ce0",
+      "template_sha256": "bde4f1b2589a8cae0999bba295240730a3815d6044ce96db959dbcdd22053b4b"
+    },
+    "p4/protect.tcl": {
+      "accepted_script_sha256": "769323b7f56a51c77b15020fa58abcf929067c672fb3bdd883dcacf0ab06342c",
+      "template_sha256": "769323b7f56a51c77b15020fa58abcf929067c672fb3bdd883dcacf0ab06342c"
+    },
+    "p4/repair_guard_pre.tcl": {
+      "accepted_script_sha256": "39e66f08836e52a04409f78d25566cea9147ad77736bca9c30efdac378e502b4",
+      "template_sha256": "39e66f08836e52a04409f78d25566cea9147ad77736bca9c30efdac378e502b4"
+    },
+    "p4/repair_guard_post.tcl": {
+      "accepted_script_sha256": "64368d6f1524cb20af091eeefd0ee0df047720d8a48e22332981c432469e9114",
+      "template_sha256": "64368d6f1524cb20af091eeefd0ee0df047720d8a48e22332981c432469e9114"
+    },
+    "p4/physical_audit.tcl": {
+      "accepted_script_sha256": "fdf32b1b3bff024c237941d045ed7c5b80a32ed11866e3a4ff1db19f55cadffd",
+      "template_sha256": "aae319aecd36c6fe0c95cc9da028a104ad5645ff8f41a21df8c84dbd976b731f",
+      "p5_template_sha256": "7c85d22e24c796e4ae4e3dcae3314b10a8f39890f40862598cbfffac9cbbc8e4",
+      "repair": "P6R fail-closed acceptance gate"
+    },
+    "p4/mapped_audit.py": {
+      "accepted_script_sha256": "c6cb593d3a818e87522433dae65c6aa7f1d5b1aefec795543d5cd29eabcd02ac",
+      "template_sha256": "c6cb593d3a818e87522433dae65c6aa7f1d5b1aefec795543d5cd29eabcd02ac"
+    },
+    "p4/coverage.py": {
+      "accepted_script_sha256": "ccb365d4ee444379c96c69e4bea934af637519384da0096e8f45ee8f9867d229",
+      "template_sha256": "ccb365d4ee444379c96c69e4bea934af637519384da0096e8f45ee8f9867d229"
+    },
+    "p4/coverage_records.tcl": {
+      "accepted_script_sha256": "71c825e9594b47d88492284a723ff401fd1bcf2c5ddcbee1caed8154ba27eff9",
+      "template_sha256": "71c825e9594b47d88492284a723ff401fd1bcf2c5ddcbee1caed8154ba27eff9"
+    },
+    "p4/audit_stage.py": {
+      "accepted_script_sha256": "86b0be4e29307139f3ebd9a613689abb215a9ed5de04bd69c6199851ab00f15d",
+      "template_sha256": "119985a801665874cfa20171cafec88cab6ae5f9ed312571e24e2315126f2f5f",
+      "p5_template_sha256": "86b0be4e29307139f3ebd9a613689abb215a9ed5de04bd69c6199851ab00f15d",
+      "repair": "P6R fail-closed acceptance gate"
+    },
+    "p4/annotation_consistency.py": {
+      "accepted_script_sha256": "c16af9ae697f702c9e22744ce26e11495332a020481bf6375465438354bb520a",
+      "template_sha256": "c16af9ae697f702c9e22744ce26e11495332a020481bf6375465438354bb520a"
+    },
+    "p4/final_geometry.py": {
+      "accepted_script_sha256": "a8f71ab958acad620c953dcf6dfe2a4567d8f14b24a8dac761c577ec917751eb",
+      "template_sha256": "ea47a567656e3511af4352e54bfb5db7dd2161ffdd8641ad04d62ce88f8fbc27"
+    },
+    "p4/verify_gls.py": {
+      "accepted_script_sha256": "c46214f4696aa7f37fd26a9410830b3ff6c5589eeeba3a6d994467b350b8876c",
+      "template_sha256": "c46214f4696aa7f37fd26a9410830b3ff6c5589eeeba3a6d994467b350b8876c"
+    },
+    "p4/insert_clock_antenna_buffers.py": {
+      "accepted_script_sha256": "737b9cf132a99bfa1ee9c085230e6c51a8b9dc31fa700a88e9c0d992d5156bc8",
+      "template_sha256": "2ad98763ecef058dfdf35661ccdafa30d66cf3f40bced845895889a960c5cd20"
+    },
+    "p4/render.py": {
+      "accepted_script_sha256": "4e583033b5a514042ac2cee565a60db3a61679b3017ad6ad59ac7c7aec633a0d",
+      "template_sha256": "4e583033b5a514042ac2cee565a60db3a61679b3017ad6ad59ac7c7aec633a0d"
+    },
+    "p3/render.tcl": {
+      "accepted_script_sha256": "17b74b2acff8d9f29e5828537d63f24c56cf3495daf39037937f0bb60f7910cc",
+      "template_sha256": "c8550c3a037db9f37ec6c9513e7436677cc03b300576aa06dad950c29f896ed4"
+    }
+  },
+  "installation_methods": {
+    "OpenROAD": "Official prebuilt Debian package, unpacked in user space; explicit user-space dependency loader/wrapper",
+    "OpenSTA": "Bundled OpenSTA inside the same compatible distribution",
+    "Yosys": "Existing OSS CAD Suite; reused",
+    "KLayout": "Existing OCI image binaries recovered into user space; native execution; reused",
+    "ABC": "Batch wrapper for OSS CAD Suite yosys-abc"
+  },
+  "qualification": "Actual tools completed the pinned ORFS flow. ORFS submodule OpenROAD 927ca5dfef1d6c9d899e4646a2ed7766f4132d33 differs from the qualified binary. Exact preserved flow is authoritative; portable adapter not end-to-end rerun in P5.",
+  "installation_method": "Unpack official Ubuntu 24.04 OpenROAD deb and Ubuntu dependency debs into user-owned prefixes; relocate ELF RPATHs with patchelf 0.18.0. Reuse existing Yosys/ABC using a batch wrapper; recover KLayout from the immutable ORFS image and relocate it without a container runtime.",
+  "openroad_package_url": "https://vaultlink.precisioninno.com/api/releases/26Q2-1164-g08f67ee5ec/openroad_26Q2-1164-g08f67ee5ec_amd64-ubuntu-24.04.deb/download",
+  "klayout_recovery_image_digest": "sha256:f5692c6325ebcf27cc348e033355ec95c82c35ace1af7e72a0d352624ada143e",
+  "installation_checksums": {
+    "bin/abc-batch": "f13fda8fbf1c79bbc4ec10068f9a4c456b10c49585fef5a264703921a43fc9e4",
+    "bin/openroad": "aabcb1edb07c7a46149c6e609e5c8672f90db5b815f7ae98971f987610982718",
+    "bin/sta": "6f679183d4e8748b43ef88fe85c05f8e96e91253410e53ec53d9626af530eab3",
+    "bin/klayout": "79a51de20b9eb35197b8d8aec670a76b6bad2577fc82b1a8427186834583469f",
+    "sources/restore_image.py": "eec8b572d629ee67c90e0aa62ce1c1ed1805baaa2b2fc7b3fe11872d7712e0a1",
+    "sources/patcher.py": "ed2240bbbce87b83398a9d9bc6c6844cb7c7c22492c97d8efd4442b0b60c9911",
+    "sources/patcher-local.py": "9fa62925bcae2613498122cfc52b990e2a2dcf0e49a23f90742f3a3dceeaa308",
+    "sources/relocate_native.py": "bd210a4f51e3668e5aa1e9070d4d05280b05b7b91309fe8c1397ff446be931d7",
+    "sources/fetch_native_runtime.py": "fafe36cbc48f4aa4b2310f01a58f11538614a27a9067d8cf82ae2bb28f80a132",
+    "downloads/openroad_26Q2-1164-g08f67ee5ec_amd64-ubuntu-24.04.deb": "f3f1eeaa18f327503f72cc45dcef5b1514ec2e89726ec53b4553bf4f951168a3",
+    "downloads/patchelf-0.18.0-x86_64.tar.gz": "ce84f2447fb7a8679e58bc54a20dc2b01b37b5802e12c57eece772a6f14bf3f0",
+    "openroad-26Q2-1164-ubuntu24/usr/bin/openroad": "842a860ea802995f1362b37b839f5f564cda46ff0dcdd8e8c478bdf46ca56af7",
+    "openroad-26Q2-1164-ubuntu24/usr/bin/sta": "7b2860deb240c109aa5261c2c957063206c07305fe87e60e902b39ca8d94b062",
+    "orfs-image-f5692c6325eb/usr/bin/klayout": "7d5213ca731abd2e87fd27af8ebbf2655319e6ed0fc1cd230b8b646a602adac2",
+    "oss-cad-suite/libexec/yosys": "c2c1dc55e1afdeba411f4f596f37f7466ab45cc433d488a569f3d74a9460adf6",
+    "oss-cad-suite/libexec/yosys-abc": "289a71333594aae3bf01e7106bb93e953525e810c58038482ab2ec57a55c6ad2"
+  },
+  "gds_check_contract": {
+    "klayout_version": "0.28.17",
+    "flat_deck_sha256": "7fae2d9172e0a2c14c07549978741fdb16df63bff3d776d11335b34a7b75d9db",
+    "category_count": 133,
+    "category_sha256": "405cb15a1e9290f39280aca69766b78672a8b627b316f4f76b206d7e8cc37935",
+    "coordinate_limits_um": [
+      -10,
+      430
+    ],
+    "scope": "Pinned complete supplied research deck; native LEF antenna inconclusive; marker coordinates only, no automatic repair",
+    "archived_flat_deck_sha256": "ef5fbeb4fd4cd76bd421234baf5a33ce81feb10a6d24a6242e2e4eff4faeb146",
+    "deck_qualification": "P6R fresh full supported DRC; same functional rules as archived deck; scheduling comment differs"
+  },
+  "accepted_router_evidence_sha256": {
+    "router_log": "8e73060ba446be022d53cef8ab39c8907b9c0151f4d1eeeb917e1510be8d9f58",
+    "router_drc": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

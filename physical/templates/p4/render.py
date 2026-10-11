@@ -1,0 +1,13 @@
+import pya,json
+view=pya.LayoutView()
+idx=view.load_layout(input_gds,0)
+cv=view.cellview(idx)
+view.load_layer_props(layer_properties)
+view.max_hier()
+view.set_config('background-color','#ffffff')
+view.set_config('grid-visible','false')
+view.set_config('text-visible','false')
+view.zoom_fit()
+view.save_image(output_png,1600,1600)
+layout=cv.layout(); top=layout.top_cell()
+print(json.dumps(dict(top=top.name,cells=layout.cells(),layers=layout.layers(),dbu=layout.dbu,bbox_um=str(top.dbbox()))))

@@ -21,7 +21,7 @@ is `mac_accel_dma_rob_top`, `MAX_OUTSTANDING=8`; PrimeTime does not elaborate RT
 
 The runner uses `/ece/synopsys/prime/R-2020.09-SP5-1/bin/pt_shell` and
 `/fs/ece/tech/osu_soc_2.7/synopsys/lib/tsmc018/osu018_stdcells.db`.
-It inherits `LM_LICENSE_FILE`, with a process-local UCSB default when absent.
+It inherits externally supplied license configuration. Set it in your own environment; no license-server default is included in this publication copy.
 There is no global environment change. The known problematic V-2023.12 tool
 is not used.
 
