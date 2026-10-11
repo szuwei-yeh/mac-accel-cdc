@@ -47,5 +47,7 @@ installation, OpenROAD, extraction, LVS, or full physical acceptance. Historical
 formal/physical results remain recorded evidence. A passing lightweight job
 does not establish physical signoff or a fresh RTL-to-GDS replay.
 
-The workflow has been reviewed and its commands tested locally; its first
-GitHub-hosted execution remains pending publication.
+The published baseline commit `3e81562` completed the
+[GitHub-hosted workflow successfully](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38152191558).
+That run passed every check step. Local changes require a new hosted run after
+publication; the recorded baseline success is not a result for an unpushed revision.

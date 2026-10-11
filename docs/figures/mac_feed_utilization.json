@@ -1,0 +1,32 @@
+{
+  "source": "sim/README.md#utilization-measurement",
+  "source_sha256": "6b5ba3ccac75eb11df2b4b60b10acf4a13edb1ac0a8e97a1ea680113a4b081e3",
+  "generator": "scripts/render_mac_feed_utilization.py",
+  "matplotlib_version": "3.9.2",
+  "conditions": {
+    "elements_per_vector": 256,
+    "beats_per_burst": 16,
+    "first_beat_latency_bus_cycles": 100
+  },
+  "measurements": [
+    {
+      "design": "V2",
+      "outstanding_bursts": 1,
+      "accepted_pairs": 256,
+      "dma_busy_bus_cycles": 3777,
+      "utilization_percent": 6.777866031241726,
+      "reported_percent": 6.78
+    },
+    {
+      "design": "V3",
+      "outstanding_bursts": 8,
+      "accepted_pairs": 256,
+      "dma_busy_bus_cycles": 941,
+      "utilization_percent": 27.20510095642933,
+      "reported_percent": 27.21
+    }
+  ],
+  "utilization_ratio": 4.0138150903294365,
+  "scope": "Simulation-based operand delivery; not full-system speedup, PE activity or physical PPA.",
+  "svg_sha256": "35d65eb7d99b0ab34f77cbf96fa1d33cbe6b85075fafd40ef66a6201cd707d41"
+}

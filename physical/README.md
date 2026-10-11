@@ -4,7 +4,7 @@ The complete `mac_accel_dma_rob_top` has a measured Nangate45 RTL-to-GDS researc
 
 The signed 16-bit MAC receives ordered operand pairs through an asynchronous FIFO. AXI read DMA keeps eight bursts outstanding, accepts RID-indexed out-of-order responses into the ROB, and retires completed entries in issue order. AXI4-Lite handles control/status. Bus and MAC clocks are asynchronous, at **10 ns and 7.5 ns**.
 
-![Accepted final routed GDS overview with selected M3–M7 metal layers.](figures/overview_dark.png)
+<p align="center"><img src="figures/overview_dark.png" width="640" alt="Accepted final routed GDS overview with selected M3–M7 metal layers."></p>
 
 *Actual accepted P4 GDS, full 417.39 × 417.39 µm die; M3–M7 selected
 for readability. Lower metal, vias and FEOL are omitted from this overview.*
@@ -39,23 +39,38 @@ The public package contains compact summaries, scripts and figures. Large GDS/OD
 
 The repaired artifact acceptance path has passed read-only validation against the accepted P4 implementation, including positive and negative CDC/antenna controls. A fresh portable RTL-to-GDS stage replay remains untested. See the [tested scope and acceptance limits](REPRODUCE.md#experimental-adapter-acceptance-limits); any nonzero antenna marker now stops the flow for investigation.
 
+## Routed-metal detail
+
+<p align="center"><img src="figures/routing_detail.png" width="640" alt="Detailed final routed GDS at x/y 195–225 µm, showing M1–M5 metal and V1–V4 cuts."></p>
+
+*30 × 30 µm window of the accepted final P4 GDS; actual M1–M5 metal and
+V1–V4 via cuts. Colors identify layers, not clock/signal net classes. Lower
+metal and vias are visible here, unlike the selected M3–M7 overview.*
+
+For the timing and repair story, see the
+[accepted P2–P4 timing comparison](RESULTS.md#setup-and-hold),
+[area/cell-count evolution](RESULTS.md#area-and-instance-counts), and
+[matched-path hold decomposition](HOLD_ANALYSIS.md). The hold analysis retains
+the exact endpoint identities and separates data delay, capture clock and
+library hold contributions.
+
 ## Placement and power distribution
 
-![Final OpenDB standard-cell footprints overlaid with M1 rails, M4 straps and M7 straps.](figures/placement_overview.png)
+<p align="center"><img src="figures/placement_overview.png" width="640" alt="Final OpenDB standard-cell footprints overlaid with M1 rails, M4 straps and M7 straps."></p>
 
 *Accepted final P4 ODB: exact footprints of 29,175 standard cells, with
 registers in blue and other standard cells in gray. M1 rails and M4/M7
 power straps are overlaid; taps and fillers are omitted. This is a cell
 placement and power-only geometry view; signal routes are not displayed.*
 
-![60 × 60 µm window of final OpenDB cell footprints and M1/M4/M7 power shapes.](figures/pdn_detail.png)
+<p align="center"><img src="figures/pdn_detail.png" width="640" alt="60 × 60 µm window of final OpenDB cell footprints and M1/M4/M7 power shapes."></p>
 
 *Accepted final P4 ODB, x = 170–230 µm and y = 195–255 µm. Cell footprints
 and power-only M1 rails, M4 straps and M7 straps show the grid at cell scale.
 The view does not establish IR/EM or display detailed signal routing.*
 
 For actual routed signal-metal geometry, see the
-[main README routing detail](../readme.md#physical-implementation).
+[routed-metal detail](#routed-metal-detail).
 The [P9 figure manifest](figures/p9_provenance.json) records copied-image
 hashes and visible layers. All original figures and their
 [original provenance](figures/provenance.json) remain preserved.
