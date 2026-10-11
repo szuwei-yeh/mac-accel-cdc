@@ -49,8 +49,7 @@ syn/
 Run from the repository root on the UCSB ECE server:
 
 ```bash
-cd /fs/student/szu-wei/work/mac-accel-cdc
-
+# Start in your local repository root.
 MAX_OUTSTANDING=8 \
 RUN_ID=mac_dma_rob_mo8_10ns \
 bash syn/run_baseline_dc.sh

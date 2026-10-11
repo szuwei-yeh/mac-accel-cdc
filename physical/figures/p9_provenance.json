@@ -1,0 +1,41 @@
+{
+  "scope": "Byte-for-byte copies of supplied P9 presentation figures; layer/window descriptions transcribed from their labels. No synthesis, P&R, extraction or re-rendering performed.",
+  "accepted_artifact_sha256": {
+    "gds": "95caed6aa2ccf1bb26e4bf4c66650ac19d73eaf0c782bce882026f854efd2a2c",
+    "odb": "da0a5238841ab87abf09cc76ba9c42ed65dbfde563a276e1799289360cecf658"
+  },
+  "figures": {
+    "overview_dark.png": {
+      "source_figure": "P9_visuals/overview_dark.png",
+      "geometry_source": "Accepted final P4 GDS",
+      "visible_geometry": "M3–M7 metal; lower metal, vias and FEOL omitted",
+      "window": "Full die: 417.39 × 417.39 µm",
+      "sha256": "0a82f80ca577d3043384e26e70070b99a4a126a47de710facfd5807004c1e3c9",
+      "bytes": 809556
+    },
+    "routing_detail.png": {
+      "source_figure": "P9_visuals/routing_detail.png",
+      "geometry_source": "Accepted final P4 GDS",
+      "visible_geometry": "M1–M5 metal and V1–V4 via cuts",
+      "window": "x/y = 195–225 µm; 30 × 30 µm window",
+      "sha256": "32e3f5c8c2640010840b83a9adcdf629a112da74f1567d6e1b5ebc793d6946c6",
+      "bytes": 273080
+    },
+    "placement_overview.png": {
+      "source_figure": "P9_visuals/placement_overview.png",
+      "geometry_source": "Accepted final P4 ODB",
+      "visible_geometry": "Standard-cell footprints plus power-only M1 rails, M4/M7 straps; taps/fillers omitted",
+      "window": "Full die; signal routes not displayed",
+      "sha256": "862d1784ec6be9bbcc70540007c10f421d45fc14b5cf12719f68e045063b96d9",
+      "bytes": 417655
+    },
+    "pdn_detail.png": {
+      "source_figure": "P9_visuals/pdn_detail.png",
+      "geometry_source": "Accepted final P4 ODB",
+      "visible_geometry": "Cell footprints and power-only M1/M4/M7 shapes; signal routes not displayed",
+      "window": "x = 170–230 µm, y = 195–255 µm; 60 × 60 µm window",
+      "sha256": "a945826b20eb52e6717b9590feb058ed8518fb9f3c71f3ec3c8766b41eb41bf0",
+      "bytes": 162148
+    }
+  }
+}

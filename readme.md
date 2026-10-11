@@ -1,9 +1,16 @@
-# Vector MAC Accelerator with CDC and Multi-Outstanding AXI Read DMA
+# Vector MAC — Dual-Clock RTL-to-GDS Accelerator
+
+## Project overview
 
 A parameterized Verilog dot-product accelerator with AXI4-Lite control,
 independent bus/MAC clocks, and an AXI read DMA. The current V3 design keeps up
 to eight read bursts in flight and uses a RID-indexed reorder buffer (ROB) to
 accept out-of-order/interleaved responses while delivering operands in order.
+The portfolio follows the design from RTL and formal control-safety verification
+through an OpenROAD routed, extracted Nangate45 implementation.
+
+**Start here:** [results](#results-at-a-glance) · [architecture](#architecture) ·
+[physical layout](#physical-implementation) · [run the RTL demo](#quick-start)
 
 ## Results at a glance
 
@@ -12,6 +19,9 @@ accept out-of-order/interleaved responses while delivering operands in order.
 | Operand delivery | **Simulated MAC-feed utilization: 6.78% → 27.21% (4.0×)** | 256 elements/vector, 16-beat bursts, 100-cycle first-beat memory latency; V2 with 1 vs. V3 with 8 outstanding bursts |
 | Timing optimization | **Synthesized QoR critical-path length reduced by 26.36%** | 5.50 → 4.05 ns; DMA block, depth 8, same 100 MHz synthesis configuration |
 | Targeted clock gating | **Active dynamic power reduced by 53.59%** | 76.1114 → 35.3225 mW; DMA block, identical workload activity, SAIF-driven pre-layout estimate |
+| Physical implementation | **29,175 standard cells; 40.552% standard-cell utilization** | Full V3, depth 8, Nangate45; taps/fillers excluded; bus 10 ns / MAC 7.5 ns |
+| Extracted post-route timing | **Positive setup/hold slack in both clock domains** | OpenRCX SPEF and propagated clocks; typical 1.1 V / 25 °C; [measured slacks](#physical-implementation) |
+| Supported physical checks | **Zero violations in supported DRC checks** | Router and 133-category KLayout checks; operative GDS antenna: 0 markers; qualified LVS unsupported |
 
 Verification combines RTL scoreboards, formal control-safety properties,
 dual-clock CDC regressions, whole-top DC/PrimeTime timing analysis, and a
@@ -59,7 +69,9 @@ See the [RTL module map and register interface](rtl/README.md) for integration
 details. The complete accelerator is `mac_accel_dma_rob_top`; the timing/power
 benchmark below targets `mac_dma_rob`, excluding the AXI-Lite shell, FIFO and MAC.
 
-## Performance and optimization
+<a id="performance-and-optimization"></a>
+
+## Performance optimizations
 
 **Hide memory latency with multiple outstanding reads.** V2 waits for each
 burst before issuing the next; V3 overlaps requests and restores response order
@@ -93,14 +105,19 @@ Block timing/power results use `mac_dma_rob`, `MAX_OUTSTANDING=8`, Design Compil
 R-2020.09-SP4 and `osu018_stdcells.db`, with a 10 ns clock target. They are
 pre-layout estimates using ideal clocks, without CTS or extracted parasitics.
 
-## Nangate45 physical implementation
+<a id="nangate45-physical-implementation"></a>
+
+## Physical implementation
 
 The full V3 top was independently synthesized from RTL and implemented through
 floorplanning, placement, CTS, detailed routing, OpenRCX extraction and GDS
 using pinned OpenROAD Flow Scripts. This run selects `MAX_OUTSTANDING=8`,
 `DATA_WIDTH=16`, bus 10 ns / MAC 7.5 ns, with two asynchronous clock domains.
 
-![Actual final routed Vector MAC V3 GDS](physical/figures/overview.png)
+![Full die of the accepted routed V3 GDS, showing selected M3–M7 metal layers on a dark background.](physical/figures/overview_dark.png)
+
+*Accepted P4 GDS, full 417.39 × 417.39 µm die. Selected M3–M7 metal
+geometry is shown; lower metal, vias and FEOL are omitted in this overview.*
 
 | Full V3, typical 1.1 V / 25 °C | Measured result |
 |---|---|
@@ -112,11 +129,18 @@ using pinned OpenROAD Flow Scripts. This run selects `MAX_OUTSTANDING=8`,
 | Supported router / KLayout DRC | 0 / 0 markers; GDS antenna 0 |
 | CDC / final functional gate simulation | 13 two-stage chains and 602 bounded crossings audited; 7/7 zero-delay cases PASS |
 
+![Detailed routed GDS geometry at x/y 195–225 µm, showing M1–M5 metal and V1–V4 via cuts.](physical/figures/routing_detail.png)
+
+*30 × 30 µm window of the same accepted P4 GDS; actual M1–M5 metal
+and V1–V4 cuts. Colors identify layers, not clock or signal net classes.*
+
 Standalone OpenSTA independently checks the exact final routed netlist, SDC and
 SPEF. These results are a single-corner research implementation; qualified LVS,
 multi-corner/OCV timing, realistic jitter, CDC MTBF/RDC and foundry signoff are
-not established. The earlier OSU block benchmarks above retain their original
-pre-layout scope and are not matched-process comparisons with Nangate45.
+not established. Native LEF antenna checks remain inconclusive because the
+qualified antenna model is absent; operative antenna evidence comes from GDS
+checks. The earlier OSU block benchmarks above retain their original pre-layout
+scope and are not matched-process comparisons with Nangate45.
 
 See the [physical implementation package](physical/README.md) for P2–P4 area/timing
 comparisons, measured hold-buffer analysis, actual layout views, constraints,
@@ -146,24 +170,9 @@ and [whole-top DC/PT results and coverage](syn/whole_top/RESULTS.md).
 The ROB proof uses a small bounded parameter configuration and legal AXI slave
 assumptions; its proven scope is control safety within that model.
 
-## Design scope and limitations
+## Reproduction and limitations
 
-- The AXI master implements the read-only AR/R subset; behavioral/formal memory
-  models stand in for a commercial memory subsystem. Bursts are not split at
-  4 KB boundaries, so callers must keep each burst within a page.
-- OSU timing and SAIF power results are pre-layout portfolio evidence. Nangate45
-  adds routed, extracted, single-corner timing and supported physical checks;
-  foundry signoff, multi-corner timing, CDC/RDC signoff and signoff power remain
-  unestablished. Reset exclusions and coverage limits are documented in both flows.
-- OSU mapped GLS remains inconclusive due to cell-model unknown-state behavior,
-  also reproduced by the baseline. LEC is not established. The library assigns
-  zero area to its generic latch, so the gating area delta is not a credible result.
-  Nangate45 final routed functional GLS passes seven zero-delay cases; SDF timing
-  simulation and LEC are not established.
-- V3 defaults to outstanding depth 4; published depth-8 results select
-  `MAX_OUTSTANDING=8` explicitly.
-
-## Quick start
+### Quick start
 
 With Icarus Verilog installed, run from the repository root:
 
@@ -184,8 +193,39 @@ Expected result: **7 PASS / 0 FAIL**. Other flows:
 [SAIF and clock gating](syn/README.md#reproduction),
 [whole-top DC](syn/whole_top/DC_FLOW.md) and [PrimeTime](syn/whole_top/PT_FLOW.md).
 Synopsys flows require the specified licensed tools and OSU library.
+The [physical reproduction guide](physical/REPRODUCE.md) lists pinned
+OpenROAD/ORFS tools and externally supplied Nangate45 inputs. A fresh portable
+RTL-to-GDS replay remains untested.
 
-## Repository map
+### Lightweight CI
+
+The [GitHub Actions workflow](.github/workflows/rtl-ci.yml) runs the V3
+full-top simulation, fast ROB/DMA/CDC regressions, Python syntax checks,
+self-contained acceptance-validator unit tests, and local documentation-link
+and source-hash checks. Run the same checks locally with the commands in
+[the CI guide](docs/CI.md). These checks require no licensed EDA tools, PDK,
+archived GDS/ODB, synthesis or P&R; they do not rerun physical signoff.
+
+### Design scope and limitations
+
+- The AXI master implements the read-only AR/R subset; behavioral/formal memory
+  models stand in for a commercial memory subsystem. Bursts are not split at
+  4 KB boundaries, so callers must keep each burst within a page.
+- OSU timing and SAIF power results are pre-layout portfolio evidence. Nangate45
+  adds routed, extracted, single-corner timing and supported physical checks;
+  foundry signoff, multi-corner timing, CDC/RDC signoff and signoff power remain
+  unestablished. Reset exclusions and coverage limits are documented in both flows.
+- OSU mapped GLS remains inconclusive due to cell-model unknown-state behavior,
+  also reproduced by the baseline. LEC is not established. The library assigns
+  zero area to its generic latch, so the gating area delta is not a credible result.
+  Nangate45 final routed functional GLS passes seven zero-delay cases; SDF timing
+  simulation and LEC are not established.
+- V3 defaults to outstanding depth 4; published depth-8 results select
+  `MAX_OUTSTANDING=8` explicitly.
+
+<a id="repository-map"></a>
+
+## Repository navigation
 
 | Directory | Contents |
 |---|---|
@@ -196,7 +236,9 @@ Synopsys flows require the specified licensed tools and OSU library.
 | [syn/whole_top/](syn/whole_top/README.md) | Dual-clock whole-top DC and PrimeTime flow |
 | [physical/](physical/README.md) | Nangate45 research implementation, pinned reproduction, measured summaries and actual layout figures |
 | docs/figures/ | Checked-in architecture, ROB, timing and power figures |
-| scripts/ | Figure generator: `python3 scripts/render_readme_figures.py` |
+| [docs/CI.md](docs/CI.md) | Lightweight check commands, coverage and exclusions |
+| [docs/GITHUB_METADATA.md](docs/GITHUB_METADATA.md) | Proposed GitHub description and topics |
+| scripts/ | Portfolio figure generator and isolated CI/documentation checks |
 
 Architecture/ROB figures illustrate RTL behavior; timing/power figures use the
 published metric tables in `syn/README.md`.
