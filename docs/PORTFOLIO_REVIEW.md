@@ -1,5 +1,11 @@
 # Portfolio polish review — 2026-10-11
 
+> Historical pre-publication review snapshot against `726ac9a688a7d45e3a3d2b1ae435e22e203b9c6a`.
+> Status statements and milestone names below describe that review, not the
+> current repository. For current engineering explanations and hosted results,
+> see the [main README](../readme.md), [physical documentation](../physical/README.md)
+> and [CI evidence](CI.md). The original review body is preserved.
+
 Reviewed locally on `polish/vector-mac-portfolio`, based on published commit
 `726ac9a`. This report records preparation and the final pre-commit review.
 No push, remote metadata update or LICENSE addition was performed.

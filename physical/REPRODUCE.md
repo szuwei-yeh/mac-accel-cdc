@@ -6,7 +6,7 @@ Use a Linux environment with GNU Make/time, Python 3, Tcl, OpenROAD/OpenSTA, KLa
 
 `pins.json` records RTL commit/source hashes, ORFS and actual tool commits, all Nangate45 platform hashes, installation provenance and archive checksums. OpenROAD 26Q2-1164-g08f67ee5ec differs from the OpenROAD submodule expected by the pinned ORFS revision; compatibility is based on the completed reference/pilot/full flows, not assumed commit identity. Nangate45 must include Liberty, LEF, cell GDS, RC rules, KLayout technology/mapping and its supported DRC deck. Obtain these separately under their applicable terms; no libraries are republished.
 
-A tools prefix must provide `bin/openroad`, `bin/sta`, `bin/klayout`, and `bin/abc-batch`. The latter forwards to the OSS CAD Suite ABC batch executable with deterministic noninteractive operation. Existing native installation wrappers and relocated dependencies were reused; exact wrapper hashes are historical evidence, not portable paths. Versions and source/archive hashes are the portability pins. A portable batch launcher can use `exec "${OSS_SUITE_BIN:?}/yosys-abc" "$@"`; place it in the supplied tools prefix and record its hash. P2 generates qualified functional models from the supplied Liberty locally; those generated models are not checked in.
+A tools prefix must provide `bin/openroad`, `bin/sta`, `bin/klayout`, and `bin/abc-batch`. The latter forwards to the OSS CAD Suite ABC batch executable with deterministic noninteractive operation. Existing native installation wrappers and relocated dependencies were reused; exact wrapper hashes are historical evidence, not portable paths. Versions and source/archive hashes are the portability pins. A portable batch launcher can use `exec "${OSS_SUITE_BIN:?}/yosys-abc" "$@"`; place it in the supplied tools prefix and record its hash. The synthesis stage generates qualified functional models from the supplied Liberty locally; those generated models are not checked in.
 
 ## Prepare without running the flow
 
@@ -24,38 +24,44 @@ python3 physical/reproduce.py \
 ```
 
 The first command prints a plan only. `--prepare` never runs synthesis or P&R. It creates `p2`, `p3`, `p4` workspaces, redirects outputs/temp/cache/config/runtime there, hydrates path tokens in 46 reviewed scripts/configurations, and records source/tool/platform pins. The existing ORFS checkout and RTL remain read-only. Template hashes are verified before hydration; root README changes do not invalidate RTL/verification hashes.
+The [archive identifier mapping](PROVENANCE.md) explains directory names and stage keys; those machine interfaces are preserved.
 
 ## Explicit stage execution
 
 After reviewing the prepared configuration and resource availability, the following experimental commands each run one stage. They stop on the production acceptance checks described below; inspect all measured outputs before making a closure claim:
 
 ```bash
+# Synthesis and mapped-design validation (historical adapter key: P2)
 python3 "$MAC_REPLAY_ROOT/stage.py" P2
+# Floorplan, placement and CTS (historical adapter key: P3)
 python3 "$MAC_REPLAY_ROOT/stage.py" P3
+# Routing, extraction and GDS validation (historical adapter key: P4)
 python3 "$MAC_REPLAY_ROOT/stage.py" P4
 ```
 
-P2: RTL/formal regression → CDC semantic tests → elaboration/parameter audit → Nangate45 synthesis and mapped-cell audit → GLS → qualified native readback and independent STA → exact constraint coverage. No OSU netlist is reused.
+**Synthesis and mapped-design validation:** RTL/formal regression → CDC semantic tests → elaboration/parameter audit → Nangate45 synthesis and mapped-cell audit → GLS → qualified native readback and independent STA → exact constraint coverage. No OSU netlist is reused.
 
-P3: copy only accepted qualified P2 netlist/ODB/SDC → `do-floorplan` → `do-place` → `do-cts` → mapped CDC/clock/register/PG/placement checks → coverage and GLS. Synchronizer hooks temporarily release cell protection only for supported physical repair, then verify all 26 cell identities/direct chains/clock assignments and restore protection. No retiming, clock gating or cloning is authorized.
+**Floorplan, placement and CTS:** copy only the accepted qualified post-synthesis netlist/ODB/SDC → `do-floorplan` → `do-place` → `do-cts` → mapped CDC/clock/register/PG/placement checks → coverage and GLS. Synchronizer hooks temporarily release cell protection only for supported physical repair, then verify all 26 cell identities/direct chains/clock assignments and restore protection. No retiming, clock gating or cloning is authorized.
 
-P4: `do-grt`, `do-5_2_route`, `do-5_3_fillcell`, `do-5_route`, `do-5_route.sdc`, `do-finish`, `do-gds`. Run KLayout DRC with all supported rule groups and two workers in qualified flat mode. The adapter now **stops on every nonzero or incomplete GDS report**. It never automatically applies the archived three-buffer clock-input segmentation recipe: that historical repair required a separately inspected experiment and rerouting. The retained recipe is archival reference only. Final exported netlist/SDC/SPEF are independently loaded by OpenSTA; annotation/CDC/clock/coverage checks and seven zero-delay integration cases follow. Router DRC and GDS DRC/antenna are distinct evidence. Native LEF antenna results remain INCONCLUSIVE because the required model is absent; LVS remains UNSUPPORTED.
+**Routing, extraction and GDS validation:** `do-grt`, `do-5_2_route`, `do-5_3_fillcell`, `do-5_route`, `do-5_route.sdc`, `do-finish`, `do-gds`. Run KLayout DRC with all supported rule groups and two workers in qualified flat mode. The adapter now **stops on every nonzero or incomplete GDS report**. It never automatically applies the archived three-buffer clock-input segmentation recipe: that historical repair required a separately inspected experiment and rerouting. The retained recipe is archival reference only. Final exported netlist/SDC/SPEF are independently loaded by OpenSTA; annotation/CDC/clock/coverage checks and seven zero-delay integration cases follow. Router DRC and GDS DRC/antenna are distinct evidence. Native LEF antenna results remain INCONCLUSIVE because the required model is absent; LVS remains UNSUPPORTED.
 
 Each run keeps logs, reports, checkpoints, resource timing and status under its new root. `accepted.json` records stage completion, not foundry signoff. Do not overwrite or resume into sealed historical runs. Failed implemented timing/coverage/DRC gates require investigation; do not relax periods or exceptions to produce PASS.
 
-## What P5 validated
+<a id="what-p5-validated"></a>
 
-The **original archived execution** completed P2–P4 with all stated gates. The new portable adapter was syntax checked, hydrated against the qualified tools/source/platform, and checked against the pinned Makefile variables/targets without running synthesis/P&R. A fresh end-to-end portability rerun has **not** been performed; new runs may differ in placement/routing and must be measured independently. Historical failed probes/iterations are preserved locally, but are not required deliberate steps of the clean reproduction recipe. The accepted P3 trajectory used placement checkpoints from `native_guards` and a separate power-connectivity repair before the `pg_final` CTS run; the adapter runs its consolidated hooks directly in `pg_final`. This clean recipe has not been demonstrated to reproduce that trajectory or its measured metrics. Summaries report the accepted evidence, not an unexecuted adapter result.
+## Reproduction preparation and provenance validation
+
+The **original archived execution** completed synthesis through routed GDS with all stated gates. The new portable adapter was syntax checked, hydrated against the qualified tools/source/platform, and checked against the pinned Makefile variables/targets without running synthesis/P&R. A fresh end-to-end portability rerun has **not** been performed; new runs may differ in placement/routing and must be measured independently. Historical failed probes/iterations are preserved locally, but are not required deliberate steps of the clean reproduction recipe. The accepted placement/CTS trajectory used placement checkpoints from `native_guards` and a separate power-connectivity repair before the `pg_final` CTS run; the adapter runs its consolidated hooks directly in `pg_final`. This clean recipe has not been demonstrated to reproduce that trajectory or its measured metrics. Summaries report the accepted evidence, not an unexecuted adapter result.
 
 Final large artifacts are identified by filename/size/hash in `summary.json` and are intentionally absent from Git. The compact figure/metric regeneration scripts read these user-supplied artifacts or the public summary; no fake layout is synthesized for documentation.
 
 ## Experimental adapter acceptance limits
 
-P6R corrected the two acceptance blockers and tested the **production code**. Every CDC row must match the mapped eight-group inventory: 602 bounded maxima must be finite and nonnegative; the three event crossings must have only the intended first-stage exceptions. All 13 direct two-stage chains, their 26 active setup/hold checks, clock roots, register identities, constraint coverage and five bound-effect probes are required. Positive synchronous-domain WNS cannot override negative CDC slack. Native Tcl audits also abort on negative required CDC/interstage slack.
+Acceptance-validator repair and validation corrected the two acceptance blockers and tested the **production code**. Every CDC row must match the mapped eight-group inventory: 602 bounded maxima must be finite and nonnegative; the three event crossings must have only the intended first-stage exceptions. All 13 direct two-stage chains, their 26 active setup/hold checks, clock roots, register identities, constraint coverage and five bound-effect probes are required. Positive synchronous-domain WNS cannot override negative CDC slack. Native Tcl audits also abort on negative required CDC/interstage slack.
 
 GDS acceptance requires matching SHA-256/size records, checker exit/completion evidence, exact input/output/deck command paths, the qualified deck hash, all 133 rule categories and a valid XML item inventory. An empty item list alone is insufficient. Antenna markers require explicit net/pin context from the matching ODB and polygon coordinates matching the reported marker and the measured pin rectangle. Missing correlation rejects the result; every nonzero marker rejects it even when metadata is valid. The qualified deck is the stock rules in flat mode with `threads(2)`; the freshly checked generated deck differs from the archived deck only in a scheduling comment. Both hashes are retained. This is a research checker contract, not foundry signoff or a general antenna repair method.
 
-The read-only **artifact acceptance path** was executed on the exact accepted P4 netlist, SDC, SPEF, ODB, DEF and GDS. Fresh native/standalone STA, mapped readback, coverage, annotation and complete supported KLayout DRC/antenna checks passed. Fault-injection controls call the same production validators. The nonzero antenna fixture is explicitly synthetic, at an actual final OpenDB pin rectangle with its measured net/pin identity; it is not a measured final violation. Its geometry is never written into the accepted database.
+The read-only **artifact acceptance path** was executed on the exact accepted post-route netlist, SDC, SPEF, ODB, DEF and GDS. Fresh native/standalone STA, mapped readback, coverage, annotation and complete supported KLayout DRC/antenna checks passed. Fault-injection controls call the same production validators. The nonzero antenna fixture is explicitly synthetic, at an actual final OpenDB pin rectangle with its measured net/pin identity; it is not a measured final violation. Its geometry is never written into the accepted database.
 
 ```bash
 # A manifest describes your existing physical files and complete audit evidence.
@@ -71,7 +77,7 @@ Bundle schema 1 requires `source_commit`, `source_root`, `platform_root`, six `a
 
 SHA-256 records detect accidental mismatch; they are not signed attestations. The checker and native database reader must run in a trusted environment. A manually rewritten manifest cannot prove that a claimed execution happened.
 
-The complete **fresh RTL-to-GDS stage replay remains untested**. P6R did not rerun synthesis, placement, CTS or routing. `stage.py P2/P3/P4` remains experimental: consolidated P3 hooks and a new physical trajectory may differ from the archive, and a recurring antenna violation now stops for investigation. No claim is made that the adapter reproduces the archived repair trajectory or exact PPA. The archive's accepted seven-case GLS result is retained; GLS was not rerun for this acceptance-code repair.
+The complete **fresh RTL-to-GDS stage replay remains untested**. The acceptance-validator repair did not rerun synthesis, placement, CTS or routing. `stage.py P2/P3/P4` (the preserved synthesis/placement-CTS/routing command keys) remains experimental: consolidated placement/CTS hooks and a new physical trajectory may differ from the archive, and a recurring antenna violation now stops for investigation. No claim is made that the adapter reproduces the archived repair trajectory or exact PPA. The archive's accepted seven-case GLS result is retained; GLS was not rerun for this acceptance-code repair.
 
 Use normal, unoptimized Python for preparation/stage execution: legacy assertions remain and these entry points now explicitly reject optimized mode. The shared acceptance validator uses explicit exceptions, which remain active under `python -O`. Preparation verifies source/platform/template hashes and version strings; it does not rebuild tool binaries or authenticate all binaries against installation checksums. Record your supplied binary hashes separately. Qualified Python is 3.12; plotting additionally requires the recorded NumPy, Matplotlib and Pillow versions. Existing single-corner, reset/RDC, MTBF, SDF, LVS and signoff limitations still apply.
 
@@ -80,6 +86,9 @@ Use normal, unoptimized Python for preparation/stage execution: legacy assertion
 Set temporary/cache/Matplotlib directories to your writable experiment root. No new tool installation is needed if the recorded plotting tools are present.
 
 ```bash
+# Current presentation charts; uses only the public accepted measurements.
+python3 scripts/render_presentation_figures.py --output "$MAC_FIGURE_ROOT/presentation"
+# Original historical charts, with their original labels.
 python3 physical/plot_results.py --output "$MAC_FIGURE_ROOT/charts"
 
 # Native read-only OpenDB export; point to your own accepted ODB and Liberty.

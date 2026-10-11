@@ -1,5 +1,11 @@
 # P10 Engineering Clarity Polish review
 
+> Historical pre-publication review snapshot against `5a456654b6847f50c89f4166355593a5f5427242`.
+> Status statements and milestone names below describe that review, not the
+> current repository. For current engineering explanations and hosted results,
+> see the [main README](../readme.md), [physical documentation](../physical/README.md)
+> and [CI evidence](CI.md). The original review body is preserved.
+
 Review baseline: published commit
 [`5a456654b6847f50c89f4166355593a5f5427242`](https://github.com/szuwei-yeh/mac-accel-cdc/commit/5a456654b6847f50c89f4166355593a5f5427242).
 Working branch: `polish/vector-mac-p10-clarity`. Changes remain uncommitted;

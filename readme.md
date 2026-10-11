@@ -155,10 +155,10 @@ length-64 job, 40-cycle memory latency, OOO responses/backpressure, and a
 100 MHz. OSU uses discrete LATCH + AND cells rather than a dedicated ICG;
 its zero-area generic latch prevents a credible gating-area claim.
 
-See the [gating-scope graphic](docs/figures/power_comparison.svg) and
+See the [gating-scope graphic](docs/figures/power-gating-presentation.svg) and
 [power methodology, coverage and results](syn/README.md#targeted-buf_a-clock-gating-experiment).
-The preserved graphic's “banks” label describes word-level clock gating;
-it does not establish independent memory banks in the RTL.
+The presentation graphic uses storage-entry terminology;
+[original figures and source provenance](docs/FIGURES.md) remain available.
 
 **Block experiment boundary:** timing/power benchmarks target `mac_dma_rob`,
 depth 8, Design Compiler R-2020.09-SP4 and `osu018_stdcells.db`, with a 10 ns
@@ -176,9 +176,9 @@ routing, OpenRCX extraction and GDS using pinned OpenROAD Flow Scripts.
 This full-top run uses `DATA_WIDTH=16`, `MAX_OUTSTANDING=8`, and asynchronous
 bus/MAC periods of **10 ns / 7.5 ns**.
 
-<p align="center"><img src="physical/figures/overview_dark.png" width="560" alt="Accepted final routed V3 GDS: full 417.39 by 417.39 micrometre die, selected M3–M7 metal geometry."></p>
+<p align="center"><img src="physical/figures/routed-overview-presentation.svg" width="560" alt="Accepted final routed V3 GDS: full 417.39 by 417.39 micrometre die, selected M3–M7 metal geometry."></p>
 
-*Actual accepted P4 GDS, full 417.39 × 417.39 µm die. M3–M7 metal is selected
+*Actual accepted post-route GDS, full 417.39 × 417.39 µm die. M3–M7 metal is selected
 for readability; lower metal, vias and FEOL are omitted. The image shows routed
 geometry, not illustrative placement or clock-tree flylines.*
 
@@ -193,17 +193,17 @@ geometry, not illustrative placement or clock-tree flylines.*
 | Electrical violations | **0** slew / fanout / capacitance |
 | CDC audit / final functional gate-level regression | **13 two-stage chains; 602 bounded crossings; 7/7 targeted zero-delay cases PASS** |
 
-![Accepted P2/P3/P4 timing comparison: bus and MAC setup WNS in ns and hold WNS in ps, through synthesis, placement, CTS and extracted final routing.](physical/figures/timing-comparison.png)
+![Accepted implementation-stage timing comparison: bus and MAC setup WNS in ns and hold WNS in ps, through synthesis, placement, CTS and extracted final routing.](physical/figures/timing-stages-presentation.svg)
 
-*Same bus 10 ns / MAC 7.5 ns contract across stages. P2: ideal-clock pre-layout;
-P3 placement: estimated RC/ideal clocks; P3 CTS: estimated RC/propagated clocks;
-P4: routed OpenRCX SPEF/propagated clocks. TNS is zero throughout. These margins
+*Same bus 10 ns / MAC 7.5 ns contract across stages. Post-Synthesis: ideal-clock pre-layout;
+Post-Placement: estimated RC/ideal clocks; Post-CTS: estimated RC/propagated clocks;
+Post-Route: routed OpenRCX SPEF/propagated clocks. TNS is zero throughout. These margins
 are neither frequency limits nor a comparison with the OSU experiments.*
 
 ### Hold closure from CTS to routing
 
-Bus hold WNS moves from **+0.954 ps after P3 CTS to +71.475 ps at final P4**.
-P4 adds **406 data hold buffers** and **three clock-input buffers** to segment
+Bus hold WNS moves from **+0.954 ps Post-CTS to +71.475 ps Post-Route**.
+Post-route repair adds **406 data hold buffers** and **three clock-input buffers** to segment
 a bus input wire that failed the operative GDS antenna checks. The worst
 endpoint changes from `ROB[52][6]` to `ROB[37][1]`, so subtracting the two WNS
 values alone cannot explain one path's improvement.
@@ -235,7 +235,7 @@ Standalone OpenSTA independently checks the final netlist, SDC and SPEF;
 | Whole-top OSU DC / PrimeTime | Mapped dual-clock timing, CDC connectivity and all 13 two-flop chains | Bus/MAC setup/hold: **0 violations** in a single-corner ideal-clock model; [coverage and timing](syn/whole_top/RESULTS.md) |
 | Nangate45 mapped / routed GLS | Targeted full-top integration on qualified functional cell models | Exact final routed netlist **7/7 PASS, zero-delay**; not SDF timing simulation or exhaustive equivalence |
 | Post-route independent STA / physical checks | Final Verilog/SDC/SPEF, annotation, clocks, CDC bounds, electrical checks and supported routing/GDS rules | Positive extracted setup/hold, zero supported DRC/antenna/electrical violations; [physical methodology](physical/METHODOLOGY.md) |
-| GitHub-hosted CI | Full-top/fast RTL, CDC matrix, syntax, validator unit tests and documentation/hash checks | Published commit `5a45665`: **[hosted run PASS](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38171676828)**; [workflow](.github/workflows/rtl-ci.yml), [local instructions](docs/CI.md) |
+| GitHub-hosted CI | Full-top/fast RTL, CDC matrix, syntax, validator unit tests and documentation/hash checks | Published commit `37c926a`: **[hosted run PASS](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38174881093)**; [workflow](.github/workflows/rtl-ci.yml), [local instructions](docs/CI.md) |
 
 Formal evidence establishes scoped control properties under its model; full
 V3 formal equivalence is not established. OSU whole-top PT worst setup slack

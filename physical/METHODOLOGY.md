@@ -2,9 +2,10 @@
 
 ## Evidence chain
 
-P5 rehashed the accepted P1A–P4 reports/manifests/checkpoints, 63 original source files, 70 platform files and 21 installation entries. Exact final netlist/GDS/DEF/ODB/SDC/SPEF hashes are in `summary.json`; source/PDK/tool revision pins are in `pins.json`. The accepted V3 source is commit `38d6353712ac7ba680868f0729cf9006e7bff93d`.
+The evidence and provenance audit rehashed the accepted toolchain-qualification, pilot and full-top synthesis/physical reports/manifests/checkpoints, 63 original source files, 70 platform files and 21 installation entries. Exact final netlist/GDS/DEF/ODB/SDC/SPEF hashes are in `summary.json`; source/PDK/tool revision pins are in `pins.json`. The accepted V3 source is commit `38d6353712ac7ba680868f0729cf9006e7bff93d`.
 
-P2 has an initial and a qualified-final coverage evaluator. Their hashes differ intentionally and both original snapshots are preserved. P5 resolved the initial manifest to its initial archived copy, and the accepted evaluator to its qualified-final manifest. No evidence file was edited to make hashes agree.
+The post-synthesis flow has an initial and a qualified-final coverage evaluator. Their hashes differ intentionally and both original snapshots are preserved. The provenance audit resolved the initial manifest to its initial archived copy, and the accepted evaluator to its qualified-final manifest. No evidence file was edited to make hashes agree.
+[Historical archive identifiers](PROVENANCE.md) remain unchanged for traceability.
 
 ## Mapping and parameter checks
 
@@ -27,13 +28,13 @@ Asynchronous grouping uses `-allow_paths`; there is no broad bus↔MAC false pat
 | Latency | 32 | 10 ns, ignore clock latency | Targeted cross-domain hold exclusion |
 | Start / done / busy event stage 1 | 3 | Specific asynchronous exception | Specific exception |
 
-This yields **602 bounded + 3 event = 605 source/destination pairs**, not 602 synchronizer chains. The **13 chains** comprise start/done/busy and five write/five read Gray bits: 26 retained two-stage registers. P5 checks each direct stage-1→stage-2 fanin, clock identity, active setup/hold timing, and physical positions. Gray bit 4 may be named `*_ptr_bin[4]` because it is also the Gray MSB; the fifth bit is retained.
+This yields **602 bounded + 3 event = 605 source/destination pairs**, not 602 synchronizer chains. The **13 chains** comprise start/done/busy and five write/five read Gray bits: 26 retained two-stage registers. The evidence audit checks each direct stage-1→stage-2 fanin, clock identity, active setup/hold timing, and physical positions. Gray bit 4 may be named `*_ptr_bin[4]` because it is also the Gray MSB; the fifth bit is retained.
 
 Final worst bounded slacks (ns): write Gray +7.357976, read Gray +7.348492, FIFO payload +7.100448, result +9.811222, latency +9.814015. Measured Gray source clock-to-Q plus data delays span 0.102561–0.108950 ns (write) and 0.110415–0.116680 ns (read), with spreads 6.389 / 6.265 ps. These are measured timing spreads, not analog MTBF or a replacement for protocol stability assumptions. Result/latency are a stable bundled bus captured after synchronized done; hold-stability depends on the RTL protocol.
 
 ## Functional and physical checks
 
-P2: 66 RTL cases/jobs, seven selected formal tasks and seven mapped functional cases pass. Formal properties use scoped/reduced configurations and legal AXI assumptions; full depth-8 accelerator formal equivalence is not established. P3 and exact final routed P4 functional netlists each pass the seven targeted integration cases, with the same preserved stimuli/assertions and complete qualified cell models.
+Post-Synthesis: 66 RTL cases/jobs, seven selected formal tasks and seven mapped functional cases pass. Formal properties use scoped/reduced configurations and legal AXI assumptions; full depth-8 accelerator formal equivalence is not established. Post-CTS and exact final Post-Route functional netlists each pass the seven targeted integration cases, with the same preserved stimuli/assertions and complete qualified cell models.
 
 The final regression is **zero-delay gate-level simulation**. It exercises integration, out-of-order ROB responses, stalls and CDC behavior; it is not SDF timing simulation or exhaustive equivalence. Standalone OpenSTA independently reads final Verilog/SDC/SPEF, matches all four domain WNS/TNS results, all 605 crossing classifications and all 26 interstage slack values. Active annotation coverage is checked against the library port graph; 8,302 raw unannotated drivers are unused, not missing functional extracted nets.
 

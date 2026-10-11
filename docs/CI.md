@@ -28,7 +28,7 @@ python3 scripts/check_portfolio.py
 | Supplemental V3 CDC matrix | Six scenarios × six jobs; payload, events and Gray pointers |
 | Python syntax | Compile published/new Python sources without executing EDA scripts |
 | Acceptance unit tests | Synthetic temporary fixtures exercise production validation boundaries |
-| Documentation integrity | Inline local Markdown links/fragments, PNG headers, paired fences, private-path/credential patterns, pinned source/template hashes and P9 image hashes |
+| Documentation integrity | Inline local Markdown links/fragments, PNG headers, paired fences, private-path/credential patterns, pinned source/template hashes and original layout-image hashes |
 
 The RTL runner requires exact scoreboard summaries and rejects timeout/failure
 diagnostics even when the testbench exits zero through `$finish`. Build products
@@ -51,9 +51,11 @@ does not establish physical signoff or a fresh RTL-to-GDS replay.
 
 | Published commit | Hosted run | Verified result |
 |---|---|---|
+| [`37c926a`](https://github.com/szuwei-yeh/mac-accel-cdc/commit/37c926a2989aad01d118e07bb837a80373d16a53) | [38174881093](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38174881093) | Completed successfully; exact SHA and every job/check step verified through the Actions API |
 | [`5a45665`](https://github.com/szuwei-yeh/mac-accel-cdc/commit/5a456654b6847f50c89f4166355593a5f5427242) | [38171676828](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38171676828) | Completed successfully; every job/check step passed; job completed 2026-10-11 20:19:15 UTC |
 | [`3e81562`](https://github.com/szuwei-yeh/mac-accel-cdc/commit/3e815629718f3f1c9c8a1504cad0c7306ff95b91) | [38152191558](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38152191558) | Earlier published baseline; successful hosted run |
 
 The run and job records were checked through GitHub's public Actions API.
-These results belong to the listed commits. Local P10 changes require a new
-hosted run after publication; neither result is evidence for an unpushed revision.
+These results belong to the listed commits. Unpublished documentation/presentation
+changes require a new hosted run after publication; the recorded successes are not
+evidence for the current uncommitted cleanup.

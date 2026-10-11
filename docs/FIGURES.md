@@ -10,16 +10,56 @@ generated from an illustrative model.
 | [ROB reordering](figures/rob_reordering.svg) | RTL protocol schematic; illustrative two-beat bursts, not a recorded trace |
 | [MAC-feed utilization](figures/mac_feed_utilization.svg) | Accepted [V2/V3 measurement table](../sim/README.md#utilization-measurement); 256 pairs / 3777 vs. 941 DMA-busy bus cycles |
 | [OSU timing comparison](figures/timing_optimization.svg) | [Block synthesis metrics](../syn/README.md#first-synthesis-driven-optimization); global QoR paths, ideal clocks |
-| [OSU power comparison](figures/power_comparison.svg) | [SAIF-driven block estimates](../syn/README.md#targeted-buf_a-clock-gating-experiment); no post-layout/Nangate45 power claim |
-| [Final routed overview](../physical/figures/overview_dark.png) | Accepted P4 GDS; selected M3–M7 layers; [P9 copy provenance](../physical/figures/p9_provenance.json) |
-| [P2–P4 timing](../physical/figures/timing-comparison.png) | Nangate45 [measured stage results](../physical/RESULTS.md#setup-and-hold); estimated/extracted RC as captioned |
-| [Area/cell-count evolution](../physical/figures/area-comparison.png) | Accepted OpenDB inventories; taps/fillers excluded |
-| [Hold decomposition](../physical/figures/hold-decomposition.png) | [Matched-path analysis](../physical/HOLD_ANALYSIS.md); estimated/extracted RC, changed worst endpoint |
+| [OSU power comparison](figures/power-gating-presentation.svg) | [SAIF-driven block estimates](../syn/README.md#targeted-buf_a-clock-gating-experiment); storage-entry terminology; no post-layout/Nangate45 power claim |
+| [Final routed overview](../physical/figures/routed-overview-presentation.svg) | Accepted post-route GDS; selected M3–M7 layers; original geometry/axes/legend pixels preserved |
+| [Routed-metal detail](../physical/figures/routing-detail-presentation.svg) | Actual M1–M5 metal and V1–V4 cuts in the accepted GDS; 30 × 30 µm window |
+| [Placement and power grid](../physical/figures/placement-power-presentation.svg) / [detail](../physical/figures/power-grid-detail-presentation.svg) | Accepted final ODB cell footprints and power-only shapes; signal routes not displayed |
+| [Implementation-stage timing](../physical/figures/timing-stages-presentation.svg) | Nangate45 [measured stage results](../physical/RESULTS.md#setup-and-hold); ideal/propagated clocks and estimated/extracted RC explicitly distinguished |
+| [Area/cell-count evolution](../physical/figures/area-stages-presentation.svg) | Accepted OpenDB inventories; taps/fillers excluded |
+| [Hold decomposition](../physical/figures/hold-path-contributions-presentation.svg) | [Matched-path analysis](../physical/HOLD_ANALYSIS.md); estimated/extracted RC, changed worst endpoint |
 
 Original SVGs, accepted PNG/PDF charts and their physical provenance are
 preserved byte-for-byte. The main README uses one sized layout overview and
-landscape charts; routed-metal, placement and power-grid detail stays in
+measured charts; routed-metal, placement and power-grid detail stays in
 [physical documentation](../physical/README.md).
+
+## Presentation regeneration and provenance
+
+```bash
+python3 scripts/render_presentation_figures.py --output /tmp/vector-mac-presentation
+```
+
+Use a new output directory. The recorded renderer uses Matplotlib 3.9.2 and
+NumPy 1.26.4. The generator reads the unchanged `physical/summary.json`,
+`physical/hold-analysis.json` and accepted power table in `syn/README.md`;
+setup is plotted in ns and hold in ps. Area/count, power and matched-path
+contributions retain the exact accepted values before display rounding.
+Vertically stacked chart panels keep the labels usable at narrow widths.
+
+For layout figures, the generator composes a new SVG using the exact original
+PNG body at native scale. Only the outer header/footer strips change. The body
+includes all geometry, coordinate axes and legends; no GDS/ODB is re-read or
+geometry inferred. The power chart uses the accepted SAIF table and correct
+storage/gating terminology; it adds no power measurements. Common browser font
+fallbacks keep the new chart text readable without an installed plotting font.
+
+[Presentation manifest](../physical/figures/presentation-provenance.json)
+records source/generator/output SHA-256s, plotted values, stage labels, retained
+pixel bounds and accepted GDS/ODB hashes. The manifest supplements the immutable
+[original chart provenance](../physical/figures/provenance.json) and
+[original layout-image provenance](../physical/figures/p9_provenance.json).
+[Archive identifiers](../physical/PROVENANCE.md) remain available for traceability.
+
+Original presentation sources remain unchanged:
+[power](figures/power_comparison.svg),
+[timing](../physical/figures/timing-comparison.png),
+[area](../physical/figures/area-comparison.png),
+[hold](../physical/figures/hold-decomposition.png),
+[overview](../physical/figures/overview_dark.png),
+[routing detail](../physical/figures/routing_detail.png),
+[placement](../physical/figures/placement_overview.png) and
+[power-grid detail](../physical/figures/pdn_detail.png).
+Their historical labels and hashes are deliberately preserved.
 
 ## Regenerate the new utilization chart
 
