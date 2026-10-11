@@ -235,7 +235,7 @@ Standalone OpenSTA independently checks the final netlist, SDC and SPEF;
 |---|---|---|
 | RTL simulation / scoreboards | AR geometry/stability, request/beat conservation, RID placement, A/B pairing and payload/last under stalls | ROB **12/12**, DMA wrapper **11/11**, V3 full top **7/7**, power workload **4/4**; [test map](sim/README.md#regression-evidence) |
 | AXI OOO / interleaving / backpressure | Later IDs may complete first; ordered retirement and ownership survive stalls | Behavioral memory models and protocol scoreboards; legal per-ID beat order, no commercial memory subsystem |
-| Formal control safety | DMA backpressure, FIFO Gray/overflow/underflow, ROB ownership/order/count/error properties | BMC + prove PASS; ROB IC3/PDR prove/cover PASS in reduced configurations with legal AXI assumptions; [proof scope](formal/STUDY_GUIDE.md) |
+| Formal control safety | DMA backpressure, FIFO Gray/overflow/underflow, ROB ownership/order/count/error properties | BMC + prove PASS; ROB IC3/PDR prove/cover PASS in reduced configurations with legal AXI assumptions; [proof scope](formal/README.md) |
 | Dual-clock CDC | Payload conservation, event toggles, Gray-pointer behavior, reset-release/phase/rate scenarios | **36/36 jobs per simulator** with Icarus/VCS; six scenarios × six consecutive jobs; [scenario matrix](sim/CDC_REGRESSION.md) |
 | Whole-top OSU DC / PrimeTime | Mapped dual-clock timing, CDC connectivity and all 13 two-flop chains | Bus/MAC setup/hold: **0 violations** in a single-corner ideal-clock model; [coverage and timing](syn/whole_top/RESULTS.md) |
 | Nangate45 mapped / routed GLS | Targeted full-top integration on qualified functional cell models | Exact final routed netlist **7/7 PASS, zero-delay**; not SDF timing simulation or exhaustive equivalence |
@@ -272,7 +272,7 @@ vvp /tmp/mac_accel_dma_rob_top
 
 Expected: **7 PASS / 0 FAIL**. Other
 [depth-8 RTL regressions](sim/README.md#depth-8-rob-and-dma-regressions),
-[CDC matrix](sim/CDC_REGRESSION.md), [formal tasks](formal/STUDY_GUIDE.md),
+[CDC matrix](sim/CDC_REGRESSION.md), [formal tasks](formal/README.md),
 [block synthesis](syn/README.md#canonical-baseline-flow),
 [SAIF/gating reproduction](syn/README.md#reproduction),
 [whole-top DC](syn/whole_top/DC_FLOW.md) and [PrimeTime](syn/whole_top/PT_FLOW.md)
@@ -288,14 +288,13 @@ OpenROAD/ORFS tools and Nangate45 inputs.
 |---|---|
 | [RTL design](rtl/README.md) | Module map, accelerator versions and register interface |
 | [Simulation / scoreboards](sim/README.md) | AXI memory models, regression cases and utilization definition |
-| [Formal verification](formal/STUDY_GUIDE.md) | Properties, reduced configurations, assumptions and proof commands |
+| [Formal verification](formal/README.md) | Properties, reduced configurations, assumptions and proof commands |
 | [Synthesis / optimizations](syn/README.md) | Block timing, frequency sweep, SAIF and targeted gating |
 | [Whole-top DC / PT](syn/whole_top/README.md) | Dual-clock mapped timing and constraint coverage |
 | [Physical implementation](physical/README.md) | Accepted layouts, result tables, provenance and verification limits |
 | [Physical reproduction](physical/REPRODUCE.md) | Pinned inputs, commands and experimental adapter acceptance limits |
 | [CI instructions](docs/CI.md) / [CI runs](https://github.com/szuwei-yeh/mac-accel-cdc/actions) | Hosted checks and matching local commands |
 | [Figure sources and regeneration](docs/FIGURES.md) | Accepted data sources, immutable original figures and new utilization chart recipe |
-| [GitHub metadata proposals](docs/GITHUB_METADATA.md) | Description and topics |
 
 <a id="design-scope-and-limitations"></a>
 

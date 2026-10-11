@@ -2,6 +2,8 @@
 
 [rtl-ci.yml](../.github/workflows/rtl-ci.yml) runs on pushes, pull requests and
 manual dispatch, using a GitHub-hosted Ubuntu runner, Icarus Verilog and Python.
+See [workflow runs](https://github.com/szuwei-yeh/mac-accel-cdc/actions/workflows/rtl-ci.yml)
+for ongoing CI status.
 Checkout and Python setup actions are pinned to release commits. The job has
 read-only repository permissions and a ten-minute timeout.
 
@@ -56,6 +58,5 @@ does not establish physical signoff or a fresh RTL-to-GDS replay.
 | [`3e81562`](https://github.com/szuwei-yeh/mac-accel-cdc/commit/3e815629718f3f1c9c8a1504cad0c7306ff95b91) | [38152191558](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38152191558) | Earlier published baseline; successful hosted run |
 
 The run and job records were checked through GitHub's public Actions API.
-These results belong to the listed commits. Unpublished documentation/presentation
-changes require a new hosted run after publication; the recorded successes are not
-evidence for the current uncommitted cleanup.
+These results belong only to the listed commits; they do not establish hosted
+CI success for later revisions.

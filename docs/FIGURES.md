@@ -85,6 +85,6 @@ model. It is not whole-system speedup, MAC PE activity, or physical PPA. The
 power experiment's separate 40-cycle workload is not used by this chart.
 
 The original SVG generator remains
-`python3 scripts/render_readme_figures.py`. It is unchanged and was not rerun
-during this redesign. Accepted physical chart and layout regeneration requires
-the inputs and tools documented in [REPRODUCE.md](../physical/REPRODUCE.md).
+`python3 scripts/render_readme_figures.py`. Accepted physical chart and layout
+regeneration requires the inputs and tools documented in
+[REPRODUCE.md](../physical/REPRODUCE.md).
