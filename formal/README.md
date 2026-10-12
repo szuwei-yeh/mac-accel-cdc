@@ -148,7 +148,5 @@ also records these statuses separately from the depth-8 RTL regressions.
 - [Lightweight CI](../docs/CI.md) does not execute formal solvers. A CI PASS is
   not a new proof result.
 
-The [original study guide](STUDY_GUIDE.md) remains byte-for-byte as a historical
-source pinned by `physical/pins.json`. It contains earlier DMA explanations and
-personal study material; this README is the current engineering entry point.
-The historical guide's proposed extensions are not a current property inventory.
+Historical source snapshots are retained byte-for-byte for implementation
+provenance, with hashes recorded in [physical/pins.json](../physical/pins.json).

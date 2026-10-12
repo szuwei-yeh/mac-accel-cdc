@@ -240,7 +240,7 @@ Standalone OpenSTA independently checks the final netlist, SDC and SPEF;
 | Whole-top OSU DC / PrimeTime | Mapped dual-clock timing, CDC connectivity and all 13 two-flop chains | Bus/MAC setup/hold: **0 violations** in a single-corner ideal-clock model; [coverage and timing](syn/whole_top/RESULTS.md) |
 | Nangate45 mapped / routed GLS | Targeted full-top integration on qualified functional cell models | Exact final routed netlist **7/7 PASS, zero-delay**; not SDF timing simulation or exhaustive equivalence |
 | Post-route independent STA / physical checks | Final Verilog/SDC/SPEF, annotation, clocks, CDC bounds, electrical checks and supported routing/GDS rules | Positive extracted setup/hold, zero supported DRC/antenna/electrical violations; [physical methodology](physical/METHODOLOGY.md) |
-| GitHub-hosted CI | Full-top/fast RTL, CDC matrix, syntax, validator unit tests and documentation/hash checks | Published commit `37c926a`: **[hosted run PASS](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38174881093)**; [workflow](.github/workflows/rtl-ci.yml), [local instructions](docs/CI.md) |
+| GitHub-hosted CI | Full-top/fast RTL regressions, CDC matrix, Python syntax, unit tests and documentation/hash checks | [Current workflow status](https://github.com/szuwei-yeh/mac-accel-cdc/actions/workflows/rtl-ci.yml); [workflow](.github/workflows/rtl-ci.yml), [local instructions](docs/CI.md) |
 
 Formal evidence establishes scoped control properties under its model; full
 V3 formal equivalence is not established. OSU whole-top PT worst setup slack
@@ -249,8 +249,9 @@ is **+5.114273 ns (bus) / +0.020727 ns (MAC)** and hold slack is
 pre-layout OSU model, not the routed Nangate45 result. OSU mapped GLS remains
 inconclusive due to cell-model unknown-state behavior, also seen in the baseline.
 
-The hosted result above is for the linked published commit. Lightweight CI does
-not rerun formal, mapped GLS, synthesis or physical implementation.
+Lightweight CI does not run formal solvers, mapped GLS, synthesis or physical
+implementation. Exact historical commit/run associations remain in
+[CI evidence](docs/CI.md#verified-hosted-results).
 
 <a id="reproduction-and-limitations"></a>
 
