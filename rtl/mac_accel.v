@@ -6,7 +6,8 @@
 
 module mac_accel #(
     parameter DATA_WIDTH = 16,
-    parameter VEC_LEN    = 4
+    parameter VEC_LEN    = 4,
+    parameter USE_WSTRB  = 0  // legacy simplified interface is full-word
 )(
     // bus clock domain (simplified register interface; AXI lives in the wrapper)
     input  wire                     bus_clk,
@@ -21,6 +22,7 @@ module mac_accel #(
     input  wire                     re,
     input  wire [3:0]               addr,
     input  wire [31:0]              wdata,
+    input  wire [3:0]               wstrb,
     output reg  [31:0]              rdata,
 
     // debug
@@ -48,6 +50,8 @@ module mac_accel #(
     reg [3:0] load_idx_b;
 
     integer i;
+    integer byte_lane;
+    wire [3:0] write_bytes = USE_WSTRB ? wstrb : 4'hf;
 
     //----------------------------------------
     // CDC: start pulse (bus -> mac)
@@ -61,7 +65,7 @@ module mac_accel #(
             start_pulse_bus  <= 1'b0;
         end else begin
             start_pulse_bus <= 1'b0;
-            if (we && addr == ADDR_CTRL && wdata[0]) begin
+            if (we && addr == ADDR_CTRL && write_bytes[0] && wdata[0]) begin
                 start_toggle_bus <= ~start_toggle_bus;
                 start_pulse_bus  <= 1'b1;
             end
@@ -78,15 +82,13 @@ module mac_accel #(
         end
     end
 
-    // [FIX] Use posedge detection instead of XOR to generate a clean single-cycle pulse.
-    // The XOR method can have race conditions when both sync FFs update in the same cycle.
-    // Detecting posedge on start_sync_mac[1] ensures exactly one mac_clk cycle pulse.
+    // Recover either transition of the synchronized source toggle.
     reg start_sync_mac_d;
     always @(posedge mac_clk or posedge mac_rst) begin
         if (mac_rst) start_sync_mac_d <= 1'b0;
         else         start_sync_mac_d <= start_sync_mac[1];
     end
-    wire start_pulse_mac = start_sync_mac[1] & ~start_sync_mac_d;
+    wire start_pulse_mac = start_sync_mac[1] ^ start_sync_mac_d;
 
     //----------------------------------------
     // Async FIFO: bus_clk -> mac_clk
@@ -172,25 +174,32 @@ module mac_accel #(
             if (we) begin
                 case (addr)
                     ADDR_AIN: begin
-                        if (load_idx_a < VEC_LEN) begin
+                        if (load_idx_a < VEC_LEN && |write_bytes[DATA_WIDTH/8-1:0]) begin
                             if (update_mask[load_idx_a])
-                                vecA[load_idx_a] <= wdata[DATA_WIDTH-1:0];
+                                for (byte_lane = 0; byte_lane < DATA_WIDTH/8; byte_lane = byte_lane + 1)
+                                    if (write_bytes[byte_lane])
+                                        vecA[load_idx_a][byte_lane*8 +: 8] <= wdata[byte_lane*8 +: 8];
                             load_idx_a <= load_idx_a + 1'b1;
                         end
                     end
 
                     ADDR_BIN: begin
-                        if (load_idx_b < VEC_LEN) begin
+                        if (load_idx_b < VEC_LEN && |write_bytes[DATA_WIDTH/8-1:0]) begin
                             if (update_mask[load_idx_b])
-                                vecB[load_idx_b] <= wdata[DATA_WIDTH-1:0];
+                                for (byte_lane = 0; byte_lane < DATA_WIDTH/8; byte_lane = byte_lane + 1)
+                                    if (write_bytes[byte_lane])
+                                        vecB[load_idx_b][byte_lane*8 +: 8] <= wdata[byte_lane*8 +: 8];
                             load_idx_b <= load_idx_b + 1'b1;
                         end
                     end
 
                     ADDR_MASK: begin
-                        update_mask <= wdata[VEC_LEN-1:0];
-                        load_idx_a  <= 4'd0;
-                        load_idx_b  <= 4'd0;
+                        if (|write_bytes[(VEC_LEN-1)/8:0]) begin
+                            for (i = 0; i < VEC_LEN; i = i + 1)
+                                if (write_bytes[i/8]) update_mask[i] <= wdata[i];
+                            load_idx_a <= 4'd0;
+                            load_idx_b <= 4'd0;
+                        end
                     end
 
                     default: ;
@@ -265,7 +274,7 @@ module mac_accel #(
     reg done_bus;
     always @(posedge bus_clk or posedge bus_rst) begin
         if (bus_rst)                                      done_bus <= 1'b0;
-        else if (we && addr == ADDR_CTRL && wdata[0])     done_bus <= 1'b0; // clear on new start
+        else if (we && addr == ADDR_CTRL && write_bytes[0] && wdata[0]) done_bus <= 1'b0;
         else if (done_pulse_bus)                          done_bus <= 1'b1;
     end
 

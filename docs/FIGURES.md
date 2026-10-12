@@ -1,4 +1,27 @@
-# Portfolio figure sources
+# Figure provenance
+
+## Current publication figures
+
+| Figure | Identity and scope |
+|---|---|
+| [Architecture](figures/architecture.svg) | Existing V3 dataflow schematic, depth8 explicitly selected; not physical geometry |
+| [ROB timeline](figures/rob_reordering.svg) | Illustrative completion order1,2,0 / retirement0,1,2; two-beat bursts, not measured waveform |
+| [New routed overview](figures/routed-20261012-overview.png) | Final 2026-10-12 frozen candidate GDS; full 434.48 × 434.48 µm die, M2–M10 |
+| [New routed detail](figures/routed-20261012-routing-detail.png) | Same final GDS; M1–M10, centered 30 × 30 µm window |
+| [MAC-feed chart](figures/mac_feed_utilization.svg) | Historical accepted V2/V3 simulation counts; operand delivery, not routed power or system speedup |
+
+[Current figure binding](../evidence/routed-20261012/binding.json) records exact
+image/diagram SHA-256s and binds both new PNGs to GDS
+`b7dec1a5900ff5ca5816f6a2141bbd3a3a75788b118fbb6fd681fc42cdf3fdb0`.
+The PNGs are byte-identical to the final external package; the recorded KLayout
+renderer is retained there as `evidence/driver/render_candidate_gds.py`.
+No geometry was invented or modified. Raw previews have no timing/power labels.
+
+All older figures, generators and their original hashes remain intact. The
+following section documents **archived experiments**; its layouts and stage
+charts must not be relabeled as the new frozen candidate.
+
+## Archived figure sources
 
 The README uses architecture/control diagrams, an accepted simulation comparison,
 and measured physical artifacts. No layout, timing or benchmark result is

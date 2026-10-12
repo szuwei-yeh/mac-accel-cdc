@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "revision": "frozen-v3-ucsb-routed-20261012",
+  "source_manifest_sha256": "706323b65d6a4bd6da3ebdbcaea053ebbc78e88fa5b6c05d699c3f5a847a993d",
+  "records": {
+    "evidence/routed-20261012/mapping.json": {
+      "sha256": "937d0226223bd995c9ca65e3c66ebdfb2bff02695c854849dad747c508e82829",
+      "archive_path": "final-delivery/evidence/p4/audit/final_antenna1-mapping-gate.json"
+    },
+    "evidence/routed-20261012/cdc.json": {
+      "sha256": "4078d6e0250a904c7bd38340ace23a99986acc01583c41ecc0ea007c0a1aa91c",
+      "archive_path": "final-delivery/evidence/p4/audit/final_antenna1-candidate-qualification.json"
+    },
+    "evidence/routed-20261012/coverage.json": {
+      "sha256": "447a163024402fb3431f26c278a9eb9cc544a8249ebefed40205d42202a2843e",
+      "archive_path": "final-delivery/evidence/p4/audit/final_antenna1-coverage-gate.json"
+    },
+    "evidence/routed-20261012/gds-check.json": {
+      "sha256": "501add0379738d0650c87a0203f0f160896ba48ce9916891f6a33bf06d0aa65a",
+      "archive_path": "final-delivery/evidence/p4/audit/drc-metadata-antenna_split3-attempt1.json"
+    },
+    "evidence/routed-20261012/gds-gate.json": {
+      "sha256": "5512ae1ae2aa83f66815af7e4f6aecfb9eb39e114c5ffdae9f0ec83e2b911473",
+      "archive_path": "final-delivery/evidence/p4/audit/drc-gate-antenna_split3-attempt1.json"
+    },
+    "evidence/routed-20261012/results.json": {
+      "sha256": "faf92438bd0c2b99da422c418a93a1f959738367b08d38a6391f50439a380b21",
+      "kind": "public projection of original external FINAL_MANIFEST; private paths omitted"
+    }
+  },
+  "figures": {
+    "docs/figures/routed-20261012-overview.png": {
+      "sha256": "1da8912b26bb503a9d28d4e852e347d0db34645ce14aeed632259c1b79791805",
+      "bytes": 599952,
+      "archive_path": "final-delivery/evidence/views/overview-raw.png",
+      "gds_sha256": "b7dec1a5900ff5ca5816f6a2141bbd3a3a75788b118fbb6fd681fc42cdf3fdb0",
+      "view": "M2-M10; full 434.48 x 434.48 um die",
+      "kind": "actual final GDS rendering"
+    },
+    "docs/figures/routed-20261012-routing-detail.png": {
+      "sha256": "430adff17d8caaca07286f92c3db288cbb77a4d37152e947c104b29ef516ba4c",
+      "bytes": 342190,
+      "archive_path": "final-delivery/evidence/views/routing-detail-raw.png",
+      "gds_sha256": "b7dec1a5900ff5ca5816f6a2141bbd3a3a75788b118fbb6fd681fc42cdf3fdb0",
+      "view": "M1-M10; 30 x 30 um centered window",
+      "kind": "actual final GDS rendering"
+    },
+    "docs/figures/architecture.svg": {
+      "sha256": "ee012b9c9203e8d4a4d6b0fa0793caca5c8b481860d7fcd1001847246e74becf",
+      "bytes": 19391,
+      "kind": "illustrative RTL protocol/dataflow; not measured waveform or layout"
+    },
+    "docs/figures/rob_reordering.svg": {
+      "sha256": "08de2fd2dd4d8fcb0b4ad4b0329b13cf9034b450c4e96f04596f92d8bd83e2f7",
+      "bytes": 19006,
+      "kind": "illustrative RTL protocol/dataflow; not measured waveform or layout"
+    }
+  },
+  "external_manifest_sha256": "b0d9e2ea6a5eb7382602b95e26c74e3f741930366b10319c7990ff69513ed7c3",
+  "support_sha256": {
+    "scripts/check_publication.py": "830cb06d96d5827afd2f5a9af620b71ffd383ef31f321b70c8bc493650569481",
+    "tests/test_publication_binding.py": "dd204decf05d7f8514b6075973d6100788e98a729ea4fecdb27478ef65d2ec20"
+  }
+}

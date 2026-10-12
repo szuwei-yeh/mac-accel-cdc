@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "scope": "electrically repaired unplaced mapped synthesis; ideal-clock zero-wire STA; complete CDC/constraint audits; 7 original GLS and 2 fault recovery GLS cases",
+  "cells": 34624,
+  "sequential": 7509,
+  "clock_domains": {
+    "bus": 7287,
+    "mac": 222
+  },
+  "global_wns_ns": {
+    "max": 6.021905,
+    "min": 0.05626
+  },
+  "tns_ns": {
+    "max": 0.0,
+    "min": 0.0
+  },
+  "electrical_violations": 0,
+  "inserted_buffers": 2759,
+  "source_manifest_sha256": "41f3430203ccb4322ab5ed17b4018a0d203233d76e57c812366c148ca660d5c3",
+  "physical_stages_executed": false,
+  "artifact_sha256": {
+    "1_2_yosys.v": "98637409fd2f161809017f5aa99988072bfe727b2124e389660840a9c0e11b6f",
+    "1_synth_qualified.odb": "4f660da0065666810493f89192f898773a8285a5c06dad29b0e434de0b702dcd",
+    "1_synth_qualified.sdc": "f754b93f07a4d3a121941438aa0433bbade1830144b90ab44c1977c86b320c35"
+  }
+}

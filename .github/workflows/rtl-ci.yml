@@ -38,4 +38,4 @@ jobs:
       - name: Self-contained acceptance unit tests
         run: python3 -m unittest discover -s tests -v
       - name: Check documentation and preserved source hashes
-        run: python3 scripts/check_portfolio.py
+        run: python3 scripts/check_publication.py

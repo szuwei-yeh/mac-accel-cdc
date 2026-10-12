@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "groups": {
+    "start": 1,
+    "done": 1,
+    "busy": 1,
+    "write_gray": 5,
+    "read_gray": 5,
+    "payload": 528,
+    "result": 32,
+    "latency": 32
+  },
+  "bounded_paths": 602,
+  "event_first_stage_exceptions": 3,
+  "active_interstage_checks": 26,
+  "minima_ns": {
+    "latency": 9.810777,
+    "result": 9.812004,
+    "read_gray": 7.329769,
+    "write_gray": 7.357763,
+    "payload": 7.130997
+  },
+  "graph": {
+    "registers": 7509,
+    "chains": 13,
+    "crossings": 605
+  },
+  "domain_wns": {
+    "bus_clk.max": 7.5517,
+    "bus_clk.min": 0.074356,
+    "mac_clk.max": 5.978773,
+    "mac_clk.min": 0.082133
+  }
+}

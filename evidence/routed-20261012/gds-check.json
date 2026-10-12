@@ -1,0 +1,14 @@
+{
+  "status": "COMPLETE",
+  "exit_code": 0,
+  "checker": "KLayout",
+  "checker_version": "0.28.17",
+  "report_sha256": "5047a72d0aa46cc0956817a761ddc8d6407d4622b6a71fc512f5131663b0f579",
+  "gds_sha256": "b7dec1a5900ff5ca5816f6a2141bbd3a3a75788b118fbb6fd681fc42cdf3fdb0",
+  "odb_sha256": "ffc3cb61026d80b01322ac69f01fce04bb3910bb2cc3a73d0a0613d2940a0f01",
+  "deck_sha256": "7fae2d9172e0a2c14c07549978741fdb16df63bff3d776d11335b34a7b75d9db",
+  "log_sha256": "c272b8a6de68dca46678f52538993f6ca5dff8fd9082e09a2d44a1c313958bdf",
+  "execution_record_sha256": "47ed7ac80e02d0ca70c19ecbe165ea6cb0cd7343d95300fbab1e05fce0678430",
+  "marker_count": 0,
+  "antenna_count": 0
+}

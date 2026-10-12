@@ -177,7 +177,9 @@ module mac_dma_rob #(
         end else begin
             dma_done <= 1'b0;
 
-            if (engine_err)
+            // RUN phases own the accepted command's sticky error. CMD_A may
+            // still see the previous job's error until the engine accepts it.
+            if (engine_err && (state == S_RUN_A || state == S_RUN_B))
                 dma_err <= 1'b1;
 
             if (stream_valid && stream_ready)
@@ -194,7 +196,8 @@ module mac_dma_rob #(
                         read_idx_a   <= 16'd0;
                         dma_busy     <= 1'b1;
                         dma_err      <= 1'b0;
-                        stream_valid <= 1'b0;
+                        // A prior phase may still own the stalled skid tail.
+                        // Keep it until acceptance; RUN_B waits for skid room.
                         state        <= S_CMD_A;
                     end
                 end

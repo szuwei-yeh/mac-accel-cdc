@@ -1,0 +1,230 @@
+{
+  "status": "PASS_WITHIN_DOCUMENTED_RESEARCH_SCOPE",
+  "source_manifest_sha256": "706323b65d6a4bd6da3ebdbcaea053ebbc78e88fa5b6c05d699c3f5a847a993d",
+  "parameters": {
+    "DATA_WIDTH": 16,
+    "AXI_DATA_WIDTH": 32,
+    "AXI_ADDR_WIDTH": 32,
+    "AXI_ID_WIDTH": 4,
+    "S_AXI_ADDR_WIDTH": 8,
+    "MAX_LEN": 256,
+    "BURST_LEN": 16,
+    "MAX_OUTSTANDING": 8
+  },
+  "clock_period_ns": {
+    "bus": 10.0,
+    "mac": 7.5
+  },
+  "final_timing": {
+    "wns": {
+      "bus_clk.max": 7.5517,
+      "bus_clk.min": 0.074356,
+      "mac_clk.max": 5.978773,
+      "mac_clk.min": 0.082133
+    },
+    "violations": {
+      "bus_clk.max": [
+        0,
+        0.0
+      ],
+      "bus_clk.min": [
+        0,
+        0.0
+      ],
+      "mac_clk.max": [
+        0,
+        0.0
+      ],
+      "mac_clk.min": [
+        0,
+        0.0
+      ]
+    }
+  },
+  "geometry": {
+    "core_um": [
+      8.17,
+      8.4,
+      426.36,
+      425.6
+    ],
+    "die_um": [
+      0.0,
+      0.0,
+      434.48,
+      434.48
+    ],
+    "core_area_um2": 174468.868,
+    "instance_categories": {
+      "standard": 29002,
+      "tap": 1046,
+      "filler": 40301
+    },
+    "area_um2": {
+      "standard": 69034.71399998317,
+      "tap": 278.23599999999834,
+      "filler": 105155.91800002365
+    },
+    "standard_cell_utilization_percent": 39.5684999801702,
+    "instances": 70349,
+    "rows": 298
+  },
+  "GLS": {
+    "status": "PASS",
+    "verification_layer": "candidate physical-stage netlist zero-delay mapped GLS",
+    "stage": "final_antenna1",
+    "original_cases": 7,
+    "error_recovery_jobs": 2,
+    "netlist_sha256": "45300ee7636ea81a9bc5cebbc2eab3656fb1fc273a111b714b3ab6406b706a73",
+    "models_sha256": "87bb617958fa45566fbf3ca752fa1a9a1185a91bcf529961604ef2cec0339cbe",
+    "TB_source_sha256": "d84ccdf6b361a4c687947c13c93252f02e132b15ecaad58eb33a633e647c6608",
+    "public_interface_mapped_fault_TB_sha256": "24b0725371ae404f4fd26f638eba304ed9aa7dc016d45835f9175500848c1926",
+    "delays": "zero, not SDF",
+    "full_top_equivalence": false,
+    "reuse_binding": "exactbyte-identicalfinalfunctionalnetlist; models,stimulus andprofileunchanged; noSDF"
+  },
+  "model": "Nangate45 typical1.1V25C; propagated clocks; OpenRCX extractedroutedSPEF; zero uncertainty, originalI/O/reset/CDCcontract",
+  "GDS_gate": {
+    "status": "PASS",
+    "supported_drc_markers": 0,
+    "gds_antenna_markers": 0,
+    "rule_categories": 133,
+    "native_lef_antenna": "INCONCLUSIVE",
+    "net_correlation": "Not required for zero markers; violations require explicit context and always reject"
+  },
+  "completed_utc": "2026-10-12T21:21:25.508135+00:00",
+  "physical_variant": "antenna_split3",
+  "clock_domain_FFs": {
+    "bus": 7287,
+    "mac": 222
+  },
+  "FFs": 7509,
+  "source_unchanged": true,
+  "P_and_R_stage_status": {
+    "floorplan": "PASS",
+    "placement": "PASS",
+    "CTS_after_hold_repair": "PASS",
+    "globalroute": "PASS",
+    "detailedroute": "PASS",
+    "filler_finish": "PASS",
+    "OpenRCX_extraction": "PASS",
+    "GDS": "PASS",
+    "postroute_native_and_independent_STA": "PASS",
+    "supported_DRC_and_GDS_antenna": "PASS",
+    "physical_connectivity": "PASS"
+  },
+  "tool_versions": {
+    "OpenROAD": "26Q2-1164-g08f67ee5ec",
+    "OpenSTA": "3.1.0",
+    "Yosys": "0.69+274 7513f8df8",
+    "KLayout": "0.28.17",
+    "ORFS": "e5ce907f878490bf9947347f4cd4b73e97451c80"
+  },
+  "input_checkpoint_binding": {
+    "status": "PASS",
+    "scope": "electrically repaired unplaced mapped synthesis; ideal-clock zero-wire STA; complete CDC/constraint audits; 7 original GLS and 2 fault recovery GLS cases",
+    "cells": 28885,
+    "sequential": 7509,
+    "clock_domains": {
+      "bus": 7287,
+      "mac": 222
+    },
+    "global_wns_ns": {
+      "max": 6.02255,
+      "min": 0.05626
+    },
+    "tns_ns": {
+      "max": 0.0,
+      "min": 0.0
+    },
+    "electrical_violations": 0,
+    "inserted_buffers": 1777,
+    "source_manifest_sha256": "706323b65d6a4bd6da3ebdbcaea053ebbc78e88fa5b6c05d699c3f5a847a993d",
+    "physical_stages_executed": false,
+    "artifact_sha256": {
+      "1_2_yosys.v": "9d5bbf1b4cf42cf381a78bfaf00a0243a1f38d0119f81022194d275f0a909771",
+      "1_synth_qualified.odb": "4a4a6617623acf99e52d0c6511f63b24eb5cc9876477dcf8671a42d6ba8eb6b6",
+      "1_synth_qualified.sdc": "f754b93f07a4d3a121941438aa0433bbade1830144b90ab44c1977c86b320c35"
+    }
+  },
+  "verification_limits": [
+    "singletypicalcorner",
+    "zero-clockuncertainty documentedI/O/resetcontract",
+    "zero-delaymappedGLS;noSDF",
+    "nofull-topLEC/formalequivalence",
+    "noMTBF/RDC",
+    "noqualifiedLVS",
+    "noMCMM/OCV/foundrysignoff",
+    "staticPDNSim defaultactivity only, nodynamicIR/EM/signoffpower"
+  ],
+  "schema": 1,
+  "revision": "frozen-v3-ucsb-routed-20261012",
+  "source_manifest_file": "evidence/frozen-v3-requalification-inputs.json",
+  "rtl_sha256": {
+    "rtl/axi_read_engine_rob.v": "b5234cde4eaa4d7b0579fbc14b9f55a3216f20727c70c5d6302879f8a757d3dc",
+    "rtl/mac_accel.v": "db26c08585406cb464b2eedc57fa04de576115861710a3712f8820deb6ebf709",
+    "rtl/mac_accel_axi.v": "09fd46cd28cb44c5e84e2649d243c8fe7e887cd7a468996aa65df05478697d88",
+    "rtl/mac_accel_dma_rob_top.v": "0f02ea10217a1138eab7f24c468acde9bd352de156e23db7df4bf383ce92e9a1",
+    "rtl/mac_accel_dma_top.v": "1a3e48f541c8cdcc014f157b280be6da1756fd58542936b85d0c4ab141363b6d",
+    "rtl/mac_dma.v": "eac52487e2fb5f053ee0278fb26576a2468bc57c7a8049a6c194ebc9690e0660",
+    "rtl/mac_dma_rob.v": "18e3202c471b317f04883fa21d7de16d7e32768fe904fafd747c8355efacc61d",
+    "rtl/mac_fifo_async.v": "cfeb105db0846f9ffc4072a2f20ffa5a79a13f6502454c77d8f0aeb3fc82c23e",
+    "rtl/mac_pe.v": "a33d7b864149cf7eb58371199d6956c04bfb535b909c859273f78dfc2c2d5c39"
+  },
+  "closure_freeze_sha256": "f3c0b5d56f57e8f7851011facca6d61ae48856f09c544dda3711ff0f35e33d8e",
+  "final_manifest_archive_path": "final-delivery/FINAL_MANIFEST.json",
+  "final_manifest_sha256": "b0d9e2ea6a5eb7382602b95e26c74e3f741930366b10319c7990ff69513ed7c3",
+  "external_archive": {
+    "name": "frozen-706323b6-ucsb-routed-final-r2.tar.gz",
+    "bytes": 166996984,
+    "sha256": "a4465f189ef68a0c9d29907033d0546ca7a58641f5df24d534ef46f528300977",
+    "files": 794
+  },
+  "artifacts": {
+    "gds": {
+      "path": "artifacts/6_final.gds",
+      "bytes": 25217432,
+      "sha256": "b7dec1a5900ff5ca5816f6a2141bbd3a3a75788b118fbb6fd681fc42cdf3fdb0"
+    },
+    "odb": {
+      "path": "artifacts/6_final.odb",
+      "bytes": 46301739,
+      "sha256": "ffc3cb61026d80b01322ac69f01fce04bb3910bb2cc3a73d0a0613d2940a0f01"
+    },
+    "v": {
+      "path": "artifacts/6_final.v",
+      "bytes": 3841603,
+      "sha256": "45300ee7636ea81a9bc5cebbc2eab3656fb1fc273a111b714b3ab6406b706a73"
+    },
+    "sdc": {
+      "path": "artifacts/6_final.sdc",
+      "bytes": 129022,
+      "sha256": "753f0ea4f6f07fdc864692cad92a5a9d192bb0fbc95babae4ece5bd9a1511e1e"
+    },
+    "spef": {
+      "path": "artifacts/6_final.spef",
+      "bytes": 30694745,
+      "sha256": "7a8d6629207b787ba9dceccce38fbd45704d3d6bec49977e8ef6bb258395c9d7"
+    },
+    "def": {
+      "path": "artifacts/6_final.def",
+      "bytes": 26228633,
+      "sha256": "8c9fd9585e93f2db9a57e559daa46895d37407b450ed6d411291b1e9d7153498"
+    }
+  },
+  "electrical_violations": {
+    "slew": 0,
+    "capacitance": 0,
+    "fanout": 0
+  },
+  "connectivity": {
+    "routing_completeness": 1,
+    "power_nets": [
+      "VDD",
+      "VSS"
+    ],
+    "scope": "router completeness/opens/shorts checks and PG connectivity; not LVS"
+  },
+  "qualified_LVS": "UNSUPPORTED",
+  "native_LEF_antenna": "INCONCLUSIVE"
+}

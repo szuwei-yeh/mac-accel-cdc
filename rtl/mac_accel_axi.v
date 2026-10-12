@@ -75,8 +75,12 @@ module mac_accel_axi #(
 
     reg                        core_we;
     reg                        core_re;
-    reg  [3:0]                 core_addr;
+    reg  [3:0]                 core_wr_addr;
+    // The core has one address port. An asserted write owns it; a pending
+    // read waits until that write is consumed before sampling its saved AR.
+    wire [3:0]                 core_addr = core_we ? core_wr_addr : ar_addr_r;
     reg  [AXI_DATA_WIDTH-1:0]  core_wdata;
+    reg  [3:0]                 core_wstrb;
     wire [AXI_DATA_WIDTH-1:0]  core_rdata;
 
     //----------------------------------------------------
@@ -84,7 +88,8 @@ module mac_accel_axi #(
     //----------------------------------------------------
     mac_accel #(
         .DATA_WIDTH(DATA_WIDTH),
-        .VEC_LEN   (VEC_LEN)
+        .VEC_LEN   (VEC_LEN),
+        .USE_WSTRB (1)
     ) u_mac_accel (
         .bus_clk  (bus_clk),
         .bus_rst  (bus_rst),
@@ -94,6 +99,7 @@ module mac_accel_axi #(
         .re       (core_re),
         .addr     (core_addr),
         .wdata    (core_wdata),
+        .wstrb    (core_wstrb),
         .rdata    (core_rdata),
         .done_led (done_led)
     );
@@ -128,8 +134,9 @@ module mac_accel_axi #(
             w_data_r      <= {AXI_DATA_WIDTH{1'b0}};
             w_strb_r      <= {AXI_DATA_WIDTH/8{1'b0}};
             core_we       <= 1'b0;
-            core_addr     <= 4'd0;
+            core_wr_addr  <= 4'd0;
             core_wdata    <= {AXI_DATA_WIDTH{1'b0}};
+            core_wstrb    <= 4'b0;
         end else begin
             // Default: deassert single-cycle strobes
             core_we      <= 1'b0;
@@ -154,14 +161,12 @@ module mac_accel_axi #(
             // Both address and data latched → issue write to core
             if (aw_latched && w_latched && !S_AXI_BVALID) begin
                 core_we    <= 1'b1;
-                core_addr  <= aw_addr_r;
-                // Apply byte strobes
-                core_wdata <= {
-                    w_strb_r[3] ? w_data_r[31:24] : 8'h00,
-                    w_strb_r[2] ? w_data_r[23:16] : 8'h00,
-                    w_strb_r[1] ? w_data_r[15:8]  : 8'h00,
-                    w_strb_r[0] ? w_data_r[7:0]   : 8'h00
-                };
+                core_wr_addr <= aw_addr_r;
+                // The core owns operand storage and auto-increment indices.
+                // Pass byte enables with the saved write rather than zeroing
+                // disabled lanes or issuing side effects for a zero strobe.
+                core_wdata <= w_data_r;
+                core_wstrb <= w_strb_r;
                 aw_latched   <= 1'b0;
                 w_latched    <= 1'b0;
                 S_AXI_BVALID <= 1'b1;
@@ -177,7 +182,7 @@ module mac_accel_axi #(
 
     //----------------------------------------------------
     // Read FSM
-    // 1 cycle latency: accept AR → drive RDATA next cycle
+    // Saved AR drives the core when no registered write is being consumed.
     //----------------------------------------------------
     reg rd_pending;
     reg [3:0] ar_addr_r;
@@ -203,9 +208,8 @@ module mac_accel_axi #(
             end
 
             // One cycle later: drive read data
-            if (rd_pending) begin
+            if (rd_pending && !core_we) begin
                 core_re      <= 1'b1;
-                core_addr    <= ar_addr_r;  // combinatorially read from core
                 S_AXI_RDATA  <= core_rdata;
                 S_AXI_RRESP  <= 2'b00;
                 S_AXI_RVALID <= 1'b1;

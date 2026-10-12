@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "input_bits_with_min_and_max": 104,
+  "output_bits_with_min_and_max": 93,
+  "excluded_reset_ports": [
+    "S_AXI_ARESETN",
+    "mac_rst"
+  ],
+  "clock_ports": [
+    "S_AXI_ACLK",
+    "mac_clk"
+  ],
+  "clock_count": 2,
+  "external_source_latency_ns": 0,
+  "max_delay_groups": 5,
+  "event_stage1_false_path_groups": 3,
+  "bounded_hold_false_path_groups": 5,
+  "broad_clock_cut": false,
+  "unclassified_exceptions": 0,
+  "unconstrained_functional_endpoints": 0,
+  "propagated_clocks": true,
+  "check_setup_warning": "Warning: There are 2 input ports missing set_input_delay.\n  S_AXI_ARESETN\n  mac_rst",
+  "reset_coverage": "reset arrival/recovery/removal/RDC intentionally excluded; safe external release assumed"
+}

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "supported_drc_markers": 0,
+  "gds_antenna_markers": 0,
+  "rule_categories": 133,
+  "native_lef_antenna": "INCONCLUSIVE",
+  "net_correlation": "Not required for zero markers; violations require explicit context and always reject"
+}

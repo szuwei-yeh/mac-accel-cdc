@@ -119,6 +119,7 @@ module mac_accel_dma_top #(
     reg                          w_latched;
     reg [AXI_DATA_WIDTH-1:0]     w_data_r;
     reg [AXI_DATA_WIDTH/8-1:0]   w_strb_r;
+    integer                     byte_lane;
 
     wire [3:0] wr_word_addr = S_AXI_AWADDR[5:2];
     wire [3:0] rd_word_addr = S_AXI_ARADDR[5:2];
@@ -165,11 +166,22 @@ module mac_accel_dma_top #(
             if (aw_latched && w_latched && !S_AXI_BVALID) begin
                 case (aw_word_addr)
                     ADDR_CTRL: begin
-                        if (w_data_r[0]) start_pulse_bus <= 1'b1;
+                        if (w_strb_r[0] && w_data_r[0]) start_pulse_bus <= 1'b1;
                     end
-                    ADDR_SRC_A:  reg_src_a  <= w_data_r[AXI_ADDR_WIDTH-1:0];
-                    ADDR_SRC_B:  reg_src_b  <= w_data_r[AXI_ADDR_WIDTH-1:0];
-                    ADDR_LENGTH: reg_length <= w_data_r[15:0];
+                    ADDR_SRC_A: begin
+                        for (byte_lane = 0; byte_lane < AXI_ADDR_WIDTH/8; byte_lane = byte_lane + 1)
+                            if (w_strb_r[byte_lane])
+                                reg_src_a[byte_lane*8 +: 8] <= w_data_r[byte_lane*8 +: 8];
+                    end
+                    ADDR_SRC_B: begin
+                        for (byte_lane = 0; byte_lane < AXI_ADDR_WIDTH/8; byte_lane = byte_lane + 1)
+                            if (w_strb_r[byte_lane])
+                                reg_src_b[byte_lane*8 +: 8] <= w_data_r[byte_lane*8 +: 8];
+                    end
+                    ADDR_LENGTH: begin
+                        if (w_strb_r[0]) reg_length[7:0] <= w_data_r[7:0];
+                        if (w_strb_r[1]) reg_length[15:8] <= w_data_r[15:8];
+                    end
                     default: ;
                 endcase
                 aw_latched   <= 1'b0;

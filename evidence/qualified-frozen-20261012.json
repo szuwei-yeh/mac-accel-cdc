@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "scope": "electrically repaired unplaced mapped synthesis; ideal-clock zero-wire STA; complete CDC/constraint audits; 7 original GLS and 2 fault recovery GLS cases",
+  "cells": 28885,
+  "sequential": 7509,
+  "clock_domains": {
+    "bus": 7287,
+    "mac": 222
+  },
+  "global_wns_ns": {
+    "max": 6.02255,
+    "min": 0.05626
+  },
+  "tns_ns": {
+    "max": 0.0,
+    "min": 0.0
+  },
+  "electrical_violations": 0,
+  "inserted_buffers": 1777,
+  "source_manifest_sha256": "706323b65d6a4bd6da3ebdbcaea053ebbc78e88fa5b6c05d699c3f5a847a993d",
+  "physical_stages_executed": false,
+  "artifact_sha256": {
+    "1_2_yosys.v": "9d5bbf1b4cf42cf381a78bfaf00a0243a1f38d0119f81022194d275f0a909771",
+    "1_synth_qualified.odb": "4a4a6617623acf99e52d0c6511f63b24eb5cc9876477dcf8671a42d6ba8eb6b6",
+    "1_synth_qualified.sdc": "f754b93f07a4d3a121941438aa0433bbade1830144b90ab44c1977c86b320c35"
+  },
+  "mapped_pending_tail_verification": {
+    "status": "PASS",
+    "verification_layer": "zero-delay Nangate45 gate-level standalone DMA; independently mapped from same frozen RTL; not a full-top admission test or block PPA qualification",
+    "jobs": 2,
+    "cells": 20647,
+    "FFs": 6501,
+    "clock_domains": "one bus clock, 10 ns",
+    "source_sha256": {
+      "rtl/mac_dma_rob.v": "18e3202c471b317f04883fa21d7de16d7e32768fe904fafd747c8355efacc61d",
+      "rtl/axi_read_engine_rob.v": "b5234cde4eaa4d7b0579fbc14b9f55a3216f20727c70c5d6302879f8a757d3dc"
+    },
+    "original_TB_sha256": "c8ad9f93a972c1371184c13aef8c21a45bae11cbf5a7493ebea481d16db94545",
+    "mapped_TB_sha256": "89a268b3125fa2e257e2a1f472164860c3ed8bf136356fb0c0152b537b164801",
+    "netlist_sha256": "d582102c006b1d197a532df1b663732395a4990850091119bce0a14852eaee3f",
+    "liberty_sha256": "8d540a4d4cf6d09d27c87ad067857a9c0c2eeb023ab7a56e058cd3113db4e9b1",
+    "cell_model_sha256": "87bb617958fa45566fbf3ca752fa1a9a1185a91bcf529961604ef2cec0339cbe",
+    "full_top_qualified_netlist_sha256": "9d5bbf1b4cf42cf381a78bfaf00a0243a1f38d0119f81022194d275f0a909771"
+  },
+  "standard_cell_area_um2": 70050.568,
+  "ODB_readback": "byte-identical; exact cell/FF/domain counts; all instances UNPLACED",
+  "qualification_complete": true,
+  "source_unchanged_from_RTL_closure": true,
+  "tool_versions": {
+    "yosys": "Yosys 0.69+274 (git sha1 7513f8df8, Release, Clang /usr/bin/clang++ 21.1.8)",
+    "openroad": "26Q2-1164-g08f67ee5ec",
+    "sta": "3.1.0"
+  },
+  "resource_policy": "taskset CPUs0,1; nice -n10 requested; host-inherited effective NI19; one heavy task at a time"
+}

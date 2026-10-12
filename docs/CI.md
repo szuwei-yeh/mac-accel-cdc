@@ -16,8 +16,13 @@ python3 scripts/run_ci_rtl.py
 python3 sim/run_cdc_regression.py --simulator iverilog
 python3 scripts/check_portfolio.py --python-syntax
 python3 -m unittest discover -s tests -v
-python3 scripts/check_portfolio.py
+python3 scripts/check_publication.py
 ```
+
+The current integrated inventory is 243 cases across 27 TBs; the table below
+shows selected component suites. The separate frozen closure stress records
+108 jobs. `check_publication.py` also checks the new routed revision binding
+without EDA execution; optional `--archive` checks the external package bytes.
 
 ## Coverage
 

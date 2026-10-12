@@ -97,9 +97,11 @@ def main():
             errors.append(f"{path.relative_to(ROOT)}: invalid PNG signature")
 
     pins = json.loads((ROOT / "physical/pins.json").read_text())
-    for name, expected in pins["source_sha256"].items():
-        if digest(ROOT / name) != expected:
-            errors.append("Pinned source hash changed: " + name)
+    from revision_evidence import validate_evidence
+    try:
+        validate_evidence(ROOT, pins)
+    except (ValueError, KeyError, OSError, StopIteration) as error:
+        errors.append("Revision evidence validation failed: " + str(error))
     for name, record in pins["template_provenance"].items():
         if digest(ROOT / "physical/templates" / name) != record["template_sha256"]:
             errors.append("Pinned template hash changed: " + name)

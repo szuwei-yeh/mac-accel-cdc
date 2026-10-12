@@ -121,12 +121,14 @@ module mac_accel_dma_rob_top #(
     reg                          w_latched;
     reg [AXI_DATA_WIDTH-1:0]     w_data_r;
     reg [AXI_DATA_WIDTH/8-1:0]   w_strb_r;
+    integer                     byte_lane;
 
     wire [3:0] wr_word_addr = S_AXI_AWADDR[5:2];
     wire [3:0] rd_word_addr = S_AXI_ARADDR[5:2];
 
-    // start pulse: 1 bus_clk cycle, generated on CTRL[0] write
+    // start pulse: 1 bus_clk cycle, generated on byte-enabled CTRL[0] write
     reg start_pulse_bus;
+    reg job_in_flight;  // CSR admission through synchronized result capture
 
     always @(posedge bus_clk) begin
         if (bus_rst) begin
@@ -143,10 +145,14 @@ module mac_accel_dma_rob_top #(
             reg_src_b     <= {AXI_ADDR_WIDTH{1'b0}};
             reg_length    <= 16'd0;
             start_pulse_bus <= 1'b0;
+            job_in_flight   <= 1'b0;
         end else begin
             start_pulse_bus <= 1'b0;
             S_AXI_AWREADY   <= 1'b0;
             S_AXI_WREADY    <= 1'b0;
+            // Admission below uses the old state: reject on this capture edge,
+            // then allow a new job on the following bus edge.
+            if (done_pulse_bus) job_in_flight <= 1'b0;
 
             // AW accept
             if (S_AXI_AWVALID && !aw_latched) begin
@@ -165,19 +171,37 @@ module mac_accel_dma_rob_top #(
 
             // Both held -> commit to register file
             if (aw_latched && w_latched && !S_AXI_BVALID) begin
+                S_AXI_BRESP <= 2'b00;
                 case (aw_word_addr)
                     ADDR_CTRL: begin
-                        if (w_data_r[0]) start_pulse_bus <= 1'b1;
+                        if (w_strb_r[0] && w_data_r[0]) begin
+                            // Reject invalid or overlapping jobs before start.
+                            if (reg_length >= 16'd1 && reg_length <= MAX_LEN && !job_in_flight) begin
+                                start_pulse_bus <= 1'b1;
+                                job_in_flight <= 1'b1;
+                            end else
+                                S_AXI_BRESP <= 2'b10;  // SLVERR; preserve prior status
+                        end
                     end
-                    ADDR_SRC_A:  reg_src_a  <= w_data_r[AXI_ADDR_WIDTH-1:0];
-                    ADDR_SRC_B:  reg_src_b  <= w_data_r[AXI_ADDR_WIDTH-1:0];
-                    ADDR_LENGTH: reg_length <= w_data_r[15:0];
+                    ADDR_SRC_A: begin
+                        for (byte_lane = 0; byte_lane < AXI_ADDR_WIDTH/8; byte_lane = byte_lane + 1)
+                            if (w_strb_r[byte_lane])
+                                reg_src_a[byte_lane*8 +: 8] <= w_data_r[byte_lane*8 +: 8];
+                    end
+                    ADDR_SRC_B: begin
+                        for (byte_lane = 0; byte_lane < AXI_ADDR_WIDTH/8; byte_lane = byte_lane + 1)
+                            if (w_strb_r[byte_lane])
+                                reg_src_b[byte_lane*8 +: 8] <= w_data_r[byte_lane*8 +: 8];
+                    end
+                    ADDR_LENGTH: begin
+                        if (w_strb_r[0]) reg_length[7:0]  <= w_data_r[7:0];
+                        if (w_strb_r[1]) reg_length[15:8] <= w_data_r[15:8];
+                    end
                     default: ;
                 endcase
                 aw_latched   <= 1'b0;
                 w_latched    <= 1'b0;
                 S_AXI_BVALID <= 1'b1;
-                S_AXI_BRESP  <= 2'b00;
             end
 
             if (S_AXI_BVALID && S_AXI_BREADY)
@@ -326,7 +350,7 @@ module mac_accel_dma_rob_top #(
         else         busy_sync_bus <= {busy_sync_bus[0], busy_mac};
     end
     wire busy_bus = busy_sync_bus[1];
-    wire busy_any_bus = busy_bus | dma_busy;
+    wire busy_any_bus = job_in_flight | busy_bus | dma_busy;
 
     //----------------------------------------------------
     // CDC: done (mac -> bus) via toggle sync + edge detect
@@ -436,8 +460,7 @@ module mac_accel_dma_rob_top #(
     // tie off unused signal
     wire _unused_ok = &{1'b0, dma_done_pulse, S_AXI_AWPROT, S_AXI_ARPROT,
                        S_AXI_AWADDR[7:6], S_AXI_AWADDR[1:0],
-                       S_AXI_ARADDR[7:6], S_AXI_ARADDR[1:0],
-                       w_strb_r};
+                       S_AXI_ARADDR[7:6], S_AXI_ARADDR[1:0]};
 
 `ifndef SYNTHESIS
     initial begin
