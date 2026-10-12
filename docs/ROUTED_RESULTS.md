@@ -5,6 +5,12 @@ revision, bound to the final integrated RTL closure and newly qualified input
 checkpoint. The archived results under `physical/` remain historical records.
 Their pins, templates, manifests and acceptance checks were not rewritten.
 
+> **Historical physical revision:** [physical/README.md](../physical/README.md)
+> describes the archived implementation: 29,175 standard cells, 7,503 FFs and
+> a 417.39 µm square die. This frozen V3 revision has 29,002 standard cells,
+> 7,509 FFs and a 434.48 µm square die. The older page, measurements and figures
+> remain unchanged to preserve their source/provenance binding.
+
 ## Profile, stages and repair
 
 DATA_WIDTH=16, AXI data/address/ID=32/32/4, S_AXI_ADDR_WIDTH=8, MAX_LEN=256,

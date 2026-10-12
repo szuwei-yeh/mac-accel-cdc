@@ -1,5 +1,11 @@
 # Integrated candidate: current evidence
 
+> **Historical closure status:** [RTL_CLOSURE.md](../RTL_CLOSURE.md) records the
+> RTL-only closure stage, when P&R qualification was blocked. The same frozen
+> RTL subsequently passed pre-layout requalification and UCSB routed qualification
+> within the documented scope; see [current routed results](ROUTED_RESULTS.md).
+> The original report is retained byte-for-byte as a hash-bound historical input.
+
 The final functional RTL is frozen. The subsequent pre-layout requalification
 and **new UCSB routed implementation have passed within the documented scope**.
 Earlier closure reports and qualified6 record an earlier stage; their blocked

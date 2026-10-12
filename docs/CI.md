@@ -56,6 +56,10 @@ does not establish physical signoff or a fresh RTL-to-GDS replay.
 
 ## Verified hosted results
 
+For the latest status, use the [workflow run list](https://github.com/szuwei-yeh/mac-accel-cdc/actions/workflows/rtl-ci.yml)
+and select the `main` branch and relevant commit. The fixed runs below are
+historical receipts; this table is not a rolling status badge.
+
 | Published commit | Hosted run | Verified result |
 |---|---|---|
 | [`73cafc3`](https://github.com/szuwei-yeh/mac-accel-cdc/commit/73cafc323e4e1e57e7e293668c1effef8ac63619) | [38315407576](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38315407576) | Exact SHA verified; 243 RTL cases across 27 TBs, six CDC scenarios, 45 unit tests, 46 Python syntax checks and publication integrity checks PASS |
