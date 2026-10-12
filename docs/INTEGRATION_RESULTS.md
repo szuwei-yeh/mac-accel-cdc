@@ -19,7 +19,10 @@ Results are reused by exact source/artifact binding; document preparation does
 not rerun functional or physical experiments. Case/job categories overlap and
 must not be summed as a unique-test total. Qualification-helper unit checks have
 a separate later count in their own record; they do not change the closure-era
-31/31 claim. Hosted CI has not run on this uncommitted candidate.
+31/31 claim. [Hosted CI for `73cafc3`](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38315407576)
+passed 243 RTL cases, the six-scenario CDC matrix, 45 current unit tests and
+publication checks. The 108-job multi-seed stress and physical results remain
+source-bound recorded evidence; this hosted run does not rerun them.
 
 ## Revision records
 

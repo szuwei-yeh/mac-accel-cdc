@@ -142,9 +142,10 @@ python3 sim/run_cdc_regression.py --simulator iverilog
 python3 scripts/check_publication.py
 ```
 
-[CI instructions](docs/CI.md) cover dependencies and unit checks. Hosted CI
-links there certify only their listed published commits; this uncommitted
-candidate has no new hosted CI result. [Physical reproduction](docs/ROUTED_RESULTS.md#reproduction)
+[CI instructions](docs/CI.md) cover dependencies and unit checks.
+[Hosted CI for `73cafc3`](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38315407576) passed all
+243 RTL cases, the six-scenario CDC matrix, 45 unit tests and publication checks.
+It does not rerun synthesis or P&R. [Physical reproduction](docs/ROUTED_RESULTS.md#reproduction)
 uses the externally archived package and pinned tools. Large netlists, ODB/GDS,
 SPEF and raw logs stay outside the publication tree; exact hashes are committed
 as reviewable records.

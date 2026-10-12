@@ -58,6 +58,7 @@ does not establish physical signoff or a fresh RTL-to-GDS replay.
 
 | Published commit | Hosted run | Verified result |
 |---|---|---|
+| [`73cafc3`](https://github.com/szuwei-yeh/mac-accel-cdc/commit/73cafc323e4e1e57e7e293668c1effef8ac63619) | [38315407576](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38315407576) | Exact SHA verified; 243 RTL cases across 27 TBs, six CDC scenarios, 45 unit tests, 46 Python syntax checks and publication integrity checks PASS |
 | [`37c926a`](https://github.com/szuwei-yeh/mac-accel-cdc/commit/37c926a2989aad01d118e07bb837a80373d16a53) | [38174881093](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38174881093) | Completed successfully; exact SHA and every job/check step verified through the Actions API |
 | [`5a45665`](https://github.com/szuwei-yeh/mac-accel-cdc/commit/5a456654b6847f50c89f4166355593a5f5427242) | [38171676828](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38171676828) | Completed successfully; every job/check step passed; job completed 2026-10-11 20:19:15 UTC |
 | [`3e81562`](https://github.com/szuwei-yeh/mac-accel-cdc/commit/3e815629718f3f1c9c8a1504cad0c7306ff95b91) | [38152191558](https://github.com/szuwei-yeh/mac-accel-cdc/actions/runs/38152191558) | Earlier published baseline; successful hosted run |
