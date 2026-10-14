@@ -1,0 +1,64 @@
+[*] Standalone ROB: actual first regression phase, Icarus VCD (1ps).
+[*] All bus values decimal. Primary marker set after RID2 completion at 1655ns; head0 still incomplete.
+[timestart] 120000
+[size] 1800 1000
+[pos] -1 -1
+*-18.4 1656000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_expanded] 0
+[signals_width] 300
+@800200
+-AXI Request
+@28
+tb_axi_read_engine_rob_waveform.tb.clk
+@28
+tb_axi_read_engine_rob_waveform.tb.ARVALID
+@28
+tb_axi_read_engine_rob_waveform.tb.ARREADY
+@24
+tb_axi_read_engine_rob_waveform.tb.ARID[3:0]
+@1000200
+-AXI Request
+@800200
+-Out-of-Order Response
+@28
+tb_axi_read_engine_rob_waveform.tb.RVALID
+@28
+tb_axi_read_engine_rob_waveform.tb.RREADY
+@24
+tb_axi_read_engine_rob_waveform.tb.RID[3:0]
+@28
+tb_axi_read_engine_rob_waveform.tb.RLAST
+@1000200
+-Out-of-Order Response
+@800200
+-ROB State
+@24
+tb_axi_read_engine_rob_waveform.tb.dut.alloc_ptr[1:0]
+@24
+tb_axi_read_engine_rob_waveform.tb.dut.head_ptr[1:0]
+@24
+tb_axi_read_engine_rob_waveform.tb.dut.occupancy[2:0]
+@28
+tb_axi_read_engine_rob_waveform.tb.dut.\e_complete[0]
+@28
+tb_axi_read_engine_rob_waveform.tb.dut.\e_complete[1]
+@28
+tb_axi_read_engine_rob_waveform.tb.dut.\e_complete[2]
+@28
+tb_axi_read_engine_rob_waveform.tb.dut.\e_complete[3]
+@1000200
+-ROB State
+@800200
+-In-Order Retirement
+@24
+tb_axi_read_engine_rob_waveform.tb.dut.drain_idx[7:0]
+@28
+tb_axi_read_engine_rob_waveform.tb.out_valid
+@28
+tb_axi_read_engine_rob_waveform.tb.out_ready_tb
+@24
+tb_axi_read_engine_rob_waveform.tb.out_data[31:0]
+@28
+tb_axi_read_engine_rob_waveform.tb.out_last
+@1000200
+-In-Order Retirement

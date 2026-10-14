@@ -32,6 +32,16 @@ order follows the AXI contract; a completed later entry waits behind the head.
 
 *Protocol illustration with two-beat bursts, not a recorded waveform.*
 
+[![Measured standalone ROB RTL simulation in Surfer: multiple request IDs, non-head completion and ordered retirement.](docs/figures/rob_ooo_surfer_standalone.png)](docs/figures/rob_ooo_surfer_standalone.png)
+
+*Measured standalone `axi_read_engine_rob` RTL simulation, depth4, four 16-beat
+bursts: requests **0 → 1 → 2 → 3**, completions **2 → 1 → 3 → 0**, retirement
+**0 → 1 → 2 → 3**; **64/64 output beats correct**. Left: request issue; right:
+completion/retirement. Binary `e_complete` is the coalesced `e_complete[3:1]` bus.*
+
+[Capture configuration, measured event times and reproduction](sim/waveforms/README.md)
+include the independent output scoreboard and original Icarus trace identity.
+
 **CDC and backpressure.** FIFO full propagates stalls through operand pairing
 and ordered retirement. Gray pointers cross through two-flop synchronizers;
 FIFO storage carries payload under the pointer/handshake protocol. Start and

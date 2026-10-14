@@ -1,0 +1,4 @@
+# Two views of the same unmodified VCD; startup with the paired state file.
+viewport_add
+viewport_set_active 1
+zoom_to 1600ns 2440ns
