@@ -1,0 +1,6 @@
+[layout]
+window_width = 900
+window_height = 710
+waveforms_text_size = 10.5
+waveforms_line_height = 23.0
+show_divider_text = false

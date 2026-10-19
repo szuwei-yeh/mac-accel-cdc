@@ -32,15 +32,22 @@ order follows the AXI contract; a completed later entry waits behind the head.
 
 *Protocol illustration with two-beat bursts, not a recorded waveform.*
 
-[![Measured standalone ROB RTL simulation in Surfer: multiple request IDs, non-head completion and ordered retirement.](docs/figures/rob_ooo_surfer_standalone.png)](docs/figures/rob_ooo_surfer_standalone.png)
+[![Standalone ROB test, depth 8, in native Surfer: seven later entries complete while head 0 waits, followed by eight ordered retirements and head wrap to 0. Click for full resolution.](docs/figures/rob_ooo_surfer_depth8.png)](docs/figures/rob_ooo_surfer_depth8.png)
 
-*Measured standalone `axi_read_engine_rob` RTL simulation, depth4, four 16-beat
-bursts: requests **0 → 1 → 2 → 3**, completions **2 → 1 → 3 → 0**, retirement
-**0 → 1 → 2 → 3**; **64/64 output beats correct**. Left: request issue; right:
-completion/retirement. Binary `e_complete` is the coalesced `e_complete[3:1]` bus.*
+*Standalone ROB test, depth 8. Eight requests × 16 beats; **128/128 output beats
+correct**. Allocation: **0 → 1 → 2 → 3 → 4 → 5 → 6 → 7**.
+Completion: **1 → 2 → 3 → 4 → 5 → 6 → 7 → 0**.
+Retirement: **0 → 1 → 2 → 3 → 4 → 5 → 6 → 7**.*
 
-[Capture configuration, measured event times and reproduction](sim/waveforms/README.md)
-include the independent output scoreboard and original Icarus trace identity.
+*At **2276 ns**, entries 1–7 have received all beats, but head 0 has not:
+`out_valid=0`, `occupancy=8`. Binary `e_complete` reads **[7:0]**, with Entry 0
+at the rightmost bit. Completion means an AXI read burst has been fully
+received, not MAC computation. Retirement frees an entry only after its last
+output beat successfully handshakes.*
+
+[Directed test, measured times, viewer setup and reproduction](sim/waveforms/README.md#primary-depth-8-directed-test)
+include the output scoreboard and screenshot provenance. The original depth-4
+capture remains available as supplemental evidence there.
 
 **CDC and backpressure.** FIFO full propagates stalls through operand pairing
 and ordered retirement. Gray pointers cross through two-flop synchronizers;

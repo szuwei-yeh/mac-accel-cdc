@@ -6,6 +6,7 @@
 |---|---|
 | [Architecture](figures/architecture.svg) | Existing V3 dataflow schematic, depth8 explicitly selected; not physical geometry |
 | [ROB timeline](figures/rob_reordering.svg) | Illustrative completion order1,2,0 / retirement0,1,2; two-beat bursts, not measured waveform |
+| [Depth-8 ROB waveform](figures/rob_ooo_surfer_depth8.png) | Real Surfer 0.7.0 screenshot of a directed standalone ROB test; eight 16-beat bursts, 128 correct output beats; only window chrome and unused lower space cropped |
 | [New routed overview](figures/routed-20261012-overview.png) | Final 2026-10-12 frozen candidate GDS; full 434.48 × 434.48 µm die, M2–M10 |
 | [New routed detail](figures/routed-20261012-routing-detail.png) | Same final GDS; M1–M10, centered 30 × 30 µm window |
 | [MAC-feed chart](figures/mac_feed_utilization.svg) | Historical accepted V2/V3 simulation counts; operand delivery, not routed power or system speedup |
@@ -31,6 +32,7 @@ generated from an illustrative model.
 |---|---|
 | [Architecture](figures/architecture.svg) | V3 RTL data flow; depth 8 explicitly selected |
 | [ROB reordering](figures/rob_reordering.svg) | RTL protocol schematic; illustrative two-beat bursts, not a recorded trace |
+| [Original depth-4 ROB waveform](figures/rob_ooo_surfer_standalone.png) | Preserved native Surfer capture, four 16-beat bursts, 64 output beats; original trace hash and viewer/reproduction settings in the supplemental waveform documentation |
 | [MAC-feed utilization](figures/mac_feed_utilization.svg) | Accepted [V2/V3 measurement table](../sim/README.md#utilization-measurement); 256 pairs / 3777 vs. 941 DMA-busy bus cycles |
 | [OSU timing comparison](figures/timing_optimization.svg) | [Block synthesis metrics](../syn/README.md#first-synthesis-driven-optimization); global QoR paths, ideal clocks |
 | [OSU power comparison](figures/power-gating-presentation.svg) | [SAIF-driven block estimates](../syn/README.md#targeted-buf_a-clock-gating-experiment); storage-entry terminology; no post-layout/Nangate45 power claim |
@@ -83,6 +85,27 @@ Original presentation sources remain unchanged:
 [placement](../physical/figures/placement_overview.png) and
 [power-grid detail](../physical/figures/pdn_detail.png).
 Their historical labels and hashes are deliberately preserved.
+
+## Standalone ROB waveform provenance
+
+The README's depth-8 image comes from the existing verified
+`rob_depth8_surfer_overview.png` capture, not a presentation page or a plotted
+reconstruction. The source is 1800 × 1476 pixels. Cropping rectangle
+`[0, 106, 1800, 710]` removes window chrome and unused lower space, producing
+1800 × 604 pixels with the original signal names, cursor values, ns axis and
+complete retirement sequence. Retained pixels are unchanged. The README image
+links to this full-resolution crop.
+
+[Depth-8 provenance](../sim/waveforms/depth8/provenance.json) records the original
+source-PNG, raw-capture, VCD and Surfer binary SHA-256s, crop coordinates, published
+image hash, reproduction inputs and measured events. It is separate from the
+immutable routed-image binding and does not extend system/physical qualification.
+[Reproduction and event definitions](../sim/waveforms/README.md#primary-depth-8-directed-test)
+describe the testbench-only completion observation wire and delayed Entry 0.
+
+The original depth-4 image and conceptual `rob_reordering.svg` are unchanged.
+The [supplemental depth-4 recording](../sim/waveforms/README.md#supplemental-depth-4-recording)
+retains its original VCD hash, settings, measured times and reproduction command.
 
 ## Regenerate the new utilization chart
 
